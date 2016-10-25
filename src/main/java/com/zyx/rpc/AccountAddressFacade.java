@@ -1,4 +1,4 @@
-package com.zyx.rpc.account;
+package com.zyx.rpc;
 
 
 import com.zyx.param.account.UserAddressParam;
