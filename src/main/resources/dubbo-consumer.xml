@@ -17,8 +17,10 @@
     <!-- 服务线程池大小 -->
     <dubbo:protocol threads="100"/>
 
-    <!-- 活动服务接口 -->
-    <dubbo:reference interface="com.zyx.rpc.activity.ActivityFacade" id="activityFacade" check="false" timeout="10000"/>
+    <!-- 用户首推 -->
+    <dubbo:reference interface="com.zyx.rpc.common.TokenFacade" id="tokenFacade" check="false"/>
 
+    <!-- 积分 -->
+    <dubbo:reference interface="com.zyx.rpc.point.UserPointFacade" id="userPointFacade" check="false"/>
 
 </beans>

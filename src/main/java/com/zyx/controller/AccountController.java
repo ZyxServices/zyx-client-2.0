@@ -28,7 +28,6 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 @RequestMapping("/v1/account")
 @Api(description = "用户信息相关接口。1、查询用户信息。")
 public class AccountController {
-    @Autowired
     private AccountInfoFacade accountInfoFacade;
 
     @RequestMapping(value = "/info", method = {RequestMethod.GET, RequestMethod.POST})
