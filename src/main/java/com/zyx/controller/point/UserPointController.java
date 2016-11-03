@@ -4,6 +4,7 @@ import com.zyx.constants.Constants;
 import com.zyx.constants.point.PointConstants;
 import com.zyx.param.point.UserPointParam;
 import com.zyx.rpc.point.UserPointFacade;
+import com.zyx.utils.PointPool;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,7 +54,7 @@ public class UserPointController {
     @ApiOperation(value = "记录积分", notes = "记录积分")
     public ModelAndView recordPoint(@RequestParam(name = "token") String token, @RequestParam(name = "id") int userId, @RequestParam(name = "pointCount") int pointCount, @RequestParam(name = "detailType") int detailType, @RequestParam(name = "detailMsg") String detailMsg) {
         AbstractView jsonView = new MappingJackson2JsonView();
-
+        Long begin = System.currentTimeMillis();
         if (StringUtils.isEmpty(token)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
@@ -64,10 +65,36 @@ public class UserPointController {
             param.setDetailType(detailType);
             param.setDetailMsg(detailMsg);
             param.setDetailTable(PointConstants.PANYAN_TABLE);
-            Map<String, Object> map = userPointFacade.recordPoint(param);
-            jsonView.setAttributesMap(map);
+            jsonView.setAttributesMap(userPointFacade.recordPoint(param));
         }
+        Long end = System.currentTimeMillis();
+        System.out.println("1花费时间 : " + (end - begin));
+        return new ModelAndView(jsonView);
+    }
 
+    @RequestMapping(value = "/v1/point/insert2", method = RequestMethod.POST)
+    @ApiOperation(value = "记录积分", notes = "记录积分")
+    public ModelAndView recordPoint2(@RequestParam(name = "token") String token, @RequestParam(name = "id") int userId, @RequestParam(name = "pointCount") int pointCount, @RequestParam(name = "detailType") int detailType, @RequestParam(name = "detailMsg") String detailMsg) {
+        AbstractView jsonView = new MappingJackson2JsonView();
+        Long begin = System.currentTimeMillis();
+        if (StringUtils.isEmpty(token)) {// 缺少参数
+            jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
+        } else {
+            for (int i = 0; i < 200; i++) {
+                PointPool.getPointPool().execute(() -> {
+                    UserPointParam param1 = new UserPointParam();
+                    param1.setUserId(userId);
+                    param1.setPointCount((long) pointCount);
+                    param1.setPointType(PointConstants.PANYAN_TYPE);
+                    param1.setDetailType(detailType);
+                    param1.setDetailMsg(detailMsg);
+                    param1.setDetailTable(PointConstants.PANYAN_TABLE);
+                    userPointFacade.recordPoint(param1);
+                });
+            }
+        }
+        Long end = System.currentTimeMillis();
+        System.out.println("2花费时间 : " + (end - begin));
         return new ModelAndView(jsonView);
     }
 }
