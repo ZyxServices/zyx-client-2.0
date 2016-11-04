@@ -1,10 +1,8 @@
 package com.zyx.controller.point;
 
 import com.zyx.constants.Constants;
-import com.zyx.constants.point.PointConstants;
 import com.zyx.param.point.UserPointParam;
 import com.zyx.rpc.point.UserPointFacade;
-import com.zyx.utils.PointPool;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,13 +56,9 @@ public class UserPointController {
         if (StringUtils.isEmpty(token)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            UserPointParam param = new UserPointParam();
-            param.setUserId(userId);
+            UserPointParam param = new PointParamContext(new PointParamAStrategy()).build(userId);
             param.setPointCount((long) pointCount);
-            param.setPointType(PointConstants.PANYAN_TYPE);
-            param.setDetailType(detailType);
             param.setDetailMsg(detailMsg);
-            param.setDetailTable(PointConstants.PANYAN_TABLE);
             jsonView.setAttributesMap(userPointFacade.recordPoint(param));
         }
         Long end = System.currentTimeMillis();
@@ -80,21 +74,30 @@ public class UserPointController {
         if (StringUtils.isEmpty(token)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            for (int i = 0; i < 200; i++) {
-                PointPool.getPointPool().execute(() -> {
-                    UserPointParam param1 = new UserPointParam();
-                    param1.setUserId(userId);
-                    param1.setPointCount((long) pointCount);
-                    param1.setPointType(PointConstants.PANYAN_TYPE);
-                    param1.setDetailType(detailType);
-                    param1.setDetailMsg(detailMsg);
-                    param1.setDetailTable(PointConstants.PANYAN_TABLE);
-                    userPointFacade.recordPoint(param1);
-                });
+            for (int i = 0; i < 20; i++) {
+                PointPool.getPointPool().execute(new RecordPointThread(userPointFacade, new PointParamContext(new PointParamAStrategy()).build(userId)));
+                PointPool.getPointPool().execute(new RecordPointThread(userPointFacade, new PointParamContext(new PointParamAStrategy()).build(userId, detailMsg)));
             }
         }
         Long end = System.currentTimeMillis();
         System.out.println("2花费时间 : " + (end - begin));
         return new ModelAndView(jsonView);
+    }
+}
+
+class RecordPointThread implements Runnable {
+
+    private UserPointFacade userPointFacade;
+
+    private UserPointParam param;
+
+    public RecordPointThread(UserPointFacade userPointFacade, UserPointParam param) {
+        this.userPointFacade = userPointFacade;
+        this.param = param;
+    }
+
+    @Override
+    public void run() {
+        userPointFacade.recordPoint(param);
     }
 }
