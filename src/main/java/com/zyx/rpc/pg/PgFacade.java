@@ -1,7 +1,5 @@
 package com.zyx.rpc.pg;
 
-import com.zyx.entity.pg.Circle;
-import com.zyx.entity.pg.Concern;
 
 import java.util.List;
 import java.util.Map;

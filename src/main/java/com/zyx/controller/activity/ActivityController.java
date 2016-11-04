@@ -2,8 +2,6 @@ package com.zyx.controller.activity;
 
 
 import com.zyx.constants.Constants;
-import com.zyx.param.activity.QueryActivityParm;
-import com.zyx.param.activity.QueryHistoryParm;
 import com.zyx.rpc.account.AccountCommonFacade;
 import com.zyx.utils.ActivityUtils;
 import com.zyx.rpc.activity.ActivityFacade;
@@ -98,18 +96,18 @@ public class ActivityController {
 /*        boolean token1 = accountCommonFacade.validateToken(token);
         if (!token1) return new ModelAndView(ActivityUtils.tokenFailure());*/
 
-        QueryActivityParm parm = new QueryActivityParm();
-        parm.setCreateId(createId);
-        parm.setId(id);
-        parm.setStartTime(startTime);
-        parm.setEndTime(endTime);
-        parm.setPageNumber(pageNumber);
-        parm.setPage(page);
-        parm.setEditState(editState != null ? editState : 0);
+//        QueryActivityParm parm = new QueryActivityParm();
+//        parm.setCreateId(createId);
+//        parm.setId(id);
+//        parm.setStartTime(startTime);
+//        parm.setEndTime(endTime);
+//        parm.setPageNumber(pageNumber);
+//        parm.setPage(page);
+//        parm.setEditState(editState != null ? editState : 0);
 
-        Map<String, Object> map = activityFacade.queryActivity(parm, 0);
-
-        jsonView.setAttributesMap(map);
+//        Map<String, Object> map = activityFacade.queryActivity(parm, 0);
+//
+//        jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
 
@@ -123,14 +121,14 @@ public class ActivityController {
 
         AbstractView jsonView = new MappingJackson2JsonView();
 
-        QueryActivityParm parm = new QueryActivityParm();
-        parm.setCreateId(createId);
-        parm.setPageNumber(pageNumber);
-        parm.setPage(page);
-
-        Map<String, Object> map = activityFacade.queryActivity(parm, 1);
-
-        jsonView.setAttributesMap(map);
+//        QueryActivityParm parm = new QueryActivityParm();
+//        parm.setCreateId(createId);
+//        parm.setPageNumber(pageNumber);
+//        parm.setPage(page);
+//
+//        Map<String, Object> map = activityFacade.queryActivity(parm, 1);
+//
+//        jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
 
@@ -178,14 +176,14 @@ public class ActivityController {
 /*        boolean token1 = accountCommonFacade.validateToken(token);
         if (!token1) return new ModelAndView(ActivityUtils.tokenFailure());*/
 
-        QueryHistoryParm parm = new QueryHistoryParm();
-        parm.setUserId(userId);
-        parm.setPageNumber(pageNumber);
-        parm.setPageHis(page);
-
-        Map<String, Object> map = activityFacade.queryActivityHistory(parm);
-
-        jsonView.setAttributesMap(map);
+//        QueryHistoryParm parm = new QueryHistoryParm();
+//        parm.setUserId(userId);
+//        parm.setPageNumber(pageNumber);
+//        parm.setPageHis(page);
+//
+//        Map<String, Object> map = activityFacade.queryActivityHistory(parm);
+//
+//        jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
 

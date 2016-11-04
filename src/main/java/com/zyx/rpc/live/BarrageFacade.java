@@ -3,9 +3,9 @@ package com.zyx.rpc.live;
 import java.util.List;
 import java.util.Map;
 
-import com.zyx.entity.live.Barrage;
-import com.zyx.param.live.BarrageParam;
-import com.zyx.vo.live.BarrageVo;
+//import com.zyx.entity.live.Barrage;
+//import com.zyx.param.live.BarrageParam;
+//import com.zyx.vo.live.BarrageVo;
 
 public interface BarrageFacade {
 	/**
@@ -16,7 +16,7 @@ public interface BarrageFacade {
 	 * @author MrDeng
 	 * @update 2016年6月22日 上午10:28:48
 	 */
-	public void add(Barrage barrage);
+//	public void add(Barrage barrage);
 //	/**
 //	 * 
 //	 * @param id
@@ -36,11 +36,11 @@ public interface BarrageFacade {
 	 * @author MrDeng
 	 * @update 2016年6月22日 上午10:30:21
 	 */
-	public List<Barrage> getLast(BarrageParam param);
-
-
-
-	public List<BarrageVo> getList(BarrageParam param);
+//	public List<Barrage> getLast(BarrageParam param);
+//
+//
+//
+//	public List<BarrageVo> getList(BarrageParam param);
 //	/**
 //	 * 
 //	 * @param token

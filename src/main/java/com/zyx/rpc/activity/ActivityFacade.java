@@ -1,7 +1,7 @@
 package com.zyx.rpc.activity;
 
-import com.zyx.param.activity.QueryActivityParm;
-import com.zyx.param.activity.QueryHistoryParm;
+//import com.zyx.param.activity.QueryActivityParm;
+//import com.zyx.param.activity.QueryHistoryParm;
 
 import java.util.Map;
 
@@ -43,7 +43,7 @@ public interface ActivityFacade {
      * @param parm
      * @return
      */
-    Map<String, Object> queryActivity(QueryActivityParm parm, int api);
+//    Map<String, Object> queryActivity(QueryActivityParm parm, int api);
 
     /**
      * 查询活动发起者自定义报名模板
@@ -69,5 +69,5 @@ public interface ActivityFacade {
      * @param history
      * @return
      */
-    Map<String, Object> queryActivityHistory(QueryHistoryParm history);
+//    Map<String, Object> queryActivityHistory(QueryHistoryParm history);
 }

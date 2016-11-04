@@ -1,7 +1,7 @@
 package com.zyx.rpc.activity;
 
-import com.zyx.param.activity.AddTopicParm;
-import com.zyx.param.activity.QueryTopicParm;
+//import com.zyx.param.activity.AddTopicParm;
+//import com.zyx.param.activity.QueryTopicParm;
 
 import java.util.Map;
 
@@ -17,20 +17,20 @@ import java.util.Map;
  */
 public interface ActivityTopicFacade {
 
-    /**
-     * 动态发布
-     *
-     * @param addTopicParm
-     * @return
-     */
-    Map<String, Object> addActivityTopic(AddTopicParm addTopicParm);
-
-    /**
-     * 查询对应活动下到动态信息
-     *
-     * @param topicParm
-     * @return
-     */
-    Map<String, Object> dynamicQuery(QueryTopicParm topicParm);
+//    /**
+//     * 动态发布
+//     *
+//     * @param addTopicParm
+//     * @return
+//     */
+//    Map<String, Object> addActivityTopic(AddTopicParm addTopicParm);
+//
+//    /**
+//     * 查询对应活动下到动态信息
+//     *
+//     * @param topicParm
+//     * @return
+//     */
+//    Map<String, Object> dynamicQuery(QueryTopicParm topicParm);
 
 }

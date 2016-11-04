@@ -3,11 +3,11 @@ package com.zyx.rpc.live;
 import java.util.List;
 import java.util.Map;
 
-import com.zyx.entity.live.LiveInfo;
-import com.zyx.entity.live.dto.LiveInfoDto;
-import com.zyx.param.live.LiveInfoParam;
-import com.zyx.vo.live.LiveInfoVo;
-import com.zyx.vo.live.LiveSearchVo;
+//import com.zyx.entity.live.LiveInfo;
+//import com.zyx.entity.live.dto.LiveInfoDto;
+//import com.zyx.param.live.LiveInfoParam;
+//import com.zyx.vo.live.LiveInfoVo;
+//import com.zyx.vo.live.LiveSearchVo;
 
 /**
  *
@@ -28,7 +28,7 @@ public interface LiveInfoFacade {
 	 * @author MrDeng
 	 * @update 2016年6月22日 上午10:28:48
 	 */
-	public Integer add(LiveInfo liveInfo);
+//	public Integer add(LiveInfo liveInfo);
 	/**
 	 *
 	 * @param liveInfo
@@ -37,9 +37,9 @@ public interface LiveInfoFacade {
 	 * @author MrDeng
 	 * @update 2016年6月22日 上午10:29:15
 	 */
-	public void updateNotNull(LiveInfo liveInfo);
-
-	public LiveInfo getById(Integer id);
+//	public void updateNotNull(LiveInfo liveInfo);
+//
+//	public LiveInfo getById(Integer id);
 	/**
 	 *
 	 * @return
@@ -48,7 +48,7 @@ public interface LiveInfoFacade {
 	 * @author MrDeng
 	 * @update 2016年6月22日 上午10:30:44
 	 */
-	public LiveInfoVo getLiveInfo(LiveInfoParam para);
+//	public LiveInfoVo getLiveInfo(LiveInfoParam para);
 
 
 	/**
@@ -56,7 +56,7 @@ public interface LiveInfoFacade {
 	 * @param id
 	 * @return
 	 */
-	public LiveInfoVo endLive(Integer id);
+//	public LiveInfoVo endLive(Integer id);
 	/**
 	 *
 	 * @param liveInfoParam
@@ -66,7 +66,7 @@ public interface LiveInfoFacade {
 	 * @author MrDeng
 	 * @update 2016年6月22日 上午10:30:21
 	 */
-	public List<LiveInfoVo> getList(LiveInfoParam liveInfoParam);
+//	public List<LiveInfoVo> getList(LiveInfoParam liveInfoParam);
 	/**
 	 *
 	 * @param id

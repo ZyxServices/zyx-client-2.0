@@ -1,6 +1,6 @@
 package com.zyx.controller.system;
 
-import com.zyx.param.system.SearchParam;
+//import com.zyx.param.system.SearchParam;
 import com.zyx.rpc.account.AccountCommonFacade;
 import com.zyx.rpc.system.SearchFacade;
 import com.zyx.utils.ActivityUtils;
@@ -37,14 +37,14 @@ public class SearchController {
                                     @RequestParam(name = "pages") Integer pages) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
-        SearchParam searchParam = new SearchParam();
-        searchParam.setUserId(userId);
-        searchParam.setCharacter(character);
-        searchParam.setModel(model);
-        searchParam.setPageNumber(pageNumber);
-        searchParam.setPages(pages);
-        Map<String, Object> map = searchFacade.modularSearch(searchParam);
-        jsonView.setAttributesMap(map);
+//        SearchParam searchParam = new SearchParam();
+//        searchParam.setUserId(userId);
+//        searchParam.setCharacter(character);
+//        searchParam.setModel(model);
+//        searchParam.setPageNumber(pageNumber);
+//        searchParam.setPages(pages);
+//        Map<String, Object> map = searchFacade.modularSearch(searchParam);
+//        jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
 
@@ -56,12 +56,12 @@ public class SearchController {
                                     @RequestParam(name = "pages") Integer pages) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
-        SearchParam searchParam = new SearchParam();
-        searchParam.setUserId(userId);
-        searchParam.setPageNumber(pageNumber);
-        searchParam.setPages(pages);
-        Map<String, Object> map = searchFacade.searchAccountByNO(searchParam);
-        jsonView.setAttributesMap(map);
+//        SearchParam searchParam = new SearchParam();
+//        searchParam.setUserId(userId);
+//        searchParam.setPageNumber(pageNumber);
+//        searchParam.setPages(pages);
+//        Map<String, Object> map = searchFacade.searchAccountByNO(searchParam);
+//        jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
 
@@ -72,12 +72,12 @@ public class SearchController {
                                     @RequestParam(name = "pages") Integer pages) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
-        SearchParam searchParam = new SearchParam();
-        searchParam.setUserId(userId);
-        searchParam.setPageNumber(pageNumber);
-        searchParam.setPages(pages);
-        Map<String, Object> map = searchFacade.searchCirleByNo(searchParam);
-        jsonView.setAttributesMap(map);
+//        SearchParam searchParam = new SearchParam();
+//        searchParam.setUserId(userId);
+//        searchParam.setPageNumber(pageNumber);
+//        searchParam.setPages(pages);
+//        Map<String, Object> map = searchFacade.searchCirleByNo(searchParam);
+//        jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
 

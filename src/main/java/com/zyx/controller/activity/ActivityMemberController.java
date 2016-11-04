@@ -1,7 +1,7 @@
 package com.zyx.controller.activity;
 
-import com.zyx.param.activity.MemberInfoParm;
-import com.zyx.param.activity.QueryMemberParm;
+//import com.zyx.param.activity.MemberInfoParm;
+//import com.zyx.param.activity.QueryMemberParm;
 import com.zyx.rpc.account.AccountCommonFacade;
 import com.zyx.rpc.activity.ActivityMemberFacade;
 import com.zyx.utils.ActivityUtils;
@@ -50,17 +50,17 @@ public class ActivityMemberController {
         boolean token1 = accountCommonFacade.validateToken(token);
         if (!token1) return new ModelAndView(ActivityUtils.tokenFailure());
 
-        MemberInfoParm addMemberInfoParm = new MemberInfoParm();
-
-        addMemberInfoParm.setActivityId(activitiId);
-        addMemberInfoParm.setUserId(userId);
-        addMemberInfoParm.setUserNick(userNick);
-        addMemberInfoParm.setPhone(phone);
-        addMemberInfoParm.setMemberInfo(memberInfo);
-
-        Map<String, Object> map = activityMemberFacade.addActivityMember(addMemberInfoParm);
-
-        jsonView.setAttributesMap(map);
+//        MemberInfoParm addMemberInfoParm = new MemberInfoParm();
+//
+//        addMemberInfoParm.setActivityId(activitiId);
+//        addMemberInfoParm.setUserId(userId);
+//        addMemberInfoParm.setUserNick(userNick);
+//        addMemberInfoParm.setPhone(phone);
+//        addMemberInfoParm.setMemberInfo(memberInfo);
+//
+//        Map<String, Object> map = activityMemberFacade.addActivityMember(addMemberInfoParm);
+//
+//        jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
 
@@ -75,14 +75,14 @@ public class ActivityMemberController {
 
         boolean token1 = accountCommonFacade.validateToken(token);
         if (!token1) return new ModelAndView(ActivityUtils.tokenFailure());
-
-        MemberInfoParm memberInfoParm = new MemberInfoParm();
-        memberInfoParm.setActivityId(activitiId);
-        memberInfoParm.setUserId(userId);
-
-        Map<String, Object> map = activityMemberFacade.delActivityMember(memberInfoParm);
-
-        jsonView.setAttributesMap(map);
+//
+//        MemberInfoParm memberInfoParm = new MemberInfoParm();
+//        memberInfoParm.setActivityId(activitiId);
+//        memberInfoParm.setUserId(userId);
+//
+//        Map<String, Object> map = activityMemberFacade.delActivityMember(memberInfoParm);
+//
+//        jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
 
@@ -98,14 +98,14 @@ public class ActivityMemberController {
         boolean token1 = accountCommonFacade.validateToken(token);
         if (!token1) return new ModelAndView(ActivityUtils.tokenFailure());
 
-        QueryMemberParm queryMemberParm = new QueryMemberParm();
-
-        queryMemberParm.setActivityId(activitiId);
-        queryMemberParm.setUserId(userId);
-
-        Map<String, Object> map = activityMemberFacade.queryActivityMember(queryMemberParm);
-
-        jsonView.setAttributesMap(map);
+//        QueryMemberParm queryMemberParm = new QueryMemberParm();
+//
+//        queryMemberParm.setActivityId(activitiId);
+//        queryMemberParm.setUserId(userId);
+//
+//        Map<String, Object> map = activityMemberFacade.queryActivityMember(queryMemberParm);
+//
+//        jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
 

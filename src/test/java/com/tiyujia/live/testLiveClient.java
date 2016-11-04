@@ -13,7 +13,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import com.zyx.entity.live.LiveInfo;
+//import com.zyx.entity.live.LiveInfo;
 
 public class testLiveClient {
 

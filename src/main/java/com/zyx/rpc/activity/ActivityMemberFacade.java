@@ -1,8 +1,8 @@
 package com.zyx.rpc.activity;
 
 
-import com.zyx.param.activity.MemberInfoParm;
-import com.zyx.param.activity.QueryMemberParm;
+//import com.zyx.param.activity.MemberInfoParm;
+//import com.zyx.param.activity.QueryMemberParm;
 
 import java.util.Map;
 
@@ -22,7 +22,7 @@ public interface ActivityMemberFacade {
      * @param addMemberInfoParm
      * @return
      */
-    Map<String, Object> addActivityMember(MemberInfoParm addMemberInfoParm);
+//    Map<String, Object> addActivityMember(MemberInfoParm addMemberInfoParm);
 
     /**
      * 取消对应活动的报名
@@ -30,7 +30,7 @@ public interface ActivityMemberFacade {
      * @param memberInfoParm
      * @return
      */
-    Map<String, Object> delActivityMember(MemberInfoParm memberInfoParm);
+//    Map<String, Object> delActivityMember(MemberInfoParm memberInfoParm);
 
     /**
      * 查询报名信息添加
@@ -38,7 +38,7 @@ public interface ActivityMemberFacade {
      * @param queryMemberParm
      * @return
      */
-    Map<String, Object> queryActivityMember(QueryMemberParm queryMemberParm);
+//    Map<String, Object> queryActivityMember(QueryMemberParm queryMemberParm);
 
     /**
      * 发起者批量审核报名

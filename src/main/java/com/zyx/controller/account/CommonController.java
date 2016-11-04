@@ -84,7 +84,8 @@ public class CommonController {
     private Map<String, Object> doSendPhone(String phone, String type, String msg) {
         try {
             // 判断手机号码
-            return isMobileNum(phone) ? accountCommonFacade.sendPhoneCode(phone, type, msg) : MapUtils.buildErrorMap(AccountConstants.ACCOUNT_ERROR_CODE_50100, AccountConstants.ACCOUNT_ERROR_CODE_50100_MSG);
+//            return isMobileNum(phone) ? accountCommonFacade.sendPhoneCode(phone, type, msg) : MapUtils.buildErrorMap(AccountConstants.ACCOUNT_ERROR_CODE_50100, AccountConstants.ACCOUNT_ERROR_CODE_50100_MSG);
+      return null;
         } catch (Exception e) {
             e.printStackTrace();
             return Constants.MAP_500;

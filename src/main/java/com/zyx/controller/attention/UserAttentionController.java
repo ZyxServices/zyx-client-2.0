@@ -1,7 +1,7 @@
 package com.zyx.controller.attention;
 
 import com.zyx.constants.Constants;
-import com.zyx.param.attention.AttentionParam;
+//import com.zyx.param.attention.AttentionParam;
 import com.zyx.rpc.attention.UserAttentionFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -45,7 +45,7 @@ public class UserAttentionController {
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
             try {
-                jsonView.setAttributesMap(userAttentionFacade.attentionFromAToB(buildParam(token, fromId, toId)));
+//                jsonView.setAttributesMap(userAttentionFacade.attentionFromAToB(buildParam(token, fromId, toId)));
             } catch (Exception e) {
                 jsonView.setAttributesMap(Constants.MAP_500);
             }
@@ -66,7 +66,7 @@ public class UserAttentionController {
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
             try {
-                jsonView.setAttributesMap(userAttentionFacade.unAttentionFromAToB(buildParam(token, fromId, toId)));
+//                jsonView.setAttributesMap(userAttentionFacade.unAttentionFromAToB(buildParam(token, fromId, toId)));
             } catch (Exception e) {
                 jsonView.setAttributesMap(Constants.MAP_500);
             }
@@ -88,7 +88,7 @@ public class UserAttentionController {
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
             try {
-                jsonView.setAttributesMap(userAttentionFacade.checkAttentionFromAToB(buildParam(token, fromId, toId)));
+//                jsonView.setAttributesMap(userAttentionFacade.checkAttentionFromAToB(buildParam(token, fromId, toId)));
             } catch (Exception e) {
                 jsonView.setAttributesMap(Constants.MAP_500);
             }
@@ -98,10 +98,10 @@ public class UserAttentionController {
     }
 
 
-    private AttentionParam buildParam(String token, Integer fromId, Integer toId) {
-        AttentionParam param = new AttentionParam(fromId, toId);
-        param.setToken(token);
-        return param;
-    }
+//    private AttentionParam buildParam(String token, Integer fromId, Integer toId) {
+//        AttentionParam param = new AttentionParam(fromId, toId);
+//        param.setToken(token);
+//        return param;
+//    }
 
 }

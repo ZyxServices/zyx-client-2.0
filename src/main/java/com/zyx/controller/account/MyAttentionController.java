@@ -1,7 +1,7 @@
 package com.zyx.controller.account;
 
 import com.zyx.constants.Constants;
-import com.zyx.param.attention.AttentionParam;
+//import com.zyx.param.attention.AttentionParam;
 import com.zyx.rpc.attention.UserAttentionFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -74,7 +74,8 @@ public class MyAttentionController {
 
     private Map<String, Object> doMyGZList(String token, Integer accountId) {
         try {
-            return userAttentionFacade.myGZList(getAttentionParam(token, accountId, null));
+//            return userAttentionFacade.myGZList(getAttentionParam(token, accountId, null));
+            return null;
         } catch (Exception e) {
             return Constants.MAP_500;
         }
@@ -82,7 +83,8 @@ public class MyAttentionController {
 
     private Map<String, Object> doMyDKGZList(String token, Integer accountId) {
         try {
-            return userAttentionFacade.myDKGZList(getAttentionParam(token, accountId, null));
+//            return userAttentionFacade.myDKGZList(getAttentionParam(token, accountId, null));
+            return null;
         } catch (Exception e) {
             return Constants.MAP_500;
         }
@@ -90,19 +92,20 @@ public class MyAttentionController {
 
     private Map<String, Object> doMyFSList(String token, Integer accountId) {
         try {
-            return userAttentionFacade.myFSList(getAttentionParam(token, null, accountId));
+//            return userAttentionFacade.myFSList(getAttentionParam(token, null, accountId));
+            return null;
         } catch (Exception e) {
             return Constants.MAP_500;
         }
     }
 
-    private AttentionParam getAttentionParam(String token, Integer fromId, Integer toId) {
-        AttentionParam attentionParam = new AttentionParam();
-        attentionParam.setToken(token);
-        attentionParam.setFromId(fromId);
-        attentionParam.setToId(toId);
-        return attentionParam;
-    }
+//    private AttentionParam getAttentionParam(String token, Integer fromId, Integer toId) {
+//        AttentionParam attentionParam = new AttentionParam();
+//        attentionParam.setToken(token);
+//        attentionParam.setFromId(fromId);
+//        attentionParam.setToId(toId);
+//        return attentionParam;
+//    }
 
 
 }
