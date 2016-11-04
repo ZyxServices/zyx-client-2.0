@@ -1,7 +1,7 @@
 package com.zyx.controller.pg;
 
 import com.zyx.constants.Constants;
-import com.zyx.controller.common.UploadCommonController;
+//import com.zyx.controller.common.UploadCommonController;
 //import com.zyx.entity.pg.Circle;
 //import com.zyx.entity.pg.Concern;
 import com.zyx.rpc.pg.PgFacade;
