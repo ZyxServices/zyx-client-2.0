@@ -3,6 +3,7 @@ package com.zyx.controller.point;
 import com.zyx.constants.Constants;
 import com.zyx.param.point.UserPointParam;
 import com.zyx.rpc.point.UserPointFacade;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,17 +21,19 @@ import java.util.Map;
  * Created by wms on 2016/10/31.
  *
  * @author WeiMinSheng
- * @version V1.0
+ * @version V2.0
  *          Copyright (c)2016 tyj-版权所有
  * @since 2016/10/31
  */
 @RestController
+@RequestMapping("/v2/point")
+@Api(description = "积分系统API。1、获取用户积分。2、记录用户积分")
 public class UserPointController {
 
     @Resource
     private UserPointFacade userPointFacade;
 
-    @RequestMapping(value = "/v1/point", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "获取用户积分", notes = "获取用户积分")
     public ModelAndView queryUserPoint(@RequestParam(name = "token") String token, @RequestParam(name = "id") int userId, @RequestParam(name = "type") int pointType) {
         AbstractView jsonView = new MappingJackson2JsonView();
@@ -48,7 +51,7 @@ public class UserPointController {
         return new ModelAndView(jsonView);
     }
 
-    @RequestMapping(value = "/v1/point/insert", method = RequestMethod.POST)
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ApiOperation(value = "记录积分", notes = "记录积分")
     public ModelAndView recordPoint(@RequestParam(name = "token") String token, @RequestParam(name = "id") int userId, @RequestParam(name = "pointCount") int pointCount, @RequestParam(name = "detailType") int detailType, @RequestParam(name = "detailMsg") String detailMsg) {
         AbstractView jsonView = new MappingJackson2JsonView();
@@ -66,7 +69,7 @@ public class UserPointController {
         return new ModelAndView(jsonView);
     }
 
-    @RequestMapping(value = "/v1/point/insert2", method = RequestMethod.POST)
+    @RequestMapping(value = "/insert2", method = RequestMethod.POST)
     @ApiOperation(value = "记录积分", notes = "记录积分")
     public ModelAndView recordPoint2(@RequestParam(name = "token") String token, @RequestParam(name = "id") int userId, @RequestParam(name = "pointCount") int pointCount, @RequestParam(name = "detailType") int detailType, @RequestParam(name = "detailMsg") String detailMsg) {
         AbstractView jsonView = new MappingJackson2JsonView();
@@ -75,8 +78,8 @@ public class UserPointController {
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
             for (int i = 0; i < 20; i++) {
-                PointPool.getPointPool().execute(new RecordPointThread(userPointFacade, new PointParamContext(new PointParamAStrategy()).build(userId)));
-                PointPool.getPointPool().execute(new RecordPointThread(userPointFacade, new PointParamContext(new PointParamAStrategy()).build(userId, detailMsg)));
+                PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new PointParamAStrategy()).build(userId)));
+                PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new PointParamAStrategy()).build(userId, detailMsg)));
             }
         }
         Long end = System.currentTimeMillis();
@@ -85,13 +88,13 @@ public class UserPointController {
     }
 }
 
-class RecordPointThread implements Runnable {
+class RecordPointRunnable implements Runnable {
 
     private UserPointFacade userPointFacade;
 
     private UserPointParam param;
 
-    public RecordPointThread(UserPointFacade userPointFacade, UserPointParam param) {
+    RecordPointRunnable(UserPointFacade userPointFacade, UserPointParam param) {
         this.userPointFacade = userPointFacade;
         this.param = param;
     }
