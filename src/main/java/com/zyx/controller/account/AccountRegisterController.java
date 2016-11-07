@@ -29,7 +29,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/v2/account")
 @Api(description = "用户注册接口API。1、验证手机验证码。2、注册")
-public class RegisterAccountController {
+public class AccountRegisterController {
 
     @Autowired
     private AccountRegisterFacade accountRegisterFacade;
@@ -104,7 +104,7 @@ public class RegisterAccountController {
     @ApiOperation(value = "用户注册", notes = "用户注册，头像可不设置")
     public ModelAndView register2(@RequestParam(name = "phone") String phone,
                                   @RequestParam(name = "pwd") String password,
-                                  @ApiParam(name = "nickname", value = "昵称")
+                                  @ApiParam(name = "nickname", value = "昵称", required = true)
                                   @RequestParam(name = "nickname") String nickname,
                                   @ApiParam(name = "avatar", value = "头像地址，需要先使用文件上传接口上传获取地址")
                                   @RequestParam(name = "avatar", required = false) String avatar) {
