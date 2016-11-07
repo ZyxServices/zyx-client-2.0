@@ -28,9 +28,8 @@
     <dubbo:reference interface="com.zyx.rpc.pg.PgFacade" id="pgFacade" check="false" timeout="10000"/>
 
     <!-- 我的模块服务接口 -->
-    <dubbo:reference interface="com.zyx.rpc.account.AccountCommonFacade" id="accountCommonFacade" check="false"/>
     <dubbo:reference interface="com.zyx.rpc.account.AccountInfoFacade" id="accountInfoFacade" check="false"/>
-    <dubbo:reference interface="com.zyx.rpc.account.RegisterFacade" id="registerFacade" check="false"/>
+
     <dubbo:reference interface="com.zyx.rpc.account.UserLoginFacade" id="userLoginFacade" check="false"
                      timeout="10000"/>
     <dubbo:reference interface="com.zyx.rpc.account.MarkFacade" id="markFacade" check="false" timeout="10000"/>
@@ -54,7 +53,13 @@
     <!-- 用户首推 -->
     <dubbo:reference interface="com.zyx.rpc.common.TokenFacade" id="tokenFacade" check="false"/>
 
-    <!-- 积分 -->
+    <!-- 账号系统公共接口 -->
+    <dubbo:reference interface="com.zyx.rpc.account.AccountCommonFacade" id="accountCommonFacade" check="false"/>
+
+    <!-- 账号系统接口 -->
+    <dubbo:reference interface="com.zyx.rpc.account.AccountRegisterFacade" id="accountRegisterFacade" check="false"/>
+
+    <!-- 积分系统接口 -->
     <dubbo:reference interface="com.zyx.rpc.point.UserPointFacade" id="userPointFacade" check="false"/>
 
 </beans>
