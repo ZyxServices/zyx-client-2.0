@@ -17,6 +17,40 @@
     <!-- 服务线程池大小 -->
     <dubbo:protocol threads="100"/>
 
+    <!-- 活动服务接口 -->
+    <dubbo:reference interface="com.zyx.rpc.activity.ActivityFacade" id="activityFacade" check="false" timeout="10000"/>
+    <dubbo:reference interface="com.zyx.rpc.activity.ActivityMemberFacade" id="activityMemberFacade" check="false"/>
+    <dubbo:reference interface="com.zyx.rpc.activity.ActivityTopicFacade" id="activityTopicFacade" check="false"/>
+    <!-- 直播服务接口 -->
+    <dubbo:reference interface="com.zyx.rpc.live.LiveInfoFacade" id="liveInfoFacade" check="false"/>
+    <dubbo:reference interface="com.zyx.rpc.live.BarrageFacade" id="barrageFacade" check="false"/>
+    <!--操场服务接口 -->
+    <dubbo:reference interface="com.zyx.rpc.pg.PgFacade" id="pgFacade" check="false" timeout="10000"/>
+
+    <!-- 我的模块服务接口 -->
+    <dubbo:reference interface="com.zyx.rpc.account.AccountCommonFacade" id="accountCommonFacade" check="false"/>
+    <dubbo:reference interface="com.zyx.rpc.account.AccountInfoFacade" id="accountInfoFacade" check="false"/>
+    <dubbo:reference interface="com.zyx.rpc.account.RegisterFacade" id="registerFacade" check="false"/>
+    <dubbo:reference interface="com.zyx.rpc.account.UserLoginFacade" id="userLoginFacade" check="false"
+                     timeout="10000"/>
+    <dubbo:reference interface="com.zyx.rpc.account.MarkFacade" id="markFacade" check="false" timeout="10000"/>
+
+    <dubbo:reference interface="com.zyx.rpc.account.AccountAddressFacade" id="accountAddressFacade" check="false"/>
+
+    <dubbo:reference interface="com.zyx.rpc.account.MyCircleFacade" id="myCircleFacade" check="false" timeout="10000"/>
+    <dubbo:reference interface="com.zyx.rpc.account.MyConcernFacade" id="myConcernFacade" check="false"
+                     timeout="10000"/>
+    <dubbo:reference interface="com.zyx.rpc.account.MyCollectionFacade" id="myCollectionFacade" check="false"
+                     timeout="10000"/>
+
+    <!--系统服务接口-->
+    <dubbo:reference interface="com.zyx.rpc.system.SearchFacade" id="searchFacade" check="false" timeout="10000"/>
+
+    <!-- 关注、拉黑服务接口 -->
+    <dubbo:reference interface="com.zyx.rpc.attention.UserAttentionFacade" id="userAttentionFacade" check="false"/>
+    <!-- 收藏服务接口 -->
+    <dubbo:reference interface="com.zyx.rpc.collection.CollectionFacade" id="collectionFacade" check="false"/>
+
     <!-- 用户首推 -->
     <dubbo:reference interface="com.zyx.rpc.common.TokenFacade" id="tokenFacade" check="false"/>
 
