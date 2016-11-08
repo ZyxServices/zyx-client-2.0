@@ -1,7 +1,7 @@
 package com.zyx.controller.account;
 
 import com.zyx.constants.account.AccountConstants;
-import com.zyx.param.account.UserLoginParam;
+import com.zyx.param.account.AccountLoginParam;
 import com.zyx.rpc.account.AccountRegisterFacade;
 import com.zyx.utils.FileUploadUtils;
 import com.zyx.utils.ImagesVerifyUtils;
@@ -45,7 +45,7 @@ public class AccountRegisterController {
             jsonView.setAttributesMap(AccountConstants.MAP_PARAM_MISS);
         } else {
             try {
-                UserLoginParam userLoginParam = new UserLoginParam();
+                AccountLoginParam userLoginParam = new AccountLoginParam();
                 userLoginParam.setPhone(phone);
                 userLoginParam.setCode(code);
                 jsonView.setAttributesMap(accountRegisterFacade.validatePhoneCode(userLoginParam));
@@ -76,7 +76,7 @@ public class AccountRegisterController {
                     if (map != null) {
                         jsonView.setAttributesMap(map);
                     } else {
-                        UserLoginParam userLoginParam = new UserLoginParam();
+                        AccountLoginParam userLoginParam = new AccountLoginParam();
                         userLoginParam.setPhone(phone);
                         userLoginParam.setPassword(password);
 //                    userLoginParam.setCode(code);
@@ -85,7 +85,7 @@ public class AccountRegisterController {
                         jsonView.setAttributesMap(accountRegisterFacade.registerAccount(userLoginParam));
                     }
                 } else {
-                    UserLoginParam userLoginParam = new UserLoginParam();
+                    AccountLoginParam userLoginParam = new AccountLoginParam();
                     userLoginParam.setPhone(phone);
                     userLoginParam.setPassword(password);
 //                userLoginParam.setCode(code);
@@ -114,7 +114,7 @@ public class AccountRegisterController {
             jsonView.setAttributesMap(AccountConstants.MAP_PARAM_MISS);
         } else {
             try {
-                UserLoginParam userLoginParam = new UserLoginParam();
+                AccountLoginParam userLoginParam = new AccountLoginParam();
                 userLoginParam.setPhone(phone);
                 userLoginParam.setPassword(password);
                 userLoginParam.setNickname(nickname);

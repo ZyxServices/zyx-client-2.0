@@ -1,7 +1,7 @@
 package com.zyx.rpc.account;
 
 
-import com.zyx.param.account.UserLoginParam;
+import com.zyx.param.account.AccountLoginParam;
 
 import java.util.Map;
 
@@ -18,20 +18,20 @@ public interface AccountRegisterFacade {
     /**
      * 验证手机验证码
      */
-    Map<String, Object> validatePhoneCode(UserLoginParam userLoginParam);
+    Map<String, Object> validatePhoneCode(AccountLoginParam userLoginParam);
 
     /**
      * 注册账号
      */
-    Map<String, Object> registerAccount(UserLoginParam userLoginParam);
+    Map<String, Object> registerAccount(AccountLoginParam userLoginParam);
 
     /**
      * 更新密码
      */
-    Map<String, Object> renewpwd(UserLoginParam userLoginParam);
+    Map<String, Object> renewpwd(AccountLoginParam userLoginParam);
 
     /**
      * 忘记密码
      */
-    Map<String, Object> retrievepwd(UserLoginParam userLoginParam);
+    Map<String, Object> retrievepwd(AccountLoginParam userLoginParam);
 }

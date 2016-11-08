@@ -1,7 +1,7 @@
 //package com.tiyujia.controller;
 //
 //import com.constants.AuthConstants;
-//import com.zyx.rpc.account.UserLoginFacade;
+//import com.zyx.rpc.account.AccountLoginFacade;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.util.StringUtils;
 //import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +27,7 @@
 //public class LoginController {
 //
 //    @Autowired
-//    private UserLoginFacade userLoginFacade;
+//    private AccountLoginFacade userLoginFacade;
 //
 //    @RequestMapping("/login")
 //    public ModelAndView login(@RequestParam(name = "phone", required = true) String phone, @RequestParam(name = "pwd", required = true) String password) {
