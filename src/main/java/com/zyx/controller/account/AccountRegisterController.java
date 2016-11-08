@@ -28,7 +28,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/v2/account")
-@Api(description = "用户注册接口API。1、验证手机验证码。2、注册")
+@Api(description = "注册接口。1、验证手机验证码。2、注册")
 public class AccountRegisterController {
 
     @Autowired

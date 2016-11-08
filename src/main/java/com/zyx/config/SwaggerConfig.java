@@ -89,7 +89,18 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.zyx.controller.account"))
                 .paths(PathSelectors.any()) // 对所有路径进行监控
                 .build()
-                .apiInfo(testApiInfo());
+                .apiInfo(accountApiInfo());
+    }
+
+    @Bean
+    public Docket userApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("user")
+                .select()  // 选择那些路径和api会生成document
+                .apis(RequestHandlerSelectors.basePackage("com.zyx.controller.user"))
+                .paths(PathSelectors.any()) // 对所有路径进行监控
+                .build()
+                .apiInfo(userApiInfo());
     }
 
     @Bean
@@ -176,6 +187,32 @@ public class SwaggerConfig {
 
     private ApiInfo testApiInfo() {
         ApiInfo apiInfo = new ApiInfo("用户接口API",//大标题
+                "1、用户收货地址服务API。2、用户公共接口API。3、用户登录相关API。4、用户签到接口API。5、用户注册接口API。6、用户密码修改API。7、用户信息相关接口。",//小标题
+                "1.0",//版本
+                "NO terms of service",
+                new Contact("魏民升", "http://112.74.112.143:8081/ui/Delta/index.html", "449598723@qq.com"),// 作者
+                "体育家",//链接显示文字
+                "http://112.74.112.143:8081/ui/Delta/index.html"//网站链接
+        );
+
+        return apiInfo;
+    }
+
+    private ApiInfo accountApiInfo() {
+        ApiInfo apiInfo = new ApiInfo("账号接口",//大标题
+                "1、登录。2、注册。3、密码。4、公共API。",//小标题
+                "2.0",//版本
+                "NO terms of service",
+                new Contact("魏民升", "http://112.74.112.143:8081/ui/Delta/index.html", "449598723@qq.com"),// 作者
+                "体育家",//链接显示文字
+                "http://112.74.112.143:8081/ui/Delta/index.html"//网站链接
+        );
+
+        return apiInfo;
+    }
+
+    private ApiInfo userApiInfo() {
+        ApiInfo apiInfo = new ApiInfo("用户接口",//大标题
                 "1、用户收货地址服务API。2、用户公共接口API。3、用户登录相关API。4、用户签到接口API。5、用户注册接口API。6、用户密码修改API。7、用户信息相关接口。",//小标题
                 "1.0",//版本
                 "NO terms of service",

@@ -1,7 +1,7 @@
 package com.zyx.controller.attention;
 
 import com.zyx.constants.Constants;
-//import com.zyx.param.attention.AttentionParam;
+import com.zyx.param.attention.AttentionParam;
 import com.zyx.rpc.attention.UserAttentionFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,15 +17,15 @@ import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 /**
- * Created by wms on 2016/8/16.
+ * Created by wms on 2016/11/8.
  *
  * @author WeiMinSheng
- * @version V1.0
+ * @version V2.0
  *          Copyright (c)2016 tyj-版权所有
- * @title UserAttentionController.java
+ * @since 2016/11/8
  */
 @RestController
-@RequestMapping("/v1/attention")
+@RequestMapping("/v2/attention")
 @Api(description = "用户关注相关接口。1、用户A关注用户B。")
 public class UserAttentionController {
 
@@ -45,8 +45,9 @@ public class UserAttentionController {
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
             try {
-//                jsonView.setAttributesMap(userAttentionFacade.attentionFromAToB(buildParam(token, fromId, toId)));
+                jsonView.setAttributesMap(userAttentionFacade.attentionFromAToB(buildParam(token, fromId, toId)));
             } catch (Exception e) {
+                e.printStackTrace();
                 jsonView.setAttributesMap(Constants.MAP_500);
             }
         }
@@ -66,8 +67,9 @@ public class UserAttentionController {
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
             try {
-//                jsonView.setAttributesMap(userAttentionFacade.unAttentionFromAToB(buildParam(token, fromId, toId)));
+                jsonView.setAttributesMap(userAttentionFacade.unAttentionFromAToB(buildParam(token, fromId, toId)));
             } catch (Exception e) {
+                e.printStackTrace();
                 jsonView.setAttributesMap(Constants.MAP_500);
             }
         }
@@ -78,18 +80,19 @@ public class UserAttentionController {
     @RequestMapping(value = "/user_check", method = {RequestMethod.GET})
     @ApiOperation(value = "检查用户A是否关注用户B", notes = "检查用户A是否关注用户B")
     public ModelAndView attention_user_check(@RequestParam(name = "token") String token,
-                                         @ApiParam(required = true, name = "fromId", value = "检查操作发起者ID")
-                                         @RequestParam(name = "fromId") Integer fromId,
-                                         @ApiParam(required = true, name = "toId", value = "被检查者ID")
-                                         @RequestParam(name = "toId") Integer toId) {
+                                             @ApiParam(required = true, name = "fromId", value = "检查操作发起者ID")
+                                             @RequestParam(name = "fromId") Integer fromId,
+                                             @ApiParam(required = true, name = "toId", value = "被检查者ID")
+                                             @RequestParam(name = "toId") Integer toId) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
         if (StringUtils.isEmpty(token) || StringUtils.isEmpty(fromId) || StringUtils.isEmpty(toId)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
             try {
-//                jsonView.setAttributesMap(userAttentionFacade.checkAttentionFromAToB(buildParam(token, fromId, toId)));
+                jsonView.setAttributesMap(userAttentionFacade.checkAttentionFromAToB(buildParam(token, fromId, toId)));
             } catch (Exception e) {
+                e.printStackTrace();
                 jsonView.setAttributesMap(Constants.MAP_500);
             }
         }
@@ -98,10 +101,10 @@ public class UserAttentionController {
     }
 
 
-//    private AttentionParam buildParam(String token, Integer fromId, Integer toId) {
-//        AttentionParam param = new AttentionParam(fromId, toId);
-//        param.setToken(token);
-//        return param;
-//    }
+    private AttentionParam buildParam(String token, Integer fromId, Integer toId) {
+        AttentionParam param = new AttentionParam(fromId, toId);
+        param.setToken(token);
+        return param;
+    }
 
 }

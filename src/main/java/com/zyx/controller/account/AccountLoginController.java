@@ -25,7 +25,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
  */
 @RestController
 @RequestMapping("/v2/account")
-@Api(description = "登录相关API。1、手机和密码登录。2、退出。3、刷新token")
+@Api(description = "登录接口。【1】手机和密码登录。【2】退出。【3】刷新token")
 public class AccountLoginController {
     @Autowired
     private AccountLoginFacade accountLoginFacade;

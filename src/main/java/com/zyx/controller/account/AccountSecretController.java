@@ -25,7 +25,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
  */
 @RestController
 @RequestMapping("/v2/account")
-@Api(description = "用户密码修改API。1、修改密码。2、忘记密码。")
+@Api(description = "密码接口。1、修改密码。2、忘记密码。")
 public class AccountSecretController {
 
     @Autowired
