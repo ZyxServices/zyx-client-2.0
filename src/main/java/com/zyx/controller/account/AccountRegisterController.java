@@ -34,6 +34,27 @@ public class AccountRegisterController {
     @Autowired
     private AccountRegisterFacade accountRegisterFacade;
 
+    @RequestMapping(value = "/validate/phone", method = RequestMethod.POST)
+    @ApiOperation(value = "验证手机号码", notes = "验证手机号是否已经注册")
+    public ModelAndView validatePhone(@RequestParam(name = "phone") String phone) {
+        AbstractView jsonView = new MappingJackson2JsonView();
+
+        if (StringUtils.isEmpty(phone)) {
+            jsonView.setAttributesMap(AccountConstants.MAP_PARAM_MISS);
+        } else {
+            try {
+                AccountLoginParam accountLoginParam = new AccountLoginParam();
+                accountLoginParam.setPhone(phone);
+                jsonView.setAttributesMap(accountRegisterFacade.validatePhone(accountLoginParam));
+            } catch (Exception e) {
+                e.printStackTrace();
+                jsonView.setAttributesMap(AccountConstants.MAP_500);
+            }
+        }
+
+        return new ModelAndView(jsonView);
+    }
+
     @RequestMapping(value = "/validate/code", method = RequestMethod.POST)
     @ApiOperation(value = "验证手机验证码", notes = "验证手机号和验证码是否匹配")
     public ModelAndView validatePhoneCode(@RequestParam(name = "phone") String phone,
@@ -45,10 +66,10 @@ public class AccountRegisterController {
             jsonView.setAttributesMap(AccountConstants.MAP_PARAM_MISS);
         } else {
             try {
-                AccountLoginParam userLoginParam = new AccountLoginParam();
-                userLoginParam.setPhone(phone);
-                userLoginParam.setCode(code);
-                jsonView.setAttributesMap(accountRegisterFacade.validatePhoneCode(userLoginParam));
+                AccountLoginParam accountLoginParam = new AccountLoginParam();
+                accountLoginParam.setPhone(phone);
+                accountLoginParam.setCode(code);
+                jsonView.setAttributesMap(accountRegisterFacade.validatePhoneCode(accountLoginParam));
             } catch (Exception e) {
                 jsonView.setAttributesMap(AccountConstants.MAP_500);
             }
@@ -76,21 +97,21 @@ public class AccountRegisterController {
                     if (map != null) {
                         jsonView.setAttributesMap(map);
                     } else {
-                        AccountLoginParam userLoginParam = new AccountLoginParam();
-                        userLoginParam.setPhone(phone);
-                        userLoginParam.setPassword(password);
-//                    userLoginParam.setCode(code);
-                        userLoginParam.setAvatar(avatarId);
-                        userLoginParam.setNickname(nickname);
-                        jsonView.setAttributesMap(accountRegisterFacade.registerAccount(userLoginParam));
+                        AccountLoginParam accountLoginParam = new AccountLoginParam();
+                        accountLoginParam.setPhone(phone);
+                        accountLoginParam.setPassword(password);
+//                    accountLoginParam.setCode(code);
+                        accountLoginParam.setAvatar(avatarId);
+                        accountLoginParam.setNickname(nickname);
+                        jsonView.setAttributesMap(accountRegisterFacade.registerAccount(accountLoginParam));
                     }
                 } else {
-                    AccountLoginParam userLoginParam = new AccountLoginParam();
-                    userLoginParam.setPhone(phone);
-                    userLoginParam.setPassword(password);
-//                userLoginParam.setCode(code);
-                    userLoginParam.setNickname(nickname);
-                    jsonView.setAttributesMap(accountRegisterFacade.registerAccount(userLoginParam));
+                    AccountLoginParam accountLoginParam = new AccountLoginParam();
+                    accountLoginParam.setPhone(phone);
+                    accountLoginParam.setPassword(password);
+//                accountLoginParam.setCode(code);
+                    accountLoginParam.setNickname(nickname);
+                    jsonView.setAttributesMap(accountRegisterFacade.registerAccount(accountLoginParam));
                 }
             } catch (Exception e) {
                 jsonView.setAttributesMap(AccountConstants.MAP_500);
@@ -114,12 +135,12 @@ public class AccountRegisterController {
             jsonView.setAttributesMap(AccountConstants.MAP_PARAM_MISS);
         } else {
             try {
-                AccountLoginParam userLoginParam = new AccountLoginParam();
-                userLoginParam.setPhone(phone);
-                userLoginParam.setPassword(password);
-                userLoginParam.setNickname(nickname);
-                userLoginParam.setAvatar(avatar);
-                jsonView.setAttributesMap(accountRegisterFacade.registerAccount(userLoginParam));
+                AccountLoginParam accountLoginParam = new AccountLoginParam();
+                accountLoginParam.setPhone(phone);
+                accountLoginParam.setPassword(password);
+                accountLoginParam.setNickname(nickname);
+                accountLoginParam.setAvatar(avatar);
+                jsonView.setAttributesMap(accountRegisterFacade.registerAccount(accountLoginParam));
             } catch (Exception e) {
                 jsonView.setAttributesMap(AccountConstants.MAP_500);
             }
@@ -127,5 +148,4 @@ public class AccountRegisterController {
 
         return new ModelAndView(jsonView);
     }
-
 }
