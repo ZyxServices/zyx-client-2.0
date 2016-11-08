@@ -56,6 +56,7 @@
 
     <!-- 账号系统接口 -->
     <dubbo:reference interface="com.zyx.rpc.account.AccountRegisterFacade" id="accountRegisterFacade" check="false"/>
+    <dubbo:reference interface="com.zyx.rpc.account.AccountSecretFacade" id="accountSecretFacade" check="false"/>
     <dubbo:reference interface="com.zyx.rpc.account.AccountLoginFacade" id="accountLoginFacade" check="false"/>
 
     <!-- 积分系统接口 -->
