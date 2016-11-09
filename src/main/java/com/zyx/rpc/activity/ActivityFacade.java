@@ -1,6 +1,7 @@
 package com.zyx.rpc.activity;
 
 import com.zyx.param.activity.ActivityParam;
+import com.zyx.param.activity.MyActivityListParam;
 import com.zyx.param.activity.QueryActivityParam;
 
 import java.util.Map;
@@ -15,7 +16,8 @@ import java.util.Map;
  */
 public interface ActivityFacade {
     /**
-     * 添加活动
+     * 发布活动
+     *
      * @param activityParam
      * @return
      */
@@ -27,4 +29,18 @@ public interface ActivityFacade {
      * @return
      */
     Map<String, Object> queryActivity(QueryActivityParam queryParam);
+
+    /**
+     * 通过用户ID 查询活动
+     * @param myActivityListParam
+     * @return
+     */
+    Map<String, Object> myActivityList(MyActivityListParam myActivityListParam);
+
+    /**
+     * 通过ID查询活动详细信息
+     * @param userId
+     * @return
+     */
+    Map<String, Object> activityById(Integer userId);
 }
