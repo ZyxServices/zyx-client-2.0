@@ -19,12 +19,14 @@
 
     <!-- 活动功能 -->
     <dubbo:reference interface="com.zyx.rpc.activity.ActivityFacade" id="activityFacade" check="false"/>
+    <!-- 活动报名功能 -->
+    <dubbo:reference interface="com.zyx.rpc.activity.ActivityMemberFacade" id="activityMemberFacade" check="false"/>
 
     <!-- 直播服务接口 -->
     <dubbo:reference interface="com.zyx.rpc.live.LiveInfoFacade" id="liveInfoFacade" check="false"/>
     <dubbo:reference interface="com.zyx.rpc.live.BarrageFacade" id="barrageFacade" check="false"/>
     <!--操场服务接口 -->
-    <dubbo:reference interface="com.zyx.rpc.pg.PgFacade" id="pgFacade" check="false" timeout="10000"/>
+    <dubbo:reference interface="com.zyx.rpc.zoom.ZoomFacade" id="zoomFacade" check="false" timeout="10000"/>
 
     <!-- 我的模块服务接口 -->
     <dubbo:reference interface="com.zyx.rpc.user.MyAttentionFacade" id="myAttentionFacade" check="false"/>
