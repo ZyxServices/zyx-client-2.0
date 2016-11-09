@@ -1,6 +1,6 @@
 package com.zyx.rpc.user;
 
-//import com.zyx.param.attention.AttentionParam;
+import com.zyx.param.attention.AttentionParam;
 
 import java.util.Map;
 
@@ -13,18 +13,18 @@ import java.util.Map;
  * @since 2016/11/8
  */
 public interface MyAttentionFacade {
-//    /**
-//     * 我的粉丝列表
-//     */
-//    Map<String, Object> myFSList(AttentionParam attentionParam);
-//
-//    /**
-//     * 我的关注列表
-//     */
-//    Map<String, Object> myGZList(AttentionParam attentionParam);
-//
-//    /**
-//     * 我的关注大咖列表
-//     */
-//    Map<String, Object> myDKGZList(AttentionParam attentionParam);
+    /**
+     * 我的粉丝列表
+     */
+    Map<String, Object> myFSList(AttentionParam attentionParam);
+
+    /**
+     * 我的关注列表
+     */
+    Map<String, Object> myGZList(AttentionParam attentionParam);
+
+    /**
+     * 我的关注大咖列表
+     */
+    Map<String, Object> myDKGZList(AttentionParam attentionParam);
 }
