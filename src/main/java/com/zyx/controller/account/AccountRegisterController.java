@@ -1,7 +1,7 @@
 package com.zyx.controller.account;
 
 import com.zyx.constants.account.AccountConstants;
-//import com.zyx.param.account.AccountLoginParam;
+import com.zyx.param.account.AccountLoginParam;
 import com.zyx.rpc.account.AccountRegisterFacade;
 import com.zyx.utils.FileUploadUtils;
 import com.zyx.utils.ImagesVerifyUtils;
