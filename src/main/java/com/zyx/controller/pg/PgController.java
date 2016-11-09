@@ -27,7 +27,6 @@ import java.util.Objects;
  * @package com.controller
  * Create by XiaoWei on 2016/6/14
  */
-@RestController
 public class PgController {
     @Resource
     private PgFacade pgFacade;
