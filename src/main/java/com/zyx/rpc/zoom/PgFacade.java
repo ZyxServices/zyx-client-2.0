@@ -1,13 +1,12 @@
-package com.zyx.rpc.pg;
+package com.zyx.rpc.zoom;
 
 
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author XiaoWei
  * @version V 1.0
- * @package com.dubborpc.pg
+ * @package com.dubborpc.zoom
  * Create by XiaoWei on 2016/6/14
  */
 public interface PgFacade {

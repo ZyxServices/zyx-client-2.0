@@ -1,10 +1,9 @@
 package com.zyx.controller.pg;
 
-import com.zyx.constants.Constants;
 //import com.zyx.controller.common.UploadCommonController;
-//import com.zyx.entity.pg.Circle;
-//import com.zyx.entity.pg.Concern;
-import com.zyx.rpc.pg.PgFacade;
+//import com.zyx.entity.zoom.Circle;
+//import com.zyx.entity.zoom.Concern;
+import com.zyx.rpc.zoom.PgFacade;
 import com.zyx.utils.FileUploadUtils;
 import com.zyx.utils.ImagesVerifyUtils;
 import io.swagger.annotations.ApiOperation;
@@ -16,9 +15,7 @@ import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+        import java.util.Map;
 import java.util.Objects;
 
 /**

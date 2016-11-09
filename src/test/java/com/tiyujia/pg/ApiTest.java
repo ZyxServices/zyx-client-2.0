@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * @author XiaoWei
  * @version V 1.0
- * @package com.tiyujia.pg
+ * @package com.tiyujia.zoom
  * Create by XiaoWei on 2016/6/17
  */
 public class ApiTest {

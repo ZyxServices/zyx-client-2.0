@@ -24,7 +24,7 @@
     <dubbo:reference interface="com.zyx.rpc.live.LiveInfoFacade" id="liveInfoFacade" check="false"/>
     <dubbo:reference interface="com.zyx.rpc.live.BarrageFacade" id="barrageFacade" check="false"/>
     <!--操场服务接口 -->
-    <dubbo:reference interface="com.zyx.rpc.pg.ZoomFacade" id="zoomFacade" check="false" timeout="10000"/>
+    <dubbo:reference interface="com.zyx.rpc.zoom.ZoomFacade" id="zoomFacade" check="false" timeout="10000"/>
 
     <!-- 我的模块服务接口 -->
     <dubbo:reference interface="com.zyx.rpc.account.AccountInfoFacade" id="accountInfoFacade" check="false"/>
