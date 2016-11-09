@@ -1,4 +1,4 @@
-package com.zyx.controller;
+package com.zyx.controller.account;
 
 import com.zyx.constants.Constants;
 import com.zyx.param.account.AccountInfoParam;

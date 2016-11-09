@@ -1,8 +1,8 @@
 package com.zyx.controller.user;
 
 import com.zyx.constants.Constants;
-import com.zyx.param.account.UserAddressParam;
-import com.zyx.rpc.account.AccountAddressFacade;
+import com.zyx.param.user.UserAddressParam;
+import com.zyx.rpc.user.UserAddressFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -28,10 +28,10 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/v1/account/receiptAddress")
 @Api(description = "用户收货地址服务API。1、新增收货地址。2、编辑收货地址。3、获取收货地址。4、删除收货地址。5、设置默认收货地址。6、获取用户收货地址列表")
-public class AddressController {
+public class UserAddressController {
 
     @Autowired
-    private AccountAddressFacade accountAddressFacade;
+    private UserAddressFacade accountAddressFacade;
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ApiOperation(value = "新增收货地址", notes = "新增收货地址。需要token验证。")

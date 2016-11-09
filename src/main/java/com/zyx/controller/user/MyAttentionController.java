@@ -1,8 +1,7 @@
 package com.zyx.controller.user;
 
-import com.zyx.constants.Constants;
+import com.zyx.constants.user.UserConstants;
 import com.zyx.param.attention.AttentionParam;
-import com.zyx.rpc.attention.UserAttentionFacade;
 import com.zyx.rpc.user.MyAttentionFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,7 +27,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/v2/my/attention")
-@Api(description = "我的关注/粉丝相关接口。1、查询我的关注列表。2、查询我的粉丝列表。")
+@Api(description = "我的关注/粉丝接口。查询我的关注列表。2、查询我的粉丝列表。")
 public class MyAttentionController {
 
     @Autowired
@@ -39,8 +38,8 @@ public class MyAttentionController {
     public ModelAndView myGZList(@RequestParam String token, @RequestParam Integer accountId) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
-        if (StringUtils.isEmpty(token) || StringUtils.isEmpty(accountId)) {// 缺少参数
-            jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
+        if (StringUtils.isEmpty(token)) {// 缺少参数
+            jsonView.setAttributesMap(UserConstants.MAP_PARAM_MISS);
         } else {
             jsonView.setAttributesMap(doMyGZList(token, accountId));
         }
@@ -52,8 +51,8 @@ public class MyAttentionController {
     public ModelAndView myDKGZList(@RequestParam String token, @RequestParam Integer accountId) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
-        if (StringUtils.isEmpty(token) || StringUtils.isEmpty(accountId)) {// 缺少参数
-            jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
+        if (StringUtils.isEmpty(token)) {// 缺少参数
+            jsonView.setAttributesMap(UserConstants.MAP_PARAM_MISS);
         } else {
             jsonView.setAttributesMap(doMyDKGZList(token, accountId));
         }
@@ -65,8 +64,8 @@ public class MyAttentionController {
     public ModelAndView myFSList(@RequestParam String token, @RequestParam Integer accountId) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
-        if (StringUtils.isEmpty(token) || StringUtils.isEmpty(accountId)) {// 缺少参数
-            jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
+        if (StringUtils.isEmpty(token)) {// 缺少参数
+            jsonView.setAttributesMap(UserConstants.MAP_PARAM_MISS);
         } else {
             jsonView.setAttributesMap(doMyFSList(token, accountId));
         }
@@ -79,7 +78,7 @@ public class MyAttentionController {
             return myAttentionFacade.myGZList(getAttentionParam(token, accountId, null));
         } catch (Exception e) {
             e.printStackTrace();
-            return Constants.MAP_500;
+            return UserConstants.MAP_500;
         }
     }
 
@@ -88,7 +87,7 @@ public class MyAttentionController {
             return myAttentionFacade.myDKGZList(getAttentionParam(token, accountId, null));
         } catch (Exception e) {
             e.printStackTrace();
-            return Constants.MAP_500;
+            return UserConstants.MAP_500;
         }
     }
 
@@ -97,7 +96,7 @@ public class MyAttentionController {
             return myAttentionFacade.myFSList(getAttentionParam(token, null, accountId));
         } catch (Exception e) {
             e.printStackTrace();
-            return Constants.MAP_500;
+            return UserConstants.MAP_500;
         }
     }
 
