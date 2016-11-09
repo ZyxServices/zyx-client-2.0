@@ -1,6 +1,5 @@
 package com.zyx.controller.account;
 
-import com.zyx.constants.Constants;
 import com.zyx.constants.account.AccountConstants;
 import com.zyx.rpc.account.AccountCommonFacade;
 import com.zyx.utils.MapUtils;
@@ -24,15 +23,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by wms on 2016/6/14.
+ * Created by wms on 2016/11/7.
  *
  * @author WeiMinSheng
- * @version V1.0
+ * @version V2.0
  *          Copyright (c)2016 tyj-版权所有
+ * @since 2016/11/7
  */
 @RestController
-@RequestMapping("/v1")
-@Api(description = "用户公共接口API。1、同步服务器时间戳。2、发送验证码")
+@RequestMapping("/v2")
+@Api(description = "公共接口。1、同步服务器时间戳。2、发送验证码")
 public class CommonController {
 
     @Autowired
@@ -42,17 +42,17 @@ public class CommonController {
     @ApiOperation(value = "同步服务器时间戳", notes = "同步服务器时间戳，返回两种类型的结果1、1466648250174。2、20160623101730")
     public ModelAndView timestamp() {
         AbstractView jsonView = new MappingJackson2JsonView();
-        Map<String, Object> map = new HashMap<>();
         try {
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
             String str = sdf.format(date);
+            Map<String, Object> map = new HashMap<>();
             map.put(AccountConstants.TIMESTAMP_LONG, System.currentTimeMillis());
             map.put(AccountConstants.TIMESTAMP_STRING, str);
             jsonView.setAttributesMap(map);
         } catch (Exception e) {
             e.printStackTrace();
-            jsonView.setAttributesMap(Constants.MAP_500);
+            jsonView.setAttributesMap(AccountConstants.MAP_500);
         }
         return new ModelAndView(jsonView);
     }
@@ -61,10 +61,16 @@ public class CommonController {
     @ApiOperation(value = "发送验证码", notes = "发送验证码")
     public ModelAndView sendRegisterCode(@RequestParam(name = "phone") String phone) {
         AbstractView jsonView = new MappingJackson2JsonView();
+
         if (StringUtils.isEmpty(phone)) {
-            jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
+            jsonView.setAttributesMap(AccountConstants.MAP_PARAM_MISS);
         } else {
-            jsonView.setAttributesMap(doSendPhone(phone, AccountConstants.SEND_REGISTER, null));
+            try {
+                jsonView.setAttributesMap(doSendPhone(phone, AccountConstants.SEND_REGISTER, null));
+            } catch (Exception e) {
+                e.printStackTrace();
+                jsonView.setAttributesMap(AccountConstants.MAP_500);
+            }
         }
         return new ModelAndView(jsonView);
     }
@@ -74,22 +80,21 @@ public class CommonController {
     public ModelAndView sendCode(@RequestParam(name = "phone") String phone) {
         AbstractView jsonView = new MappingJackson2JsonView();
         if (StringUtils.isEmpty(phone)) {
-            jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
+            jsonView.setAttributesMap(AccountConstants.MAP_PARAM_MISS);
         } else {
-            jsonView.setAttributesMap(doSendPhone(phone, AccountConstants.SEND_PUBLIC, null));
+            try {
+                jsonView.setAttributesMap(doSendPhone(phone, AccountConstants.SEND_PUBLIC, null));
+            } catch (Exception e) {
+                e.printStackTrace();
+                jsonView.setAttributesMap(AccountConstants.MAP_500);
+            }
         }
         return new ModelAndView(jsonView);
     }
 
     private Map<String, Object> doSendPhone(String phone, String type, String msg) {
-        try {
-            // 判断手机号码
-//            return isMobileNum(phone) ? accountCommonFacade.sendPhoneCode(phone, type, msg) : MapUtils.buildErrorMap(AccountConstants.ACCOUNT_ERROR_CODE_50100, AccountConstants.ACCOUNT_ERROR_CODE_50100_MSG);
-      return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Constants.MAP_500;
-        }
+        // 判断手机号码
+        return isMobileNum(phone) ? accountCommonFacade.sendPhoneCode(phone, type, msg) : MapUtils.buildErrorMap(AccountConstants.ACCOUNT_ERROR_CODE_40100, AccountConstants.ACCOUNT_ERROR_CODE_40100_MSG);
     }
 
     private boolean isMobileNum(String mobiles) {
