@@ -19,6 +19,8 @@
 
     <!-- 活动功能 -->
     <dubbo:reference interface="com.zyx.rpc.activity.ActivityFacade" id="activityFacade" check="false"/>
+    <!-- 活动报名功能 -->
+    <dubbo:reference interface="com.zyx.rpc.activity.ActivityMemberFacade" id="activityMemberFacade" check="false"/>
 
     <!-- 直播服务接口 -->
     <dubbo:reference interface="com.zyx.rpc.live.LiveInfoFacade" id="liveInfoFacade" check="false"/>
