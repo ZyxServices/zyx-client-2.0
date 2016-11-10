@@ -17,4 +17,11 @@ public interface ZoomFacade {
      */
     Map<String, Object> addFollow(Integer fromUserId, Integer toUserId);
 
+    /**
+     *  添加关注列表获取未关注的用户（认证通过）
+     * @param loginUserId
+     * @return
+     */
+    Map<String,Object> getNoAttentionUser(Integer loginUserId);
+
 }

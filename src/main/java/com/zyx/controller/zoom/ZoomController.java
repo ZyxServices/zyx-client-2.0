@@ -25,13 +25,23 @@ public class ZoomController {
     @Resource
     private ZoomFacade zoomFacade;
 
-    @RequestMapping(value = "/v1/follow/add", method = RequestMethod.POST)
-    @ApiOperation(value = "添加圈子", notes = "添加圈子")
-    public ModelAndView addCircle(@RequestParam("token") String token,
+    @RequestMapping(value = "/v2/follow/add", method = RequestMethod.POST)
+    @ApiOperation(value = "添加关注", notes = "添加关注")
+    public ModelAndView addFollow(@RequestParam("token") String token,
                                   @ApiParam(required = true, name = "fromUserId", value = "添加关注的人") @RequestParam("fromUserId") Integer fromUserId,
                                   @ApiParam(required = true, name = "toUserId", value = "被添加关注的人") @RequestParam("toUserId") Integer toUserId) {
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> map = zoomFacade.addFollow(fromUserId, toUserId);
+        jsonView.setAttributesMap(map);
+        return new ModelAndView(jsonView);
+    }
+
+    @RequestMapping(value = "/v2/follow/list", method = RequestMethod.POST)
+    @ApiOperation(value = "获取未关注用户", notes = "获取未关注用户")
+    public ModelAndView followList(@RequestParam("token") String token,
+                                   @ApiParam(required = false, name = "loginUserId", value = "登录用户id") @RequestParam("loginUserId") Integer loginUserId) {
+        AbstractView jsonView = new MappingJackson2JsonView();
+        Map<String, Object> map = zoomFacade.getNoAttentionUser(loginUserId);
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
