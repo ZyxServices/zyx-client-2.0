@@ -57,7 +57,7 @@ public class UserAddressController {
             param.setReceiver(receiver);
             param.setZipCode(zipCode);
             param.setAddressId(UUID.randomUUID().toString().replaceAll("-", ""));
-            jsonView.setAttributesMap(accountAddressFacade.insertAccountAddressInfo(param));
+            jsonView.setAttributesMap(accountAddressFacade.insertUserAddressInfo(param));
         }
         return new ModelAndView(jsonView);
     }
@@ -101,7 +101,7 @@ public class UserAddressController {
             UserAddressParam param = new UserAddressParam();
             param.setToken(token);
             param.setAddressId(addressId);
-            jsonView.setAttributesMap(accountAddressFacade.queryAccountAddressInfo(param));
+            jsonView.setAttributesMap(accountAddressFacade.queryUserAddressInfo(param));
         }
         return new ModelAndView(jsonView);
     }
@@ -119,7 +119,7 @@ public class UserAddressController {
             UserAddressParam param = new UserAddressParam();
             param.setToken(token);
             param.setAddressId(addressId);
-            jsonView.setAttributesMap(accountAddressFacade.deleteAccountAddressInfo(param));
+            jsonView.setAttributesMap(accountAddressFacade.deleteUserAddressInfo(param));
         }
         return new ModelAndView(jsonView);
     }
@@ -156,7 +156,7 @@ public class UserAddressController {
             UserAddressParam param = new UserAddressParam();
             param.setToken(token);
             param.setUserId(userId);
-            jsonView.setAttributesMap(accountAddressFacade.queryAccountAddressList(param));
+            jsonView.setAttributesMap(accountAddressFacade.queryUserAddressList(param));
         }
         return new ModelAndView(jsonView);
     }

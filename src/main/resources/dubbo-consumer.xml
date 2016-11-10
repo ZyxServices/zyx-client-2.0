@@ -34,7 +34,7 @@
     <dubbo:reference interface="com.zyx.rpc.user.MyCollectionFacade" id="myCollectionFacade" check="false"/>
     <dubbo:reference interface="com.zyx.rpc.user.MyConcernFacade" id="myConcernFacade" check="false"/>
     <dubbo:reference interface="com.zyx.rpc.user.UserMarkFacade" id="userMarkFacade" check="false"/>
-    <dubbo:reference interface="com.zyx.rpc.user.UserAddressFacade" id="accountAddressFacade" check="false"/>
+    <dubbo:reference interface="com.zyx.rpc.user.UserAddressFacade" id="userAddressFacade" check="false"/>
 
     <!--系统服务接口-->
     <dubbo:reference interface="com.zyx.rpc.system.SearchFacade" id="searchFacade" check="false" timeout="10000"/>
