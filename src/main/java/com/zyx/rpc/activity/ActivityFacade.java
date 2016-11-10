@@ -39,8 +39,8 @@ public interface ActivityFacade {
 
     /**
      * 通过ID查询活动详细信息
-     * @param userId
+     * @param activityId
      * @return
      */
-    Map<String, Object> activityById(Integer userId);
+    Map<String, Object> activityById(Integer activityId);
 }

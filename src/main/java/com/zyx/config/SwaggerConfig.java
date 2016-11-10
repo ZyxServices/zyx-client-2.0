@@ -170,6 +170,40 @@ public class SwaggerConfig {
                 .apiInfo(attentionApiInfo());
     }
 
+    @Bean
+    public Docket recordApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("record")
+                .select()  // 选择那些路径和api会生成document
+                .apis(RequestHandlerSelectors.basePackage("com.zyx.controller.record"))
+                .paths(PathSelectors.any()) // 对所有路径进行监控
+                .build()
+                .apiInfo(recordApiInfo());
+    }
+
+    @Bean
+    public Docket venueApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("venue")
+                .select()  // 选择那些路径和api会生成document
+                .apis(RequestHandlerSelectors.basePackage("com.zyx.controller.venue"))
+                .paths(PathSelectors.any()) // 对所有路径进行监控
+                .build()
+                .apiInfo(venueApiInfo());
+    }
+
+    @Bean
+    public Docket coinApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("coin")
+                .select()  // 选择那些路径和api会生成document
+                .apis(RequestHandlerSelectors.basePackage("com.zyx.controller.coin"))
+                .paths(PathSelectors.any()) // 对所有路径进行监控
+                .build()
+                .apiInfo(coinApiInfo());
+    }
+
+
     private ApiInfo attentionApiInfo() {
 
         ApiInfo apiInfo = new ApiInfo("关注接口API",//大标题
@@ -310,6 +344,42 @@ public class SwaggerConfig {
         return apiInfo;
     }
 
+    private ApiInfo recordApiInfo() {
+        ApiInfo apiInfo = new ApiInfo("record",//大标题
+                "运动记录API",//小标题
+                "0.1",//版本
+                "暂无",
+                new Contact("MrDeng", "暂无", "dengqinghai@perfect-cn.cn"),//作者
+                "智悠行",//链接显示文字
+                ""//网站链接
+        );
+
+        return apiInfo;
+    }
+
+    private ApiInfo venueApiInfo() {
+        ApiInfo apiInfo = new ApiInfo("venue",//大标题
+                "场馆信息API",//小标题
+                "0.1",//版本
+                "暂无",
+                new Contact("MrDeng", "暂无", "dengqinghai@perfect-cn.cn"),//作者
+                "智悠行",//链接显示文字
+                ""//网站链接
+        );
+        return apiInfo;
+    }
+
+    private ApiInfo coinApiInfo() {
+        ApiInfo apiInfo = new ApiInfo("coin",//大标题
+                "运动币API",//小标题
+                "0.1",//版本
+                "暂无",
+                new Contact("MrDeng", "暂无", "dengqinghai@perfect-cn.cn"),//作者
+                "智悠行",//链接显示文字
+                ""//网站链接
+        );
+        return apiInfo;
+    }
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html")

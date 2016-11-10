@@ -1,4 +1,4 @@
-package com.zyx.rpc.account;
+package com.zyx.rpc.user;
 
 import com.zyx.param.account.AccountInfoParam;
 import com.zyx.param.account.UserAuthParam;
@@ -6,13 +6,14 @@ import com.zyx.param.account.UserAuthParam;
 import java.util.Map;
 
 /**
- * Created by wms on 2016/6/17.
+ * Created by wms on 2016/11/9.
  *
  * @author WeiMinSheng
- * @version V1.0
+ * @version V2.0
  *          Copyright (c)2016 tyj-版权所有
+ * @since 2016/11/9
  */
-public interface AccountInfoFacade {
+public interface UserInfoFacade {
     Map<String, Object> queryAccountInfo(String token, int userId);
 
     Map<String, Object> editAccountInfo(String token, int userId, AccountInfoParam param);

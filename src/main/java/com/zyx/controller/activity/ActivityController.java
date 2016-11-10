@@ -46,7 +46,8 @@ public class ActivityController {
                                 @RequestParam(name = "lastTime", required = true) Long lastTime,
                                 @RequestParam(name = "address", required = true) String address,
                                 @RequestParam(name = "maxPeople", required = true) Integer maxPeople,
-                                @RequestParam(name = "price", required = true) Double price) {
+                                @RequestParam(name = "price", required = true) Double price,
+                                @RequestParam(name = "city", required = true) String city) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
 
@@ -74,6 +75,7 @@ public class ActivityController {
             activityParam.setAddress(address);
             activityParam.setMaxPepople(maxPeople);
             activityParam.setPrice(price);
+
             Map<String, Object> map = activityFacade.insertActivity(activityParam);
             jsonView.setAttributesMap(map);
             return new ModelAndView(jsonView);
@@ -81,8 +83,8 @@ public class ActivityController {
     }
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
-    @ApiOperation(value = "活动发布", notes = "活动发布")
-    public ModelAndView release(@RequestParam(name = "state", required = true) Integer state,
+    @ApiOperation(value = "活动查询筛选", notes = "活动查询筛选")
+    public ModelAndView query(@RequestParam(name = "state", required = true) Integer state,
                                 @RequestParam(name = "type", required = true) Integer type,
                                 @RequestParam(name = "number", required = true) Integer number,
                                 @RequestParam(name = "pageNumber", required = true) Integer pageNumber) {
@@ -96,6 +98,16 @@ public class ActivityController {
         queryActivityParam.setPageNumber(pageNumber);
 
         Map<String, Object> map = activityFacade.queryActivity(queryActivityParam);
+        jsonView.setAttributesMap(map);
+        return new ModelAndView(jsonView);
+    }
+
+    @RequestMapping(value = "/activityById", method = RequestMethod.POST)
+    @ApiOperation(value = "通过活动ID查询活动详情信息", notes = "通过活动ID查询活动详情信息")
+    public ModelAndView activityById(@RequestParam(name = "activityId", required = true) Integer activityId) {
+
+        AbstractView jsonView = new MappingJackson2JsonView();
+        Map<String, Object> map = activityFacade.activityById(activityId);
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }

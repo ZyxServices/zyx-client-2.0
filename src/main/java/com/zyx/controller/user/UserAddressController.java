@@ -1,8 +1,8 @@
 package com.zyx.controller.user;
 
 import com.zyx.constants.Constants;
-import com.zyx.param.account.UserAddressParam;
-import com.zyx.rpc.account.AccountAddressFacade;
+import com.zyx.param.user.UserAddressParam;
+import com.zyx.rpc.user.UserAddressFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -19,19 +19,20 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import java.util.UUID;
 
 /**
- * Created by wms on 2016/6/20.
+ * Created by wms on 2016/11/9.
  *
  * @author WeiMinSheng
- * @version V1.0
+ * @version V2.0
  *          Copyright (c)2016 tyj-版权所有
+ * @since 2016/11/9
  */
 @RestController
-@RequestMapping("/v1/account/receiptAddress")
+@RequestMapping("/v2/user/receiptAddress")
 @Api(description = "用户收货地址服务API。1、新增收货地址。2、编辑收货地址。3、获取收货地址。4、删除收货地址。5、设置默认收货地址。6、获取用户收货地址列表")
-public class AddressController {
+public class UserAddressController {
 
     @Autowired
-    private AccountAddressFacade accountAddressFacade;
+    private UserAddressFacade accountAddressFacade;
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ApiOperation(value = "新增收货地址", notes = "新增收货地址。需要token验证。")
@@ -56,7 +57,7 @@ public class AddressController {
             param.setReceiver(receiver);
             param.setZipCode(zipCode);
             param.setAddressId(UUID.randomUUID().toString().replaceAll("-", ""));
-            jsonView.setAttributesMap(accountAddressFacade.insertAccountAddressInfo(param));
+            jsonView.setAttributesMap(accountAddressFacade.insertUserAddressInfo(param));
         }
         return new ModelAndView(jsonView);
     }
@@ -100,7 +101,7 @@ public class AddressController {
             UserAddressParam param = new UserAddressParam();
             param.setToken(token);
             param.setAddressId(addressId);
-            jsonView.setAttributesMap(accountAddressFacade.queryAccountAddressInfo(param));
+            jsonView.setAttributesMap(accountAddressFacade.queryUserAddressInfo(param));
         }
         return new ModelAndView(jsonView);
     }
@@ -118,7 +119,7 @@ public class AddressController {
             UserAddressParam param = new UserAddressParam();
             param.setToken(token);
             param.setAddressId(addressId);
-            jsonView.setAttributesMap(accountAddressFacade.deleteAccountAddressInfo(param));
+            jsonView.setAttributesMap(accountAddressFacade.deleteUserAddressInfo(param));
         }
         return new ModelAndView(jsonView);
     }
@@ -155,7 +156,7 @@ public class AddressController {
             UserAddressParam param = new UserAddressParam();
             param.setToken(token);
             param.setUserId(userId);
-            jsonView.setAttributesMap(accountAddressFacade.queryAccountAddressList(param));
+            jsonView.setAttributesMap(accountAddressFacade.queryUserAddressList(param));
         }
         return new ModelAndView(jsonView);
     }
