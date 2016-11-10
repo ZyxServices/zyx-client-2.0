@@ -7,6 +7,7 @@ import com.zyx.param.activity.ActivityMemberParam;
 import com.zyx.param.activity.ActivityParam;
 import com.zyx.param.activity.QueryActivityMemberParam;
 import com.zyx.param.activity.QueryActivityParam;
+import com.zyx.rpc.account.AccountCommonFacade;
 import com.zyx.rpc.activity.ActivityFacade;
 import com.zyx.rpc.activity.ActivityMemberFacade;
 import com.zyx.utils.MapUtils;
@@ -34,6 +35,9 @@ import java.util.Map;
 public class ActivityMemberController {
 
     @Resource
+    private AccountCommonFacade accountCommonFacade;
+
+    @Resource
     private ActivityMemberFacade activityMemberFacade;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -43,7 +47,7 @@ public class ActivityMemberController {
                                 @RequestParam(name = "activityId", required = true) Integer activityId) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
-
+        boolean validateToken = accountCommonFacade.validateToken(token);
         ActivityMemberParam param = new ActivityMemberParam();
         param.setActivityId(activityId);
         param.setUserId(userId);
