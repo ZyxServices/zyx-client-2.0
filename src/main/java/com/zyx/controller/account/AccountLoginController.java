@@ -1,6 +1,5 @@
 package com.zyx.controller.account;
 
-import com.zyx.constants.Constants;
 import com.zyx.constants.account.AccountConstants;
 import com.zyx.rpc.account.AccountLoginFacade;
 import io.swagger.annotations.Api;
@@ -36,7 +35,7 @@ public class AccountLoginController {
         AbstractView jsonView = new MappingJackson2JsonView();
 
         if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password)) {// 缺少参数
-            jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
+            jsonView.setAttributesMap(AccountConstants.MAP_PARAM_MISS);
         } else {
             try {
                 jsonView.setAttributesMap(accountLoginFacade.loginByPhoneAndPassword(phone, password));
@@ -55,7 +54,7 @@ public class AccountLoginController {
         AbstractView jsonView = new MappingJackson2JsonView();
 
         if (StringUtils.isEmpty(token)) {// 缺少参数
-            jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
+            jsonView.setAttributesMap(AccountConstants.MAP_PARAM_MISS);
         } else {// 退出
             try {
                 jsonView.setAttributesMap(accountLoginFacade.logOut(token));
@@ -74,7 +73,7 @@ public class AccountLoginController {
         AbstractView jsonView = new MappingJackson2JsonView();
 
         if (StringUtils.isEmpty(token)) {// 缺少参数
-            jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
+            jsonView.setAttributesMap(AccountConstants.MAP_PARAM_MISS);
         } else {// 刷新token并返回新token
             try {
                 jsonView.setAttributesMap(accountLoginFacade.refreshToken(token));

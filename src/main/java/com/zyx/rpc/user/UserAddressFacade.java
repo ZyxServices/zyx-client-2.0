@@ -1,18 +1,19 @@
-package com.zyx.rpc;
+package com.zyx.rpc.user;
 
 
-import com.zyx.param.account.UserAddressParam;
+import com.zyx.param.user.UserAddressParam;
 
 import java.util.Map;
 
 /**
- * Created by wms on 2016/6/20.
+ * Created by wms on 2016/11/9.
  *
  * @author WeiMinSheng
- * @version V1.0
+ * @version V2.0
  *          Copyright (c)2016 tyj-版权所有
+ * @since 2016/11/9
  */
-public interface AccountAddressFacade {
+public interface UserAddressFacade {
 
     /**
      * 新增收货地址
