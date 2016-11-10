@@ -17,44 +17,31 @@ public interface UserAddressFacade {
 
     /**
      * 新增收货地址
-     *
-     * @param userAddressParam 地址参数
      */
-    Map<String, Object> insertAccountAddressInfo(UserAddressParam userAddressParam);
+    Map<String, Object> insertUserAddressInfo(UserAddressParam param);
 
     /**
      * 查询收货地址
-     *
-     * @param param 地址参数
      */
-    Map<String, Object> queryAccountAddressInfo(UserAddressParam param);
+    Map<String, Object> queryUserAddressInfo(UserAddressParam param);
 
     /**
      * 查询收货地址列表
-     *
-     * @param param 地址参数
      */
-    Map<String, Object> queryAccountAddressList(UserAddressParam param);
+    Map<String, Object> queryUserAddressList(UserAddressParam param);
 
     /**
      * 删除收货地址
-     *
-     * @param param 地址参数
      */
-    Map<String, Object> deleteAccountAddressInfo(UserAddressParam param);
+    Map<String, Object> deleteUserAddressInfo(UserAddressParam param);
 
     /**
      * 编辑收货地址
-     *
-     * @param param 地址参数
      */
     Map<String, Object> editReceiptAddress(UserAddressParam param);
 
     /**
      * 设置默认收货地址
-     *
-     * @param param 地址参数
      */
     Map<String, Object> setDefaultReceiptAddress(UserAddressParam param);
-
 }

@@ -10,7 +10,7 @@
 //import com.zyx.param.live.BarrageParam;
 //import com.zyx.param.live.LiveInfoParam;
 //import com.zyx.rpc.account.AccountCommonFacade;
-//import com.zyx.rpc.account.AccountInfoFacade;
+//import com.zyx.rpc.user.UserInfoFacade;
 //import com.zyx.rpc.live.BarrageFacade;
 //import com.zyx.rpc.live.LiveInfoFacade;
 //import com.zyx.rpc.live.LiveLabFacade;
@@ -54,7 +54,7 @@
 //    @Autowired
 //    BarrageFacade barrageFacade;
 //    @Autowired
-//    AccountInfoFacade accountInfoFacade;
+//    UserInfoFacade accountInfoFacade;
 //    @Autowired
 //    LiveLabFacade liveLabFacade;
 //    @Autowired

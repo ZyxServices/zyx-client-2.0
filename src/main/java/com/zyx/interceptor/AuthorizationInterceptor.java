@@ -13,13 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 /**
- * 自定义拦截器，判断此次请求是否有权限
+ * Created by wms on 2016/11/10.
  *
  * @author WeiMinSheng
- * @version V1.0
+ * @version V2.0
  *          Copyright (c)2016 tyj-版权所有
- * @title AuthorizationInterceptor.java
- * Created by wms on 2016/7/6.
+ * @since 2016/11/10
  */
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Autowired
