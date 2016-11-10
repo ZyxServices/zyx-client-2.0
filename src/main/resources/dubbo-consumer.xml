@@ -59,4 +59,6 @@
 
     <!--记录-->
     <dubbo:reference interface="com.zyx.rpc.record.SportRecordFacade" id="sportRecordFacade" check="false"/>
+
+    <dubbo:reference interface="com.zyx.rpc.coin.SportCoinFacade" id="sportCoinFacade" check="false"/>
 </beans>
