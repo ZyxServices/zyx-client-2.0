@@ -28,7 +28,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/v2/user")
-@Api(description = "用户签到接口API。1、签到。2、查询用户签到信息")
+@Api(description = "用户签到接口API。【1】签到。【2】查询签到信息")
 public class UserMarkController {
     @Autowired
     private UserMarkFacade userMarkFacade;

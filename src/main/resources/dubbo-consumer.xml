@@ -35,6 +35,7 @@
     <dubbo:reference interface="com.zyx.rpc.user.MyConcernFacade" id="myConcernFacade" check="false"/>
     <dubbo:reference interface="com.zyx.rpc.user.UserMarkFacade" id="userMarkFacade" check="false"/>
     <dubbo:reference interface="com.zyx.rpc.user.UserAddressFacade" id="userAddressFacade" check="false"/>
+    <dubbo:reference interface="com.zyx.rpc.user.UserInfoFacade" id="accountInfoFacade" check="false" retries="0"/>
 
     <!--系统服务接口-->
     <dubbo:reference interface="com.zyx.rpc.system.SearchFacade" id="searchFacade" check="false" timeout="10000"/>
@@ -48,11 +49,10 @@
     <dubbo:reference interface="com.zyx.rpc.common.TokenFacade" id="tokenFacade" check="false"/>
 
     <!-- 账号系统接口 -->
-    <dubbo:reference interface="com.zyx.rpc.account.AccountInfoFacade" id="accountInfoFacade" check="false"/>
-    <dubbo:reference interface="com.zyx.rpc.account.AccountRegisterFacade" id="accountRegisterFacade" check="false"/>
-    <dubbo:reference interface="com.zyx.rpc.account.AccountSecretFacade" id="accountSecretFacade" check="false"/>
-    <dubbo:reference interface="com.zyx.rpc.account.AccountLoginFacade" id="accountLoginFacade" check="false"/>
-    <dubbo:reference interface="com.zyx.rpc.account.AccountCommonFacade" id="accountCommonFacade" check="false"/>
+    <dubbo:reference interface="com.zyx.rpc.account.AccountRegisterFacade" id="accountRegisterFacade" check="false" retries="0"/>
+    <dubbo:reference interface="com.zyx.rpc.account.AccountSecretFacade" id="accountSecretFacade" check="false" retries="0"/>
+    <dubbo:reference interface="com.zyx.rpc.account.AccountLoginFacade" id="accountLoginFacade" check="false" retries="0"/>
+    <dubbo:reference interface="com.zyx.rpc.account.AccountCommonFacade" id="accountCommonFacade" check="false" retries="0"/>
 
     <!-- 积分系统接口 -->
     <dubbo:reference interface="com.zyx.rpc.point.UserPointFacade" id="userPointFacade" check="false"/>

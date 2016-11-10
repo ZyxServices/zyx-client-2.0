@@ -27,7 +27,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/v2/my/attention")
-@Api(description = "我的关注/粉丝接口。查询我的关注列表。2、查询我的粉丝列表。")
+@Api(description = "我的关注/粉丝接口。【1】查询我的关注列表。【2】查询我的粉丝列表。")
 public class MyAttentionController {
 
     @Autowired
