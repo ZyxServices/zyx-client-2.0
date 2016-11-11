@@ -10,6 +10,7 @@ import com.zyx.utils.ActivityUtils;
 import com.zyx.rpc.activity.ActivityFacade;
 import com.zyx.utils.MapUtils;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.AbstractView;
@@ -35,19 +36,19 @@ public class ActivityController {
     @RequestMapping(value = "/release", method = RequestMethod.POST)
     @ApiOperation(value = "活动发布", notes = "活动发布")
     public ModelAndView release(@RequestParam(name = "token", required = true) String token,
-                                @RequestParam(name = "userId", required = true) Integer userId,
-                                @RequestParam(name = "imageUrl", required = true) String imageUrl,
-                                @RequestParam(name = "title", required = true) String title,
-                                @RequestParam(name = "descimage", required = false) String[] descimage,
-                                @RequestParam(name = "desc", required = true) String desc,
-                                @RequestParam(name = "type", required = true) Integer type,
-                                @RequestParam(name = "startTime", required = true) Long startTime,
-                                @RequestParam(name = "endTime", required = true) Long endTime,
-                                @RequestParam(name = "lastTime", required = true) Long lastTime,
-                                @RequestParam(name = "address", required = true) String address,
-                                @RequestParam(name = "maxPeople", required = true) Integer maxPeople,
-                                @RequestParam(name = "price", required = true) Double price,
-                                @RequestParam(name = "city", required = true) String city) {
+                                @ApiParam(required = true, name = "userId", value = "用户ID") @RequestParam(name = "userId", required = true) Integer userId,
+                                @ApiParam(required = true, name = "imageUrl", value = "封面图片") @RequestParam(name = "imageUrl", required = true) String imageUrl,
+                                @ApiParam(required = true, name = "title", value = "标题") @RequestParam(name = "title", required = true) String title,
+                                @ApiParam(required = true, name = "descimage", value = "活动内容中的图片") @RequestParam(name = "descimage", required = false) String[] descimage,
+                                @ApiParam(required = true, name = "desc", value = "活动内容") @RequestParam(name = "desc", required = true) String desc,
+                                @ApiParam(required = true, name = "type", value = "活动类型(1、求约 2、求带)") @RequestParam(name = "type", required = true) Integer type,
+                                @ApiParam(required = true, name = "startTime", value = "活动开始时间") @RequestParam(name = "startTime", required = true) Long startTime,
+                                @ApiParam(required = true, name = "endTime", value = "活动结束时间") @RequestParam(name = "endTime", required = true) Long endTime,
+                                @ApiParam(required = true, name = "lastTime", value = "报名结束时间") @RequestParam(name = "lastTime", required = true) Long lastTime,
+                                @ApiParam(required = true, name = "address", value = "集合地址") @RequestParam(name = "address", required = true) String address,
+                                @ApiParam(required = true, name = "maxPeople", value = "报名人数限制(0 为不限制)") @RequestParam(name = "maxPeople", required = true) Integer maxPeople,
+                                @ApiParam(required = true, name = "price", value = "价格") @RequestParam(name = "price", required = true) Double price,
+                                @ApiParam(required = true, name = "city", value = "城市") @RequestParam(name = "city", required = true) String city) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
 
@@ -84,10 +85,10 @@ public class ActivityController {
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     @ApiOperation(value = "活动查询筛选", notes = "活动查询筛选")
-    public ModelAndView query(@RequestParam(name = "state", required = true) Integer state,
-                                @RequestParam(name = "type", required = true) Integer type,
-                                @RequestParam(name = "number", required = true) Integer number,
-                                @RequestParam(name = "pageNumber", required = true) Integer pageNumber) {
+    public ModelAndView query(@ApiParam(required = true, name = "state", value = "状态（0、全部  1、正在报名 2、已结束）") @RequestParam(name = "state", required = true) Integer state,
+                              @ApiParam(required = true, name = "type", value = "类型（0、全部 1、求约 2、求带）") @RequestParam(name = "type", required = true) Integer type,
+                              @ApiParam(required = true, name = "number", value = "每页显示条数") @RequestParam(name = "number", required = true) Integer number,
+                              @ApiParam(required = true, name = "pageNumber", value = "当前第几页") @RequestParam(name = "pageNumber", required = true) Integer pageNumber) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
 

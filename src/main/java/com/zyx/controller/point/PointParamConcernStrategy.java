@@ -2,6 +2,7 @@ package com.zyx.controller.point;
 
 import com.zyx.constants.point.PointConstants;
 import com.zyx.param.point.UserPointParam;
+import com.zyx.param.point.UserPointRuleParam;
 
 
 /**
@@ -12,22 +13,7 @@ import com.zyx.param.point.UserPointParam;
  *          Copyright (c)2016 tyj-版权所有
  * @since 2016/11/4
  */
-public class PointParamAStrategy implements PointParamStrategy {
-    @Override
-    public UserPointParam buildPointParam(Integer userId) {
-        return buildPointParam(userId, null, null);
-    }
-
-    @Override
-    public UserPointParam buildPointParam(Integer userId, Long pointCount) {
-        return buildPointParam(userId, pointCount, null);
-    }
-
-    @Override
-    public UserPointParam buildPointParam(Integer userId, String detailMsg) {
-        return buildPointParam(userId, null, detailMsg);
-    }
-
+public class PointParamConcernStrategy extends PointParamStrategy {
     @Override
     public UserPointParam buildPointParam(Integer userId, Long pointCount, String detailMsg) {
         UserPointParam userPointParam = new UserPointParam();
@@ -37,6 +23,7 @@ public class PointParamAStrategy implements PointParamStrategy {
         userPointParam.setDetailTable(PointConstants.TABLE_PANYAN);
         userPointParam.setDetailType(PointConstants.DETAIL_TYPE_PL);
         userPointParam.setDetailMsg(detailMsg);
+        userPointParam.setRuleParam(new UserPointRuleParam(1, 3));
         return userPointParam;
     }
 }

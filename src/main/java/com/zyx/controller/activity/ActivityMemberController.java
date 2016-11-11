@@ -12,6 +12,7 @@ import com.zyx.rpc.activity.ActivityFacade;
 import com.zyx.rpc.activity.ActivityMemberFacade;
 import com.zyx.utils.MapUtils;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,8 +44,8 @@ public class ActivityMemberController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ApiOperation(value = "活动报名", notes = "活动报名")
     public ModelAndView add(@RequestParam(name = "token", required = true) String token,
-                                @RequestParam(name = "userId", required = true) Integer userId,
-                                @RequestParam(name = "activityId", required = true) Integer activityId) {
+                            @ApiParam(required = true, name = "userId", value = "用户ID") @RequestParam(name = "userId", required = true) Integer userId,
+                            @ApiParam(required = true, name = "activityId", value = "活动ID") @RequestParam(name = "activityId", required = true) Integer activityId) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
         boolean validateToken = accountCommonFacade.validateToken(token);
@@ -60,9 +61,9 @@ public class ActivityMemberController {
 
     @RequestMapping(value = "/findByActivityId", method = RequestMethod.POST)
     @ApiOperation(value = "通过活动id查询报名用户列表", notes = "通过活动id查询报名用户列表")
-    public ModelAndView findByActivityId(@RequestParam(name = "activityId", required = true) Integer activityId,
-                                @RequestParam(name = "number", required = true) Integer number,
-                                @RequestParam(name = "pageNumber", required = true) Integer pageNumber) {
+    public ModelAndView findByActivityId(@ApiParam(required = true, name = "activityId", value = "活动ID") @RequestParam(name = "activityId", required = true) Integer activityId,
+                                         @ApiParam(required = true, name = "number", value = "每页显示多少条") @RequestParam(name = "number", required = true) Integer number,
+                                         @ApiParam(required = true, name = "pageNumber", value = "当前第几页") @RequestParam(name = "pageNumber", required = true) Integer pageNumber) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
 
@@ -78,9 +79,9 @@ public class ActivityMemberController {
 
     @RequestMapping(value = "/findByUserId", method = RequestMethod.POST)
     @ApiOperation(value = "通过用户ID查询用户所报名的活动列表", notes = "通过用户ID查询用户所报名的活动列表")
-    public ModelAndView findByUserId(@RequestParam(name = "userId", required = true) Integer userId,
-                                @RequestParam(name = "number", required = true) Integer number,
-                                @RequestParam(name = "pageNumber", required = true) Integer pageNumber) {
+    public ModelAndView findByUserId(@ApiParam(required = true, name = "userId", value = "用户ID") @RequestParam(name = "userId", required = true) Integer userId,
+                                     @ApiParam(required = true, name = "number", value = "每页显示多少条") @RequestParam(name = "number", required = true) Integer number,
+                                     @ApiParam(required = true, name = "pageNumber", value = "当前第几页") @RequestParam(name = "pageNumber", required = true) Integer pageNumber) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
         QueryActivityMemberParam param = new QueryActivityMemberParam();
