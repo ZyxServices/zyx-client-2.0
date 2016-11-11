@@ -2,12 +2,13 @@ package com.zyx.controller.venue;
 
 import com.zyx.constants.Constants;
 import com.zyx.entity.venue.Venue;
+import com.zyx.param.venue.FindVenueParam;
 import com.zyx.param.venue.VenueParam;
-import com.zyx.rpc.record.SportRecordFacade;
 import com.zyx.rpc.venue.VenueFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -85,6 +86,37 @@ public class VenueController {
         attrMap.put(Constants.STATE, Constants.SUCCESS);
         attrMap.put(Constants.SUCCESS_MSG, Constants.MSG_SUCCESS);
         jsonView.setAttributesMap(attrMap);
+        return new ModelAndView(jsonView);
+    }
+
+    @RequestMapping(value = "/findVenue", method = RequestMethod.POST)
+    @ApiOperation(value = "查询场馆列表信息", notes = "查询场馆列表信息")
+    public ModelAndView findVenue(
+            @ApiParam(required = true, name = "type", value = "查询方式(1、全部，2、距离当前经纬度最近，3、最热门， 4、最大难度)") @RequestParam(name = "type", required = true) Integer type,
+            @ApiParam(required = true, name = "lng", value = "经度") @RequestParam(name = "lng", required = true) Double lng,
+            @ApiParam(required = true, name = "lat", value = "纬度") @RequestParam(name = "lat", required = true) Double lat,
+            @ApiParam(required = true, name = "number", value = "每页显示多少条") @RequestParam(name = "number", required = true) Integer number,
+            @ApiParam(required = true, name = "pageNumber", value = "当前第几页") @RequestParam(name = "pageNumber", required = true) Integer pageNumber
+    ) {
+        AbstractView jsonView = new MappingJackson2JsonView();
+        FindVenueParam findVenueParam = new FindVenueParam();
+        findVenueParam.setType(type);
+        findVenueParam.setLng(lng);
+        findVenueParam.setLat(lat);
+        findVenueParam.setNumber(number);
+        findVenueParam.setPageNumber(pageNumber);
+        Map<String, Object> venue = venueFacade.findVenue(findVenueParam);
+        jsonView.setAttributesMap(venue);
+        return new ModelAndView(jsonView);
+    }
+
+    @RequestMapping(value = "/findVenueById", method = RequestMethod.POST)
+    @ApiOperation(value = "查询某个场馆详细信息", notes = "查询某个场馆详细信息")
+    public ModelAndView findVenueById(
+            @ApiParam(required = true, name = "venueId", value = "场馆ID") @RequestParam(name = "venueId", required = true) Integer venueId) {
+        AbstractView jsonView = new MappingJackson2JsonView();
+        Map<String, Object> venue = venueFacade.findVenueById(venueId);
+        jsonView.setAttributesMap(venue);
         return new ModelAndView(jsonView);
     }
 }
