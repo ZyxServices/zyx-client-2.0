@@ -59,7 +59,7 @@ public class UserPointController {
         if (StringUtils.isEmpty(token)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            UserPointParam param = new PointParamContext(new PointParamAStrategy()).build(userId);
+            UserPointParam param = new PointParamContext(new PointParamConcernStrategy()).build(userId);
             param.setPointCount((long) pointCount);
             param.setDetailMsg(detailMsg);
             jsonView.setAttributesMap(userPointFacade.recordPoint(param));
@@ -88,19 +88,3 @@ public class UserPointController {
     }
 }
 
-class RecordPointRunnable implements Runnable {
-
-    private UserPointFacade userPointFacade;
-
-    private UserPointParam param;
-
-    RecordPointRunnable(UserPointFacade userPointFacade, UserPointParam param) {
-        this.userPointFacade = userPointFacade;
-        this.param = param;
-    }
-
-    @Override
-    public void run() {
-        userPointFacade.recordPoint(param);
-    }
-}

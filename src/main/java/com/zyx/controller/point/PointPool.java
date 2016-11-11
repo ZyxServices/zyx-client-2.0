@@ -22,6 +22,10 @@ public final class PointPool {
         private static ExecutorService fixedThreadPool = Executors.newFixedThreadPool(20);
     }
 
+    private static PointPool instance = new PointPool();
+
+    private static ExecutorService fixedThreadPool = Executors.newFixedThreadPool(20);
+
     /**
      * 私有化的构造方法，保证外部的类不能通过构造器来实例化。
      */
@@ -39,6 +43,6 @@ public final class PointPool {
     }
 
     public static ExecutorService getPointPool() {
-        return SingletonHolder.fixedThreadPool;
+        return fixedThreadPool;
     }
 }

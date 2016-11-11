@@ -10,12 +10,18 @@ import com.zyx.param.point.UserPointParam;
  *          Copyright (c)2016 tyj-版权所有
  * @since 2016/11/4
  */
-public interface PointParamStrategy {
-    UserPointParam buildPointParam(Integer userId);
+public abstract class PointParamStrategy {
+    UserPointParam buildPointParam(Integer userId) {
+        return buildPointParam(userId, null, null);
+    }
 
-    UserPointParam buildPointParam(Integer userId, Long pointCount);
+    UserPointParam buildPointParam(Integer userId, Long pointCount) {
+        return buildPointParam(userId, pointCount, null);
+    }
 
-    UserPointParam buildPointParam(Integer userId, String detailMsg);
+    UserPointParam buildPointParam(Integer userId, String detailMsg) {
+        return buildPointParam(userId, null, detailMsg);
+    }
 
-    UserPointParam buildPointParam(Integer userId, Long pointCount, String detailMsg);
+    abstract UserPointParam buildPointParam(Integer userId, Long pointCount, String detailMsg);
 }

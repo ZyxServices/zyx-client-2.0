@@ -13,6 +13,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.annotation.Resource;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author XiaoWei
@@ -39,7 +40,8 @@ public class ZoomController {
     @RequestMapping(value = "/v2/follow/list", method = RequestMethod.POST)
     @ApiOperation(value = "获取未关注用户", notes = "获取未关注用户")
     public ModelAndView followList(@RequestParam("token") String token,
-                                   @ApiParam(required = false, name = "loginUserId", value = "登录用户id") @RequestParam("loginUserId") Integer loginUserId) {
+                                   @ApiParam(name = "loginUserId", value = "登录用户id") @RequestParam(value = "loginUserId",required = false,defaultValue = "-1") Integer loginUserId) {
+        loginUserId = Objects.equals(loginUserId, null) || Objects.equals(loginUserId, "") ? -1 : loginUserId;
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> map = zoomFacade.getNoAttentionUser(loginUserId);
         jsonView.setAttributesMap(map);
