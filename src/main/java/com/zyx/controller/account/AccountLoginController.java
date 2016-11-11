@@ -1,7 +1,13 @@
 package com.zyx.controller.account;
 
 import com.zyx.constants.account.AccountConstants;
+import com.zyx.controller.point.PointParamAStrategy;
+import com.zyx.controller.point.PointParamContext;
+import com.zyx.controller.point.PointPool;
+import com.zyx.controller.point.RecordPointRunnable;
 import com.zyx.rpc.account.AccountLoginFacade;
+import com.zyx.rpc.point.UserPointFacade;
+import com.zyx.vo.account.AccountInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
+
+import javax.annotation.Resource;
+import java.util.Map;
+
+//import com.zyx.controller.point.PointParamAStrategy;
+//import com.zyx.controller.point.PointParamContext;
+//import com.zyx.controller.point.PointPool;
+//import com.zyx.controller.point.RecordPointRunnable;
 
 /**
  * Created by wms on 2016/11/8.
@@ -29,6 +43,9 @@ public class AccountLoginController {
     @Autowired
     private AccountLoginFacade accountLoginFacade;
 
+    @Resource
+    private UserPointFacade userPointFacade;
+
     @RequestMapping(value = "/log_in", method = RequestMethod.POST)
     @ApiOperation(value = "手机密码登录", notes = "手机密码登录")
     public ModelAndView logIn(@RequestParam(name = "phone") String phone, @RequestParam(name = "pwd") String password) {
@@ -38,7 +55,12 @@ public class AccountLoginController {
             jsonView.setAttributesMap(AccountConstants.MAP_PARAM_MISS);
         } else {
             try {
-                jsonView.setAttributesMap(accountLoginFacade.loginByPhoneAndPassword(phone, password));
+                Map<String, Object> map = accountLoginFacade.loginByPhoneAndPassword(phone, password);
+                jsonView.setAttributesMap(map);
+                if (AccountConstants.SUCCESS == (int) map.get(AccountConstants.STATE)) {
+                    AccountInfoVo vo = (AccountInfoVo) map.get(AccountConstants.DATA);
+                    PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new PointParamAStrategy()).build(vo.getId())));
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 jsonView.setAttributesMap(AccountConstants.MAP_500);

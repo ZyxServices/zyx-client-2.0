@@ -88,19 +88,3 @@ public class UserPointController {
     }
 }
 
-class RecordPointRunnable implements Runnable {
-
-    private UserPointFacade userPointFacade;
-
-    private UserPointParam param;
-
-    RecordPointRunnable(UserPointFacade userPointFacade, UserPointParam param) {
-        this.userPointFacade = userPointFacade;
-        this.param = param;
-    }
-
-    @Override
-    public void run() {
-        userPointFacade.recordPoint(param);
-    }
-}
