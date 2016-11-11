@@ -1,7 +1,7 @@
 package com.zyx.controller.account;
 
 import com.zyx.constants.account.AccountConstants;
-import com.zyx.controller.point.PointParamAStrategy;
+import com.zyx.controller.point.PointParamConcernStrategy;
 import com.zyx.controller.point.PointParamContext;
 import com.zyx.controller.point.PointPool;
 import com.zyx.controller.point.RecordPointRunnable;
@@ -59,7 +59,7 @@ public class AccountLoginController {
                 jsonView.setAttributesMap(map);
                 if (AccountConstants.SUCCESS == (int) map.get(AccountConstants.STATE)) {
                     AccountInfoVo vo = (AccountInfoVo) map.get(AccountConstants.DATA);
-                    PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new PointParamAStrategy()).build(vo.getId())));
+                    PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new PointParamConcernStrategy()).build(vo.getId())));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
