@@ -5,8 +5,12 @@ import com.zyx.controller.point.PointParamConcernStrategy;
 import com.zyx.controller.point.PointParamContext;
 import com.zyx.controller.point.PointPool;
 import com.zyx.controller.point.RecordPointRunnable;
+import com.zyx.controller.system.InsertMsgRunnable;
+import com.zyx.controller.system.MsgPool;
+import com.zyx.param.account.UserMsgParam;
 import com.zyx.rpc.account.AccountLoginFacade;
 import com.zyx.rpc.point.UserPointFacade;
+import com.zyx.rpc.system.MsgFacade;
 import com.zyx.vo.account.AccountInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 //import com.zyx.controller.point.PointParamAStrategy;
@@ -43,8 +46,11 @@ public class AccountLoginController {
     @Autowired
     private AccountLoginFacade accountLoginFacade;
 
-    @Resource
+    @Autowired
     private UserPointFacade userPointFacade;
+
+    @Autowired
+    private MsgFacade msgFacade;
 
     @RequestMapping(value = "/log_in", method = RequestMethod.POST)
     @ApiOperation(value = "手机密码登录", notes = "手机密码登录")
@@ -60,6 +66,14 @@ public class AccountLoginController {
                 if (AccountConstants.SUCCESS == (int) map.get(AccountConstants.STATE)) {
                     AccountInfoVo vo = (AccountInfoVo) map.get(AccountConstants.DATA);
                     PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new PointParamConcernStrategy()).build(vo.getId())));
+                    UserMsgParam param = new UserMsgParam();
+                    param.setFromUserId(162);
+                    param.setToUserId(162);
+                    param.setBodyId(162);
+                    param.setBodyType(1);
+                    param.setFromContent("1111111");
+                    param.setCreateTime(System.currentTimeMillis());
+                    MsgPool.getMsgPool().execute(new InsertMsgRunnable(msgFacade, param));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

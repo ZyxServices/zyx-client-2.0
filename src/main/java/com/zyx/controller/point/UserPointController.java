@@ -78,8 +78,8 @@ public class UserPointController {
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
             for (int i = 0; i < 20; i++) {
-                PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new PointParamAStrategy()).build(userId)));
-                PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new PointParamAStrategy()).build(userId, detailMsg)));
+                PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new PointParamActivityStrategy()).build(userId)));
+                PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new PointParamActivityStrategy()).build(userId, detailMsg)));
             }
         }
         Long end = System.currentTimeMillis();

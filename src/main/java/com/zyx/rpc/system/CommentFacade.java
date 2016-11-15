@@ -16,9 +16,10 @@ public interface CommentFacade  {
      * @param commentContent 评论内容
      * @param commentAccount 评论人
      * @param commentState 评论可见范围
+     * @param commentImgPath 评论图片
      * @return
      */
-    Map<String, Object> addComment(Integer commentType, Integer commentId, String commentContent, Integer commentAccount, Integer commentState);
+    Map<String, Object> addComment(Integer commentType, Integer commentId, String commentContent, Integer commentAccount, Integer commentState,String commentImgPath);
 
     /**
      *  获取评论列表
