@@ -42,7 +42,7 @@
     <dubbo:reference interface="com.zyx.rpc.system.SystemCityFacade" id="systemCityFacade" check="false" timeout="10000"/>
     <dubbo:reference interface="com.zyx.rpc.system.CommentFacade" id="commentFacade" check="false" timeout="10000"/>
     <dubbo:reference interface="com.zyx.rpc.system.ReplyFacade" id="replyFacade" check="false" timeout="10000"/>
-
+    <dubbo:reference interface="com.zyx.rpc.system.MsgFacade" id="msgFacade" check="false" timeout="10000" retries="0"/>
 
     <!-- 关注、拉黑服务接口 -->
     <dubbo:reference interface="com.zyx.rpc.attention.UserAttentionFacade" id="userAttentionFacade" check="false"/>
