@@ -37,6 +37,7 @@ public class RecordController {
     @ApiOperation(value = "记录-上传用户运动记录", notes = "上传用户运动记录")
     public ModelAndView uploadSportRecord(
             @RequestParam(name = "token", required = true) String token,
+            @ApiParam(required = true, name = "venueId", value = "场馆ID") @RequestParam(name = "venueId", required = true) Integer venueId,
             @ApiParam(required = true, name = "sportInfoId", value = "运动场馆路线信息ID") @RequestParam(name = "sportInfoId", required = true) Integer sportInfoId,
             @ApiParam(required = true, name = "spendTime", value = "运动时长") @RequestParam(name = "spendTime", required = true) Long spendTime) {
         AbstractView jsonView = new MappingJackson2JsonView();
@@ -48,7 +49,7 @@ public class RecordController {
             if (account == null) {
                 attrMap = RecordConstants.MAP_TOKEN_FAILURE;
             } else {
-                sportRecordFacade.uploadSportRecord(account.getId(), 1, sportInfoId, spendTime);
+                sportRecordFacade.uploadSportRecord(account.getId(), 1, venueId, sportInfoId, spendTime);
                 attrMap.put(RecordConstants.STATE, RecordConstants.SUCCESS);
                 attrMap.put(RecordConstants.SUCCESS_MSG, RecordConstants.MSG_SUCCESS);
             }
@@ -84,7 +85,9 @@ public class RecordController {
     @RequestMapping(value = "/history", method = RequestMethod.POST)
     @ApiOperation(value = "记录-获取用户运动历史情况", notes = "获取用户运动历史情况")
     public ModelAndView getHistoryRecords(
-            @RequestParam(name = "token", required = true) String token) {
+            @RequestParam(name = "token", required = true) String token,
+            @ApiParam(required = true, name = "pageSize", value = "分页大小") @RequestParam(name = "pageSize", required = true) Integer pageSize,
+            @ApiParam(required = true, name = "pageNum", value = "页码 1开始") @RequestParam(name = "pageNum", required = true) Integer pageNum) {
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> attrMap = new HashMap<>();
         if (!accountCommonFacade.validateToken(token)) {
@@ -96,6 +99,8 @@ public class RecordController {
             } else {
                 SportRecordParam param = new SportRecordParam();
                 param.setUserId(account.getId());
+                param.setPageNum(pageNum);
+                param.setPageSize(pageSize);
                 List<SportRecordVo> list = sportRecordFacade.getHistoryRecords(param);
                 attrMap.put(RecordConstants.STATE, RecordConstants.SUCCESS);
                 attrMap.put(RecordConstants.SUCCESS_MSG, RecordConstants.MSG_SUCCESS);
@@ -116,15 +121,19 @@ public class RecordController {
         if (!accountCommonFacade.validateToken(token)) {
             attrMap = RecordConstants.MAP_TOKEN_FAILURE;
         } else {
-            AccountInfoVo account = accountCommonFacade.getAccountVoByToken(token);
-            if (account == null || account.getId() == null) {
+            if (!accountCommonFacade.validateToken(token)) {
                 attrMap = RecordConstants.MAP_TOKEN_FAILURE;
             } else {
-                SportRecordParam param = new SportRecordParam();
-                List<CityFootprintVo> list = sportRecordFacade.getCityFootprints(account.getId());
-                attrMap.put(RecordConstants.STATE, RecordConstants.SUCCESS);
-                attrMap.put(RecordConstants.SUCCESS_MSG, RecordConstants.MSG_SUCCESS);
-                attrMap.put(RecordConstants.DATA, list);
+                AccountInfoVo account = accountCommonFacade.getAccountVoByToken(token);
+                if (account == null || account.getId() == null) {
+                    attrMap = RecordConstants.MAP_TOKEN_FAILURE;
+                } else {
+                    SportRecordParam param = new SportRecordParam();
+                    List<CityFootprintVo> list = sportRecordFacade.getCityFootprints(account.getId());
+                    attrMap.put(RecordConstants.STATE, RecordConstants.SUCCESS);
+                    attrMap.put(RecordConstants.SUCCESS_MSG, RecordConstants.MSG_SUCCESS);
+                    attrMap.put(RecordConstants.DATA, list);
+                }
             }
         }
         jsonView.setAttributesMap(attrMap);
@@ -185,22 +194,31 @@ public class RecordController {
     @RequestMapping(value = "/rank/list", method = RequestMethod.POST)
     @ApiOperation(value = "记录-获取所有用户排行信息", notes = "获取用户排行信息")
     public ModelAndView getRanks(
-            @RequestParam(name = "token", required = true) String token) {
+            @RequestParam(name = "token", required = true) String token,
+            @ApiParam(required = true, name = "pageSize", value = "分页大小") @RequestParam(name = "pageSize", required = false) Integer pageSize,
+            @ApiParam(required = true, name = "pageNum", value = "页码 1开始") @RequestParam(name = "pageNum", required = false) Integer pageNum) {
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> attrMap = new HashMap<>();
-        if (!accountCommonFacade.validateToken(token)) {
-            attrMap = RecordConstants.MAP_TOKEN_FAILURE;
+        if (pageSize < 1 || pageSize < 1) {
+            attrMap.put(RecordConstants.STATE, RecordConstants.PARAM_ERROR);
+            attrMap.put(RecordConstants.ERROR_MSG, RecordConstants.MSG_PARAM_ERROR);
         } else {
-            AccountInfoVo account = accountCommonFacade.getAccountVoByToken(token);
-            if (account == null || account.getId() == null) {
+            if (!accountCommonFacade.validateToken(token)) {
                 attrMap = RecordConstants.MAP_TOKEN_FAILURE;
             } else {
-                RankParam param = new RankParam();
-                param.setUserId(account.getId());
-                List<RankVo> list = sportRecordFacade.getRanks(param);
-                attrMap.put(RecordConstants.STATE, RecordConstants.SUCCESS);
-                attrMap.put(RecordConstants.SUCCESS_MSG, RecordConstants.MSG_SUCCESS);
-                attrMap.put(RecordConstants.DATA, list);
+                AccountInfoVo account = accountCommonFacade.getAccountVoByToken(token);
+                if (account == null || account.getId() == null) {
+                    attrMap = RecordConstants.MAP_TOKEN_FAILURE;
+                } else {
+                    RankParam param = new RankParam();
+                    param.setUserId(account.getId());
+                    param.setPageSize(pageSize);
+                    param.setPageNum(pageNum);
+                    List<RankVo> list = sportRecordFacade.getRanks(param);
+                    attrMap.put(RecordConstants.STATE, RecordConstants.SUCCESS);
+                    attrMap.put(RecordConstants.SUCCESS_MSG, RecordConstants.MSG_SUCCESS);
+                    attrMap.put(RecordConstants.DATA, list);
+                }
             }
         }
         jsonView.setAttributesMap(attrMap);

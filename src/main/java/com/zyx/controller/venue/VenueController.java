@@ -55,7 +55,7 @@ public class VenueController {
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @ApiOperation(value = "记录-获取用户运动总览概况", notes = "获取用户运动总览概况")
+    @ApiOperation(value = "记录-上传运动场馆", notes = "上传运动场馆")
     public ModelAndView uploadVenue(
             @ApiParam(required = true, name = "type", value = "场馆类型 1-室内 2-室外") @RequestParam(name = "type", required = true) Integer type,
             @ApiParam(required = true, name = "name", value = "场馆名称") @RequestParam(name = "name", required = true) String name,
@@ -66,7 +66,8 @@ public class VenueController {
             @ApiParam(required = false, name = "description", value = "描述") @RequestParam(name = "description", required = false) String description,
             @ApiParam(required = false, name = "phone", value = "联系电话") @RequestParam(name = "phone", required = false) String phone,
             @ApiParam(required = false, name = "address", value = "地址") @RequestParam(name = "address", required = false) String address,
-            @ApiParam(required = false, name = "imgUrls", value = "图片") @RequestParam(name = "imgUrls", required = false) String imgUrls
+            @ApiParam(required = false, name = "imgUrls", value = "图片") @RequestParam(name = "imgUrls", required = false) String imgUrls,
+            @ApiParam(required = false, name = "level", value = "综合难度等级") @RequestParam(name = "level", required = false) String level
     ) {
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> attrMap = new HashMap<>();
@@ -82,6 +83,7 @@ public class VenueController {
         entity.setPhone(phone);
         entity.setAddress(address);
         entity.setImgUrls(imgUrls);
+        entity.setLevel(level);
         venueFacade.uploadVenue(entity);
         attrMap.put(Constants.STATE, Constants.SUCCESS);
         attrMap.put(Constants.SUCCESS_MSG, Constants.MSG_SUCCESS);

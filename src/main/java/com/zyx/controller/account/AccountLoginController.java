@@ -49,9 +49,6 @@ public class AccountLoginController {
     @Autowired
     private UserPointFacade userPointFacade;
 
-    @Autowired
-    private MsgFacade msgFacade;
-
     @RequestMapping(value = "/log_in", method = RequestMethod.POST)
     @ApiOperation(value = "手机密码登录", notes = "手机密码登录")
     public ModelAndView logIn(@RequestParam(name = "phone") String phone, @RequestParam(name = "pwd") String password) {
@@ -66,14 +63,6 @@ public class AccountLoginController {
                 if (AccountConstants.SUCCESS == (int) map.get(AccountConstants.STATE)) {
                     AccountInfoVo vo = (AccountInfoVo) map.get(AccountConstants.DATA);
                     PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new PointParamConcernStrategy()).build(vo.getId())));
-                    UserMsgParam param = new UserMsgParam();
-                    param.setFromUserId(162);
-                    param.setToUserId(162);
-                    param.setBodyId(162);
-                    param.setBodyType(1);
-                    param.setFromContent("1111111");
-                    param.setCreateTime(System.currentTimeMillis());
-                    MsgPool.getMsgPool().execute(new InsertMsgRunnable(msgFacade, param));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

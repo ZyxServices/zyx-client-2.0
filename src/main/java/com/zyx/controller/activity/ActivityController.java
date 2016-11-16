@@ -39,7 +39,7 @@ public class ActivityController {
                                 @ApiParam(required = true, name = "userId", value = "用户ID") @RequestParam(name = "userId", required = true) Integer userId,
                                 @ApiParam(required = true, name = "imageUrl", value = "封面图片") @RequestParam(name = "imageUrl", required = true) String imageUrl,
                                 @ApiParam(required = true, name = "title", value = "标题") @RequestParam(name = "title", required = true) String title,
-                                @ApiParam(required = true, name = "descimage", value = "活动内容中的图片") @RequestParam(name = "descimage", required = false) String[] descimage,
+                                @ApiParam(name = "descimage", value = "活动内容中的图片") @RequestParam(name = "descimage", required = false) String[] descimage,
                                 @ApiParam(required = true, name = "desc", value = "活动内容") @RequestParam(name = "desc", required = true) String desc,
                                 @ApiParam(required = true, name = "type", value = "活动类型(1、求约 2、求带)") @RequestParam(name = "type", required = true) Integer type,
                                 @ApiParam(required = true, name = "startTime", value = "活动开始时间") @RequestParam(name = "startTime", required = true) Long startTime,
@@ -48,7 +48,8 @@ public class ActivityController {
                                 @ApiParam(required = true, name = "address", value = "集合地址") @RequestParam(name = "address", required = true) String address,
                                 @ApiParam(required = true, name = "maxPeople", value = "报名人数限制(0 为不限制)") @RequestParam(name = "maxPeople", required = true) Integer maxPeople,
                                 @ApiParam(required = true, name = "price", value = "价格") @RequestParam(name = "price", required = true) Double price,
-                                @ApiParam(required = true, name = "city", value = "城市") @RequestParam(name = "city", required = true) String city) {
+                                @ApiParam(required = true, name = "city", value = "城市") @RequestParam(name = "city", required = true) String city,
+                                @ApiParam(required = true, name = "paymentType", value = "付费类型(0奖励 1免费 2AA)") @RequestParam(name = "paymentType", required = true) Integer paymentType) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
 
@@ -76,6 +77,7 @@ public class ActivityController {
             activityParam.setAddress(address);
             activityParam.setMaxPepople(maxPeople);
             activityParam.setPrice(price);
+            activityParam.setPaymentType(paymentType);
 
             Map<String, Object> map = activityFacade.insertActivity(activityParam);
             jsonView.setAttributesMap(map);

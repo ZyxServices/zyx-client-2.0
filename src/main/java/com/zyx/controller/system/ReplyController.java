@@ -1,6 +1,9 @@
 package com.zyx.controller.system;
 
 import com.zyx.config.BaseResponse;
+import com.zyx.constants.Constants;
+import com.zyx.param.account.UserMsgParam;
+import com.zyx.rpc.system.MsgFacade;
 import com.zyx.rpc.system.ReplyFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +29,9 @@ public class ReplyController {
     @Autowired
     private ReplyFacade replyFacade;
 
+    @Autowired
+    private MsgFacade msgFacade;
+
     @RequestMapping(value = "/addReply", method = RequestMethod.POST)
     @ApiOperation(value = "发表回复", notes = "发表回复")
     public ModelAndView addReply(@RequestParam("token") String token,
@@ -33,10 +39,12 @@ public class ReplyController {
                                  @ApiParam(required = true, name = "reply_from_user", value = "发表评论用户id") @RequestParam("reply_from_user") Integer replyFromUser,
                                  @ApiParam(required = true, name = "reply_to_user", value = "发表评论用户id") @RequestParam(value = "reply_to_user", required = false, defaultValue = "-1") Integer replyToUser,
                                  @RequestParam("reply_content") String replyContent,
-                                 @ApiParam(name = "reply_img_path", value = "回复图片")@RequestParam("reply_img_path") String replyImgPath) {
-        Map<String, Object> map = replyFacade.addReply(replyParentId, replyFromUser, replyToUser, replyContent,replyImgPath);
+                                 @ApiParam(name = "reply_img_path", value = "回复图片") @RequestParam("reply_img_path") String replyImgPath) {
+        Map<String, Object> map = replyFacade.addReply(replyParentId, replyFromUser, replyToUser, replyContent, replyImgPath);
         AbstractView jsonView = new MappingJackson2JsonView();
         jsonView.setAttributesMap(map);
+        // 回复成功，进行消息提示
+        checkAndSendMsg(map, replyParentId, replyFromUser, replyToUser, replyContent);
         return new ModelAndView(jsonView);
     }
     @RequestMapping(value = "/del/{id}/{reply_account_id}", method = {RequestMethod.GET})
@@ -50,4 +58,28 @@ public class ReplyController {
         return new ModelAndView(jsonView);
 
     }
+
+    private void checkAndSendMsg(Map<String, Object> map, Integer replyParentId, Integer replyFromUser, Integer replyToUser, String replyContent) {
+        try {
+            Integer state = (Integer) map.get(Constants.STATE);
+            if (null != state && state == Constants.SUCCESS) {
+                MsgPool.getMsgPool().execute(new InsertMsgRunnable(msgFacade, buildUserMsgParam(replyFromUser, replyToUser, replyContent)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private UserMsgParam buildUserMsgParam(Integer replyFromUser, Integer replyToUser, String replyContent) {
+        //TODO:联调的时候参数进行修改
+        UserMsgParam param = new UserMsgParam();
+        param.setFromUserId(replyFromUser);
+        param.setToUserId(replyToUser);
+        param.setFromContent(replyContent);
+        param.setBodyId(replyToUser);
+        param.setBodyType(1);
+        param.setCreateTime(System.currentTimeMillis());
+        return param;
+    }
+
 }
