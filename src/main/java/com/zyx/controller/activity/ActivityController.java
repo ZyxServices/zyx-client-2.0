@@ -33,6 +33,9 @@ public class ActivityController {
     @Resource
     private ActivityFacade activityFacade;
 
+    @Resource
+    private AccountCommonFacade accountCommonFacade;
+
     @RequestMapping(value = "/release", method = RequestMethod.POST)
     @ApiOperation(value = "活动发布", notes = "活动发布")
     public ModelAndView release(@RequestParam(name = "token", required = true) String token,
@@ -52,6 +55,9 @@ public class ActivityController {
                                 @ApiParam(required = true, name = "paymentType", value = "付费类型(0奖励 1免费 2AA)") @RequestParam(name = "paymentType", required = true) Integer paymentType) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
+
+        boolean token1 = accountCommonFacade.validateToken(token);
+        if (!token1) return new ModelAndView(ActivityUtils.tokenFailure());
 
         if (descimage != null && descimage.length >= 0) {
             String htmlImage = "";

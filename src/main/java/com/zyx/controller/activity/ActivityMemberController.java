@@ -10,6 +10,7 @@ import com.zyx.param.activity.QueryActivityParam;
 import com.zyx.rpc.account.AccountCommonFacade;
 import com.zyx.rpc.activity.ActivityFacade;
 import com.zyx.rpc.activity.ActivityMemberFacade;
+import com.zyx.utils.ActivityUtils;
 import com.zyx.utils.MapUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -48,7 +49,9 @@ public class ActivityMemberController {
                             @ApiParam(required = true, name = "activityId", value = "活动ID") @RequestParam(name = "activityId", required = true) Integer activityId) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
-        boolean validateToken = accountCommonFacade.validateToken(token);
+        boolean token1 = accountCommonFacade.validateToken(token);
+        if (!token1) return new ModelAndView(ActivityUtils.tokenFailure());
+
         ActivityMemberParam param = new ActivityMemberParam();
         param.setActivityId(activityId);
         param.setUserId(userId);
@@ -93,6 +96,4 @@ public class ActivityMemberController {
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
-
-
 }
