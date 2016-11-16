@@ -61,42 +61,42 @@
 
         <!--系统依赖包-->
         <dependency>
-            <groupId>tiyujia-parent-2</groupId>
+            <groupId>tiyujia-parent</groupId>
             <artifactId>zyx-common</artifactId>
             <version>${zyx.common.version}</version>
         </dependency>
         <dependency>
-            <groupId>tiyujia-parent-2</groupId>
+            <groupId>tiyujia-parent</groupId>
             <artifactId>zyx-param</artifactId>
             <version>${zyx.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>tiyujia-parent-2</groupId>
+            <groupId>tiyujia-parent</groupId>
             <artifactId>zyx-entity</artifactId>
             <version>${zyx.entity.version}</version>
         </dependency>
         <dependency>
-            <groupId>tiyujia-parent-2</groupId>
+            <groupId>tiyujia-parent</groupId>
             <artifactId>zyx-vo</artifactId>
             <version>${zyx.vo.version}</version>
         </dependency>
         <dependency>
-            <groupId>tiyujia-parent-2</groupId>
+            <groupId>tiyujia-parent</groupId>
             <artifactId>zyx-utils</artifactId>
             <version>${zyx.utils.version}</version>
         </dependency>
         <dependency>
-            <groupId>tiyujia-parent-2</groupId>
+            <groupId>tiyujia-parent</groupId>
             <artifactId>zyx-constants</artifactId>
             <version>${zyx.constants.version}</version>
         </dependency>
         <dependency>
-            <groupId>tiyujia-parent-2</groupId>
+            <groupId>tiyujia-parent</groupId>
             <artifactId>zyx-param</artifactId>
             <version>${zyx.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>tiyujia-parent-2</groupId>
+            <groupId>tiyujia-parent</groupId>
             <artifactId>zyx-file</artifactId>
             <version>${zyx.file.version}</version>
             <exclusions>
