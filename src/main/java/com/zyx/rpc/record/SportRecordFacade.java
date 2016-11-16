@@ -46,7 +46,7 @@ public interface SportRecordFacade {
      * @param sportInfoId
      * @param spendTime
      */
-    public void uploadSportRecord(Integer userId, Integer type, Integer sportInfoId, Long spendTime);
+    public void uploadSportRecord(Integer userId, Integer type,Integer venueId, Integer sportInfoId, Long spendTime);
 
 
     /**
