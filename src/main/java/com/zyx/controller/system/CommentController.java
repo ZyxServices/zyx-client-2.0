@@ -53,4 +53,16 @@ public class CommentController {
         return new ModelAndView(jsonView);
 
     }
+
+    @RequestMapping(value = "/del/{id}/{comment_account_id}", method = {RequestMethod.GET})
+    @ApiOperation(value = "删除评论", notes = "删除评论", response = BaseResponse.class)
+    public ModelAndView delComment(
+            @ApiParam(required = true, name = "id", value = "评论id") @PathVariable(value = "id") Integer id,
+            @ApiParam(required = true, name = "comment_account_id", value = "评论用户id") @PathVariable(value = "comment_account_id") Integer comment_account_id) {
+        Map<String, Object> map = commentFacade.delComment(id,comment_account_id);
+        AbstractView jsonView = new MappingJackson2JsonView();
+        jsonView.setAttributesMap(map);
+        return new ModelAndView(jsonView);
+
+    }
 }

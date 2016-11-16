@@ -28,4 +28,12 @@ public interface CommentFacade  {
      * @return
      */
     Map<String,Object> queryComment(Integer commentType, Integer commentId);
+
+    /**
+     * 删除评论
+     * @param id
+     * @param comment_accountId
+     * @return
+     */
+    Map<String, Object> delComment(Integer id, Integer comment_accountId);
 }

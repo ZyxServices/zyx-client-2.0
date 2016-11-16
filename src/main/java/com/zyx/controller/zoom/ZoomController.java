@@ -63,7 +63,7 @@ public class ZoomController {
             @PathVariable(value = "loginUserId") Integer loginUserId,
             @PathVariable(value = "start") Integer start,
             @PathVariable(value = "pageSize") Integer pageSize) {
-        Map<String, Object> returnMap = zoomFacade.getMyFollowList(loginUserId, start, pageSize);
+        Map<String, Object> returnMap = zoomFacade.myFollowCon(loginUserId, start, pageSize);
         AbstractView jsonView = new MappingJackson2JsonView();
         jsonView.setAttributesMap(returnMap);
         return new ModelAndView(jsonView);

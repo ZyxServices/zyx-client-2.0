@@ -36,7 +36,7 @@ public interface ZoomFacade {
      * @param loginUserId
      * @return
      */
-    Map<String, Object> getMyFollowList(Integer loginUserId,Integer start,Integer pageSize);
+    Map<String, Object> myFollowCon(Integer loginUserId,Integer start,Integer pageSize);
 
     /**
      * 发布动态(多模块)
