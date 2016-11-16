@@ -1,5 +1,6 @@
 package com.zyx.controller.system;
 
+import com.zyx.config.BaseResponse;
 import com.zyx.constants.Constants;
 import com.zyx.param.account.UserMsgParam;
 import com.zyx.rpc.system.MsgFacade;
@@ -8,10 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
@@ -48,6 +46,17 @@ public class ReplyController {
         // 回复成功，进行消息提示
         checkAndSendMsg(map, replyParentId, replyFromUser, replyToUser, replyContent);
         return new ModelAndView(jsonView);
+    }
+    @RequestMapping(value = "/del/{id}/{reply_account_id}", method = {RequestMethod.GET})
+    @ApiOperation(value = "删除评论", notes = "删除评论", response = BaseResponse.class)
+    public ModelAndView delComment(
+            @ApiParam(required = true, name = "id", value = "回复id") @PathVariable(value = "id") Integer id,
+            @ApiParam(required = true, name = "reply_account_id", value = "回复用户id") @PathVariable(value = "reply_account_id") Integer comment_account_id) {
+        Map<String, Object> map = replyFacade.delReply(id,comment_account_id);
+        AbstractView jsonView = new MappingJackson2JsonView();
+        jsonView.setAttributesMap(map);
+        return new ModelAndView(jsonView);
+
     }
 
     private void checkAndSendMsg(Map<String, Object> map, Integer replyParentId, Integer replyFromUser, Integer replyToUser, String replyContent) {

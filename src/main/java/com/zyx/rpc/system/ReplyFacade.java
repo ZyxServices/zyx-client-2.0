@@ -10,4 +10,7 @@ import java.util.Map;
  */
 public interface ReplyFacade {
     Map<String, Object> addReply(Integer replyParentId, Integer replyFromUser, Integer replyToUser, String replyContent,String replyImgPath);
+
+    Map<String, Object> delReply(Integer id, Integer replyAccountId);
+
 }
