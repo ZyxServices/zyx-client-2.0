@@ -1,33 +1,23 @@
 package com.zyx.rpc.system;
 
-//import com.zyx.param.system.SearchParam;
+import com.zyx.param.system.SearchParam;
 
 import java.util.Map;
 
 /**
- * Created by Rainbow on 2016/8/23.
+ * Created by Rainbow
+ *
+ * @author SubDong
+ * @version V2.0
+ *          Copyright (c)2016 zyx-版权所有
+ * @since 2016/11/9
  */
 public interface SearchFacade {
 
-//    /**
-//     * 分模块检索数据
-//     *
-//     * @return
-//     */
-//    Map<String, Object> modularSearch(SearchParam searchParam);
-//
-//    /**
-//     * 查询当前用户未关注的用户
-//     * @param searchParam
-//     * @return
-//     */
-//    Map<String, Object> searchAccountByNO(SearchParam searchParam);
-//
-//    /**
-//     * 查询当前用户未关注的圈子
-//     * @param searchParam
-//     * @return
-//     */
-//    Map<String, Object> searchCirleByNo(SearchParam searchParam);
-
+    /**
+     * 分模块检索数据
+     *
+     * @return
+     */
+    Map<String, Object> modularSearch(SearchParam searchParam);
 }
