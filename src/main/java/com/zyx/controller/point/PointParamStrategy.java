@@ -23,5 +23,5 @@ public abstract class PointParamStrategy {
         return buildPointParam(userId, null, detailMsg);
     }
 
-    abstract UserPointParam buildPointParam(Integer userId, Long pointCount, String detailMsg);
+    protected abstract UserPointParam buildPointParam(Integer userId, Long pointCount, String detailMsg);
 }

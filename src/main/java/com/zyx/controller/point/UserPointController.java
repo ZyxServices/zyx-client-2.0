@@ -1,6 +1,8 @@
 package com.zyx.controller.point;
 
 import com.zyx.constants.Constants;
+import com.zyx.controller.point.strategy.FBHDStrategy;
+import com.zyx.controller.point.strategy.FBPLStrategy;
 import com.zyx.param.point.UserPointParam;
 import com.zyx.rpc.point.UserPointFacade;
 import io.swagger.annotations.Api;
@@ -59,7 +61,7 @@ public class UserPointController {
         if (StringUtils.isEmpty(token)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            UserPointParam param = new PointParamContext(new PointParamConcernStrategy()).build(userId);
+            UserPointParam param = new PointParamContext(new FBPLStrategy()).build(userId);
             param.setPointCount((long) pointCount);
             param.setDetailMsg(detailMsg);
             jsonView.setAttributesMap(userPointFacade.recordPoint(param));
@@ -78,8 +80,8 @@ public class UserPointController {
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
             for (int i = 0; i < 20; i++) {
-                PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new PointParamActivityStrategy()).build(userId)));
-                PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new PointParamActivityStrategy()).build(userId, detailMsg)));
+                PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new FBHDStrategy()).build(userId)));
+                PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new FBHDStrategy()).build(userId, detailMsg)));
             }
         }
         Long end = System.currentTimeMillis();
