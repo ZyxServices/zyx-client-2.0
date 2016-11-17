@@ -1,6 +1,7 @@
-package com.zyx.controller.point;
+package com.zyx.controller.point.strategy;
 
 import com.zyx.constants.point.PointConstants;
+import com.zyx.controller.point.PointParamStrategy;
 import com.zyx.param.point.UserPointParam;
 import com.zyx.param.point.UserPointRuleParam;
 
@@ -13,17 +14,17 @@ import com.zyx.param.point.UserPointRuleParam;
  *          Copyright (c)2016 tyj-版权所有
  * @since 2016/11/4
  */
-public class PointParamConcernStrategy extends PointParamStrategy {
+public class ZBXStrategy extends PointParamStrategy {
     @Override
     public UserPointParam buildPointParam(Integer userId, Long pointCount, String detailMsg) {
         UserPointParam userPointParam = new UserPointParam();
         userPointParam.setUserId(userId);
         userPointParam.setPointType(PointConstants.POINT_TYPE_PANYAN);
-        userPointParam.setPointCount(null == pointCount ? 10L : pointCount);
+        userPointParam.setPointCount(null == pointCount ? PointConstants.POINT_COUNT_ZBX : pointCount);
         userPointParam.setDetailTable(PointConstants.TABLE_PANYAN);
-        userPointParam.setDetailType(PointConstants.DETAIL_TYPE_PL);
-        userPointParam.setDetailMsg(detailMsg);
-        userPointParam.setRuleParam(new UserPointRuleParam(1, 3));
+        userPointParam.setDetailType(PointConstants.DETAIL_TYPE_ZBX);
+        userPointParam.setDetailMsg(detailMsg + PointConstants.DETAIL_TYPE_MSG_ZBX);
+        userPointParam.setRuleParam(new UserPointRuleParam(1, 1));
         return userPointParam;
     }
 }

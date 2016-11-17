@@ -1,16 +1,13 @@
 package com.zyx.controller.account;
 
 import com.zyx.constants.account.AccountConstants;
-import com.zyx.controller.point.PointParamConcernStrategy;
 import com.zyx.controller.point.PointParamContext;
 import com.zyx.controller.point.PointPool;
 import com.zyx.controller.point.RecordPointRunnable;
-import com.zyx.controller.system.InsertMsgRunnable;
-import com.zyx.controller.system.MsgPool;
-import com.zyx.param.account.UserMsgParam;
+import com.zyx.controller.point.strategy.FBPLStrategy;
+import com.zyx.controller.point.strategy.LoginStrategy;
 import com.zyx.rpc.account.AccountLoginFacade;
 import com.zyx.rpc.point.UserPointFacade;
-import com.zyx.rpc.system.MsgFacade;
 import com.zyx.vo.account.AccountInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,11 +22,6 @@ import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import java.util.Map;
-
-//import com.zyx.controller.point.PointParamAStrategy;
-//import com.zyx.controller.point.PointParamContext;
-//import com.zyx.controller.point.PointPool;
-//import com.zyx.controller.point.RecordPointRunnable;
 
 /**
  * Created by wms on 2016/11/8.
@@ -60,10 +52,7 @@ public class AccountLoginController {
             try {
                 Map<String, Object> map = accountLoginFacade.loginByPhoneAndPassword(phone, password);
                 jsonView.setAttributesMap(map);
-                if (AccountConstants.SUCCESS == (int) map.get(AccountConstants.STATE)) {
-                    AccountInfoVo vo = (AccountInfoVo) map.get(AccountConstants.DATA);
-                    PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new PointParamConcernStrategy()).build(vo.getId())));
-                }
+                checkAndRecordPoint(map);
             } catch (Exception e) {
                 e.printStackTrace();
                 jsonView.setAttributesMap(AccountConstants.MAP_500);
@@ -71,6 +60,18 @@ public class AccountLoginController {
         }
 
         return new ModelAndView(jsonView);
+    }
+
+    private void checkAndRecordPoint(Map<String, Object> map) {
+        try {// 积分方法不保证成功或失败
+            Object state = map.get(AccountConstants.STATE);
+            if (state != null && AccountConstants.SUCCESS == (int) map.get(AccountConstants.STATE)) {
+                AccountInfoVo vo = (AccountInfoVo) map.get(AccountConstants.DATA);
+                PointPool.getPointPool().execute(new RecordPointRunnable(userPointFacade, new PointParamContext(new LoginStrategy()).build(vo.getId())));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping(value = "/log_out", method = RequestMethod.GET)
