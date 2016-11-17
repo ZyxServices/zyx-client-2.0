@@ -1,5 +1,6 @@
 package com.zyx.rpc.system;
 
+import com.zyx.param.system.SearchDevaParam;
 import com.zyx.param.system.SearchParam;
 
 import java.util.Map;
@@ -20,4 +21,11 @@ public interface SearchFacade {
      * @return
      */
     Map<String, Object> modularSearch(SearchParam searchParam);
+
+    /**
+     * 官方推荐查询
+     *
+     * @return
+     */
+    Map<String, Object> devaSearch(SearchDevaParam searchDevaParam);
 }

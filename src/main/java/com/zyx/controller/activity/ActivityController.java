@@ -9,6 +9,7 @@ import com.zyx.rpc.account.AccountCommonFacade;
 import com.zyx.utils.ActivityUtils;
 import com.zyx.rpc.activity.ActivityFacade;
 import com.zyx.utils.MapUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/v1/activity")
+@Api(description = "活动接口。【1】活动发布。【2】活动列表查询。【3】活动详细信息查询")
 public class ActivityController {
 
     @Resource
@@ -84,6 +86,7 @@ public class ActivityController {
             activityParam.setMaxPepople(maxPeople);
             activityParam.setPrice(price);
             activityParam.setPaymentType(paymentType);
+            activityParam.setCity(city);
 
             Map<String, Object> map = activityFacade.insertActivity(activityParam);
             jsonView.setAttributesMap(map);

@@ -28,7 +28,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(value = "/v2/venue")
-@Api(description = "场馆相关接口")
+@Api(description = "场馆相关接口【1】场馆-获取定位点半径范围内场馆信息 【2】记录-上传运动场馆 【3】查询场馆列表信息 【4】查询某个场馆详细信息")
 public class VenueController {
     @Autowired
     VenueFacade venueFacade;

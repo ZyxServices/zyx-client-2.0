@@ -12,6 +12,7 @@ import com.zyx.rpc.activity.ActivityFacade;
 import com.zyx.rpc.activity.ActivityMemberFacade;
 import com.zyx.utils.ActivityUtils;
 import com.zyx.utils.MapUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/v1/member")
+@Api(description = "活动报名接口。【1】活动报名。【2】通过活动id查询报名用户列表。【3】通过用户ID查询用户所报名的活动列表")
 public class ActivityMemberController {
 
     @Resource

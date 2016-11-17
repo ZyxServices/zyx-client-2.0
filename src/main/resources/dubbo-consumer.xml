@@ -18,9 +18,9 @@
     <dubbo:protocol threads="100"/>
 
     <!-- 活动功能 -->
-    <dubbo:reference interface="com.zyx.rpc.activity.ActivityFacade" id="activityFacade" check="false"/>
+    <dubbo:reference interface="com.zyx.rpc.activity.ActivityFacade" id="activityFacade" check="false" retries="0"/>
     <!-- 活动报名功能 -->
-    <dubbo:reference interface="com.zyx.rpc.activity.ActivityMemberFacade" id="activityMemberFacade" check="false"/>
+    <dubbo:reference interface="com.zyx.rpc.activity.ActivityMemberFacade" id="activityMemberFacade" check="false" retries="0"/>
 
     <!-- 直播服务接口 -->
     <dubbo:reference interface="com.zyx.rpc.live.LiveInfoFacade" id="liveInfoFacade" check="false"/>

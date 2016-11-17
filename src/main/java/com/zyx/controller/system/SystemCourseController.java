@@ -29,7 +29,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/v1/city")
-@Api(description = "教程攻略")
+@Api(description = "教程攻略 【1】查询教程攻略分类标签 【2】查询教程攻略列表 【3】通过教程ID查询教程详细信息")
 public class SystemCourseController {
 
     @Resource
