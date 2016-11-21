@@ -60,4 +60,22 @@ public interface ZoomFacade {
      * @return
      */
     Map<String, Object> addZan(Integer body_id, Integer body_type, Integer account_id);
+
+    /**
+     *
+     * @param title
+     * @param content
+     * @param accountId
+     * @param labelId
+     * @return
+     */
+    Map<String, Object> addEquip(String title, String content, Integer accountId,Integer labelId);
+
+
+    /**
+     * 装备控列表
+     * @param eId
+     * @return
+     */
+    Map<String,Object> queryEquip(Integer eId);
 }
