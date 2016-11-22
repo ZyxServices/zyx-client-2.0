@@ -100,11 +100,21 @@ public class ZoomController {
     }
 
     @RequestMapping(value = "equip/query", method = RequestMethod.POST)
-    @ApiOperation(value = "装备控查询", notes = "装备控发布")
+    @ApiOperation(value = "装备秀列表查询", notes = "装备秀列表查询")
     public ModelAndView queryEquip(@RequestParam(name = "token", value = "", required = false) String token,
-                                   @ApiParam(required = false, name = "id", value = "装备控id") @RequestParam(name = "eId", required = false) Integer eid) {
+                                   @ApiParam(required = false, name = "id", value = "装备秀id") @RequestParam(name = "eId", required = false) Integer eid) {
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> map = zoomFacade.queryEquip(eid);
+        jsonView.setAttributesMap(map);
+        return new ModelAndView(jsonView);
+    }
+
+    @RequestMapping(value = "equip/queryOne/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "装备秀详情查询", notes = "装备秀详情查询")
+    public ModelAndView queryOne(@RequestParam(name = "token", value = "", required = false) String token,
+                                 @ApiParam(required = false, name = "id", value = "装备秀id") @PathVariable("id") Integer eid) {
+        AbstractView jsonView = new MappingJackson2JsonView();
+        Map<String, Object> map = zoomFacade.queryOne(eid);
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }

@@ -39,7 +39,7 @@ public class ReplyController {
                                  @ApiParam(required = true, name = "reply_from_user", value = "发表评论用户id") @RequestParam("reply_from_user") Integer replyFromUser,
                                  @ApiParam(required = true, name = "reply_to_user", value = "发表评论用户id") @RequestParam(value = "reply_to_user", required = false, defaultValue = "-1") Integer replyToUser,
                                  @RequestParam("reply_content") String replyContent,
-                                 @ApiParam(name = "reply_img_path", value = "回复图片") @RequestParam("reply_img_path") String replyImgPath) {
+                                 @ApiParam(name = "reply_img_path", value = "回复图片") @RequestParam(value = "reply_img_path",required = false) String replyImgPath) {
         Map<String, Object> map = replyFacade.addReply(replyParentId, replyFromUser, replyToUser, replyContent, replyImgPath);
         AbstractView jsonView = new MappingJackson2JsonView();
         jsonView.setAttributesMap(map);
