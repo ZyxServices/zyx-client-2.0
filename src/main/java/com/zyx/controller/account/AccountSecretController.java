@@ -59,18 +59,18 @@ public class AccountSecretController {
     @RequestMapping(value = "/retrieve_secret", method = RequestMethod.POST)
     @ApiOperation(value = "忘记密码", notes = "忘记密码，通过手机号和验证码修改密码")
     public ModelAndView retrieveSecret(@RequestParam(name = "phone") String phone,
-                                       @RequestParam(name = "pwd") String password,
-                                       @RequestParam(name = "re_pwd") String rePassword) {
+                                       @RequestParam(name = "code") String code,
+                                       @RequestParam(name = "pwd") String password) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
-        if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) || StringUtils.isEmpty(rePassword)) {
+        if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(code) || StringUtils.isEmpty(password)) {
             jsonView.setAttributesMap(AccountConstants.MAP_PARAM_MISS);
         } else {
             try {
                 AccountLoginParam accountLoginParam = new AccountLoginParam();
                 accountLoginParam.setPhone(phone);
+                accountLoginParam.setCode(code);
                 accountLoginParam.setPassword(password);
-                accountLoginParam.setPassword2(rePassword);
                 jsonView.setAttributesMap(accountSecretFacade.retrieveSecret(accountLoginParam));
             } catch (Exception e) {
                 e.printStackTrace();
