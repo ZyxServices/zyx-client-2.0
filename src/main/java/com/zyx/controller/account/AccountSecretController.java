@@ -71,6 +71,7 @@ public class AccountSecretController {
                 accountLoginParam.setPhone(phone);
                 accountLoginParam.setCode(code);
                 accountLoginParam.setPassword(password);
+                accountLoginParam.setPassword2(password);
                 jsonView.setAttributesMap(accountSecretFacade.retrieveSecret(accountLoginParam));
             } catch (Exception e) {
                 e.printStackTrace();

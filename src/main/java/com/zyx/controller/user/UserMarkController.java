@@ -3,6 +3,7 @@ package com.zyx.controller.user;
 import com.zyx.constants.user.UserConstants;
 import com.zyx.interceptor.Authorization;
 import com.zyx.param.user.UserMarkParam;
+import com.zyx.rpc.common.TokenFacade;
 import com.zyx.rpc.user.UserMarkFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +33,9 @@ import java.util.Map;
 public class UserMarkController {
     @Autowired
     private UserMarkFacade userMarkFacade;
+
+    @Autowired
+    private TokenFacade tokenFacade;
 
     @RequestMapping(value = "/sign", method = RequestMethod.GET)
     @ApiOperation(value = "签到", notes = "签到")
@@ -65,6 +69,11 @@ public class UserMarkController {
 
     private Map<String, Object> doSign(String token, int userId) {
         try {
+            // 判断token是否失效
+            Map<String, Object> map = tokenFacade.validateTokenIncludeOther(token, userId);
+            if (map != null) {
+                return map;
+            }
             return userMarkFacade.sign(buildUserMarkParam(token, userId));
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,6 +83,11 @@ public class UserMarkController {
 
     private Map<String, Object> doQuerySign(String token, int userId) {
         try {
+            // 判断token是否失效
+            Map<String, Object> map = tokenFacade.validateTokenIncludeOther(token, userId);
+            if (map != null) {
+                return map;
+            }
             return userMarkFacade.querySign(buildUserMarkParam(token, userId));
         } catch (Exception e) {
             e.printStackTrace();
