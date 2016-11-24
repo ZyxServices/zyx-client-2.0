@@ -57,14 +57,14 @@ public class ZoomController {
         return new ModelAndView(jsonView);
     }
 
-    @RequestMapping(value = "concern/getFollow/{token}/{loginUserId}/{start}/{pageSize}", method = RequestMethod.GET)
+    @RequestMapping(value = "concern/getFollow", method = RequestMethod.GET)
     @ApiOperation(value = "根据登录用户查询当前用户的关注的动态列表", notes = "loginUserId：登录用户id")
     public ModelAndView getFollow(
-            @PathVariable(value = "token") String token,
-            @PathVariable(value = "loginUserId") Integer loginUserId,
-            @PathVariable(value = "start") Integer start,
-            @PathVariable(value = "pageSize") Integer pageSize) {
-        Map<String, Object> returnMap = zoomFacade.myFollowCon(loginUserId, start, pageSize);
+            @RequestParam(value = "token") String token,
+            @RequestParam(value = "loginUserId") Integer loginUserId,
+            @RequestParam(value = "page") Integer page,
+            @RequestParam(value = "pageSize") Integer pageSize) {
+        Map<String, Object> returnMap = zoomFacade.myFollowCon(loginUserId, page, pageSize);
         AbstractView jsonView = new MappingJackson2JsonView();
         jsonView.setAttributesMap(returnMap);
         return new ModelAndView(jsonView);
@@ -75,13 +75,13 @@ public class ZoomController {
     public ModelAndView addCern(@RequestParam(name = "token", value = "", required = false) String token,
                                 @ApiParam(required = true, name = "userId", value = "发布动态id") @RequestParam(name = "userId") Integer userId,
 //                                @ApiParam(required = true, name = "type", value = "动态类型1为个人动态，2为活动动态，3为明星动态，4为圈子动态") @RequestParam(name = "type") Integer type,
-                                @RequestParam(name = "cernTitle") String cernTitle,
                                 @RequestParam(name = "content") String content,
                                 @RequestParam(name = "imgUrl", required = false) String imgUrl,
-                                @ApiParam(required = true, name = "videoUrl", value = "视频url，一期暂无") @RequestParam(name = "videoUrl", required = false) String videoUrl,
-                                @ApiParam(required = true, name = "visible", value = "可见范围，可见范围0所有可见，1好友可见") @RequestParam(name = "visible") Integer visible) {
+                                @ApiParam(name = "videoUrl", value = "视频url") @RequestParam(name = "videoUrl", required = false) String videoUrl,
+                                @ApiParam(required = true, name = "visible", value = "可见范围，可见范围0所有可见，1好友可见") @RequestParam(name = "visible") Integer visible,
+                                @ApiParam(name = "local", value = "位置") @RequestParam(name = "local", required = false) String local) {
         AbstractView jsonView = new MappingJackson2JsonView();
-        Map<String, Object> map = zoomFacade.addCern(userId, 0, cernTitle, content, imgUrl, videoUrl, visible);
+        Map<String, Object> map = zoomFacade.addCern(userId, 0, content, imgUrl, videoUrl, visible,local);
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
@@ -100,11 +100,21 @@ public class ZoomController {
     }
 
     @RequestMapping(value = "equip/query", method = RequestMethod.POST)
-    @ApiOperation(value = "装备控查询", notes = "装备控发布")
+    @ApiOperation(value = "装备秀列表查询", notes = "装备秀列表查询")
     public ModelAndView queryEquip(@RequestParam(name = "token", value = "", required = false) String token,
-                                   @ApiParam(required = false, name = "id", value = "装备控id") @RequestParam(name = "eId", required = false) Integer eid) {
+                                   @ApiParam(required = false, name = "id", value = "装备秀id") @RequestParam(name = "eId", required = false) Integer eid) {
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> map = zoomFacade.queryEquip(eid);
+        jsonView.setAttributesMap(map);
+        return new ModelAndView(jsonView);
+    }
+
+    @RequestMapping(value = "equip/queryOne", method = RequestMethod.GET)
+    @ApiOperation(value = "装备秀详情查询", notes = "装备秀详情查询")
+    public ModelAndView queryOne(@RequestParam(name = "token", value = "", required = false) String token,
+                                 @ApiParam(required = false, name = "id", value = "装备秀id") @RequestParam("id") Integer eid) {
+        AbstractView jsonView = new MappingJackson2JsonView();
+        Map<String, Object> map = zoomFacade.queryOne(eid);
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }

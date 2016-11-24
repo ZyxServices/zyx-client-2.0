@@ -2,6 +2,7 @@ package com.zyx.controller.user;
 
 import com.zyx.constants.Constants;
 import com.zyx.param.user.UserAddressParam;
+import com.zyx.rpc.common.TokenFacade;
 import com.zyx.rpc.user.UserAddressFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -34,6 +36,9 @@ public class UserAddressController {
     @Autowired
     private UserAddressFacade accountAddressFacade;
 
+    @Autowired
+    private TokenFacade tokenFacade;
+
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ApiOperation(value = "新增收货地址", notes = "新增收货地址。需要token验证。")
     public ModelAndView insert(@RequestParam(name = "token") String token,
@@ -49,15 +54,21 @@ public class UserAddressController {
         if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userId) || StringUtils.isEmpty(receiver) || StringUtils.isEmpty(phone) || StringUtils.isEmpty(zipCode) || StringUtils.isEmpty(content)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            UserAddressParam param = new UserAddressParam();
-            param.setToken(token);
-            param.setUserId(userId);
-            param.setContent(content);
-            param.setPhone(phone);
-            param.setReceiver(receiver);
-            param.setZipCode(zipCode);
-            param.setAddressId(UUID.randomUUID().toString().replaceAll("-", ""));
-            jsonView.setAttributesMap(accountAddressFacade.insertUserAddressInfo(param));
+            // 判断token是否失效
+            Map<String, Object> map = tokenFacade.validateToken(token, userId);
+            if (map != null) {
+                jsonView.setAttributesMap(map);
+            } else {
+                UserAddressParam param = new UserAddressParam();
+                param.setToken(token);
+                param.setUserId(userId);
+                param.setContent(content);
+                param.setPhone(phone);
+                param.setReceiver(receiver);
+                param.setZipCode(zipCode);
+                param.setAddressId(UUID.randomUUID().toString().replaceAll("-", ""));
+                jsonView.setAttributesMap(accountAddressFacade.insertUserAddressInfo(param));
+            }
         }
         return new ModelAndView(jsonView);
     }
@@ -77,14 +88,20 @@ public class UserAddressController {
         if (StringUtils.isEmpty(token) || StringUtils.isEmpty(address_id)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            UserAddressParam param = new UserAddressParam();
-            param.setToken(token);
-            param.setAddressId(address_id);
-            param.setContent(content);
-            param.setPhone(phone);
-            param.setReceiver(receiver);
-            param.setZipCode(zipCode);
-            jsonView.setAttributesMap(accountAddressFacade.editReceiptAddress(param));
+            // 判断token是否失效
+            Map<String, Object> map = tokenFacade.validateToken(token);
+            if (map != null) {
+                jsonView.setAttributesMap(map);
+            } else {
+                UserAddressParam param = new UserAddressParam();
+                param.setToken(token);
+                param.setAddressId(address_id);
+                param.setContent(content);
+                param.setPhone(phone);
+                param.setReceiver(receiver);
+                param.setZipCode(zipCode);
+                jsonView.setAttributesMap(accountAddressFacade.editReceiptAddress(param));
+            }
         }
         return new ModelAndView(jsonView);
     }
@@ -98,10 +115,16 @@ public class UserAddressController {
         if (StringUtils.isEmpty(token) || StringUtils.isEmpty(addressId)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            UserAddressParam param = new UserAddressParam();
-            param.setToken(token);
-            param.setAddressId(addressId);
-            jsonView.setAttributesMap(accountAddressFacade.queryUserAddressInfo(param));
+            // 判断token是否失效
+            Map<String, Object> map = tokenFacade.validateToken(token);
+            if (map != null) {
+                jsonView.setAttributesMap(map);
+            } else {
+                UserAddressParam param = new UserAddressParam();
+                param.setToken(token);
+                param.setAddressId(addressId);
+                jsonView.setAttributesMap(accountAddressFacade.queryUserAddressInfo(param));
+            }
         }
         return new ModelAndView(jsonView);
     }
@@ -116,10 +139,16 @@ public class UserAddressController {
         if (StringUtils.isEmpty(token) || StringUtils.isEmpty(addressId)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            UserAddressParam param = new UserAddressParam();
-            param.setToken(token);
-            param.setAddressId(addressId);
-            jsonView.setAttributesMap(accountAddressFacade.deleteUserAddressInfo(param));
+            // 判断token是否失效
+            Map<String, Object> map = tokenFacade.validateToken(token);
+            if (map != null) {
+                jsonView.setAttributesMap(map);
+            } else {
+                UserAddressParam param = new UserAddressParam();
+                param.setToken(token);
+                param.setAddressId(addressId);
+                jsonView.setAttributesMap(accountAddressFacade.deleteUserAddressInfo(param));
+            }
         }
         return new ModelAndView(jsonView);
     }
@@ -129,17 +158,23 @@ public class UserAddressController {
     public ModelAndView defaultAddress(@RequestParam(name = "token") String token,
                                        @RequestParam(name = "account_id") Integer userId,
                                        @ApiParam(required = true, name = "address_id", value = "address_id：32位的字符串")
-                                       @RequestParam(name = "address_id")String addressId) {
+                                       @RequestParam(name = "address_id") String addressId) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
         if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userId) || StringUtils.isEmpty(addressId)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            UserAddressParam param = new UserAddressParam();
-            param.setToken(token);
-            param.setUserId(userId);
-            param.setAddressId(addressId);
-            jsonView.setAttributesMap(accountAddressFacade.setDefaultReceiptAddress(param));
+            // 判断token是否失效
+            Map<String, Object> map = tokenFacade.validateToken(token, userId);
+            if (map != null) {
+                jsonView.setAttributesMap(map);
+            } else {
+                UserAddressParam param = new UserAddressParam();
+                param.setToken(token);
+                param.setUserId(userId);
+                param.setAddressId(addressId);
+                jsonView.setAttributesMap(accountAddressFacade.setDefaultReceiptAddress(param));
+            }
         }
         return new ModelAndView(jsonView);
     }
@@ -153,10 +188,16 @@ public class UserAddressController {
         if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userId)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            UserAddressParam param = new UserAddressParam();
-            param.setToken(token);
-            param.setUserId(userId);
-            jsonView.setAttributesMap(accountAddressFacade.queryUserAddressList(param));
+            // 判断token是否失效
+            Map<String, Object> map = tokenFacade.validateToken(token, userId);
+            if (map != null) {
+                jsonView.setAttributesMap(map);
+            } else {
+                UserAddressParam param = new UserAddressParam();
+                param.setToken(token);
+                param.setUserId(userId);
+                jsonView.setAttributesMap(accountAddressFacade.queryUserAddressList(param));
+            }
         }
         return new ModelAndView(jsonView);
     }
