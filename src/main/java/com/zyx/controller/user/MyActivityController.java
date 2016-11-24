@@ -31,7 +31,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/v2/my/activity")
-@Api(description = "我的活动接口。【1】查询我的活动列表。")
+@Api(description = "我的活动接口。【1】查询我发布的活动列表。【2】查询我参与的活动列表。")
 public class MyActivityController {
 
     @Autowired
