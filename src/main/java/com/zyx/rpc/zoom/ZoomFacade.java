@@ -36,20 +36,19 @@ public interface ZoomFacade {
      * @param loginUserId
      * @return
      */
-    Map<String, Object> myFollowCon(Integer loginUserId,Integer start,Integer pageSize);
+    Map<String, Object> myFollowCon(Integer loginUserId,Integer page,Integer pageSize);
 
     /**
      * 发布动态(多模块)
      *
      * @param userId
-     * @param cernTitle
      * @param content
      * @param cernImgurl
      * @param videoUrl
      * @param visible
      * @return
      */
-    Map<String, Object> addCern(Integer userId, Integer type, String cernTitle, String content, String cernImgurl, String videoUrl, Integer visible);
+    Map<String, Object> addCern(Integer userId, Integer type, String content, String cernImgurl, String videoUrl, Integer visible,String local);
 
     /**
      * 各模块点赞
