@@ -49,11 +49,11 @@ public class UserRegisterTest {
 
     @Test
     public void testMethod1() throws IOException {
-//        HttpPost httpPost = new HttpPost("http://localhost:8080/v1/account/register");
+//        HttpPost httpPost = new HttpPost("http://localhost:8080/v2/account/register");
         try {
             CloseableHttpClient client = HttpClients.createDefault();
             HttpClient client1 = new HttpClient();
-            PostMethod postMethod = new PostMethod("http://localhost:8080/v1/account/register");
+            PostMethod postMethod = new PostMethod("http://localhost:8080/v2/account/register");
             postMethod.setParameter("phone", "18502826672");
 //            List<NameValuePair> params = new ArrayList<NameValuePair>();
 //            params.add(new BasicNameValuePair("phone", "18502826672"));

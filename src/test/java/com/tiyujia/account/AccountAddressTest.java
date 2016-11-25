@@ -41,7 +41,7 @@ public class AccountAddressTest {
 
     @Test
     public void insertAccountAddressInfoTest() throws IOException {
-        HttpPost httpPost = new HttpPost("http://localhost:8080/v1/account/receiptAddress/insert");
+        HttpPost httpPost = new HttpPost("http://localhost:8080/v2/account/receiptAddress/insert");
         try {
             CloseableHttpClient client = HttpClients.createDefault();
             List<NameValuePair> params = new ArrayList<NameValuePair>();

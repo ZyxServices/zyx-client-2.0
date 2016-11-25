@@ -27,7 +27,7 @@ public class ZanController {
     @Resource
     private ZoomFacade zoomFacade;
 
-    @RequestMapping(value = "/v1/zan/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/v2/zan/add", method = RequestMethod.POST)
     @ApiOperation(value = "点赞", notes = "点赞")
     public ModelAndView zan(@RequestParam(name = "token") String token,
                             @ApiParam(required = true, name = "bodyId", value = "模块id") @RequestParam(name = "bodyId") Integer bodyId,

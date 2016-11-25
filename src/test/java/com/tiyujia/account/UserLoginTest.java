@@ -46,7 +46,7 @@ public class UserLoginTest {
 
     @Test
     public void testMethod1() throws IOException {
-//        HttpPost httpPost = new HttpPost("http://localhost:8080/v1/account/login");
+//        HttpPost httpPost = new HttpPost("http://localhost:8080/v2/account/login");
 //        try {
 //            CloseableHttpClient client = HttpClients.createDefault();
 //            List<NameValuePair> params = new ArrayList<NameValuePair>();

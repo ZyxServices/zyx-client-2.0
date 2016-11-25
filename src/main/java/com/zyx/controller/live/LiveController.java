@@ -43,7 +43,7 @@
 // * @update 2016年6月14日 下午3:17:26
 // */
 //@RestController
-//@RequestMapping("/v1/live")
+//@RequestMapping("/v2/live")
 //@Api(description = "直播相关接口")
 //public class LiveController {
 //

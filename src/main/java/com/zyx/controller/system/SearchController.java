@@ -23,7 +23,7 @@ import java.util.Map;
  * Created by Rainbow on 2016/8/24.
  */
 @RestController
-@RequestMapping("/v1/search")
+@RequestMapping("/v2/search")
 @Api(description = "App 多模块查询 【1】搜索查询 【2】官方推荐查询")
 public class SearchController {
 

@@ -33,7 +33,7 @@
 // */
 //
 //@RestController
-//@RequestMapping("/v1/collect")
+//@RequestMapping("/v2/collect")
 //@Api(description = "直播相关接口")
 //public class CollectionController {
 //

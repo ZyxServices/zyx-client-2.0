@@ -28,7 +28,7 @@ import java.util.Map;
  *          Copyright (c)2016 tyj-版权所有
  */
 @RestController
-@RequestMapping("/v1/activity")
+@RequestMapping("/v2/activity")
 @Api(description = "活动接口。【1】活动发布。【2】活动列表查询。【3】活动详细信息查询")
 public class ActivityController {
 
@@ -98,6 +98,7 @@ public class ActivityController {
     @ApiOperation(value = "活动查询筛选", notes = "活动查询筛选")
     public ModelAndView query(@ApiParam(required = true, name = "state", value = "状态（0、全部  1、正在报名 2、已结束）") @RequestParam(name = "state", required = true) Integer state,
                               @ApiParam(required = true, name = "type", value = "类型（0、全部 1、求约 2、求带）") @RequestParam(name = "type", required = true) Integer type,
+                              @ApiParam(required = false, name = "city", value = "城市") @RequestParam(name = "city", required = false) String city,
                               @ApiParam(required = true, name = "number", value = "每页显示条数") @RequestParam(name = "number", required = true) Integer number,
                               @ApiParam(required = true, name = "pageNumber", value = "当前第几页") @RequestParam(name = "pageNumber", required = true) Integer pageNumber) {
 
@@ -108,6 +109,7 @@ public class ActivityController {
         queryActivityParam.setActivityType(type);
         queryActivityParam.setNumber(number);
         queryActivityParam.setPageNumber(pageNumber);
+        queryActivityParam.setCity(city);
 
         Map<String, Object> map = activityFacade.queryActivity(queryActivityParam);
         jsonView.setAttributesMap(map);

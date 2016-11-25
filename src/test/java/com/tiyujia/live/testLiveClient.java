@@ -36,7 +36,7 @@ public class testLiveClient {
 		}
 	}
 	public static void testCreateLivePost() throws IOException {
-        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v1/live/create");
+        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v2/live/create");
         try {
         	CloseableHttpClient client = HttpClients.createDefault();
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -57,7 +57,7 @@ public class testLiveClient {
     }
 	
 	public static void testUpdatePost() throws IOException {
-        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v1/live/update");
+        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v2/live/update");
         try {
         	CloseableHttpClient client = HttpClients.createDefault();
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -75,7 +75,7 @@ public class testLiveClient {
     }
 	
 	public static void testGetListPost() throws IOException {
-        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v1/live/list");
+        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v2/live/list");
         try {
         	CloseableHttpClient client = HttpClients.createDefault();
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -101,7 +101,7 @@ public class testLiveClient {
     }
 	
 	public static void testGetByIdtPost() throws IOException {
-        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v1/live/get");
+        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v2/live/get");
         try {
         	CloseableHttpClient client = HttpClients.createDefault();
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -117,7 +117,7 @@ public class testLiveClient {
     }
 	
 	public static void testTextCreatePost() throws IOException {
-        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v1/live/text/create");
+        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v2/live/text/create");
         try {
         	CloseableHttpClient client = HttpClients.createDefault();
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -134,7 +134,7 @@ public class testLiveClient {
     }
 	
 	public static void testGetTextListPost() throws IOException {
-        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v1/live/text/list");
+        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v2/live/text/list");
         try {
         	CloseableHttpClient client = HttpClients.createDefault();
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -151,7 +151,7 @@ public class testLiveClient {
     }
 	
 	public static void testGetTextPost() throws IOException {
-        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v1/live/text/get");
+        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v2/live/text/get");
         try {
         	CloseableHttpClient client = HttpClients.createDefault();
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -166,7 +166,7 @@ public class testLiveClient {
         }
     }
 	public static void testDeleteTextPost() throws IOException {
-        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v1/live/text/delete");
+        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v2/live/text/delete");
         try {
         	CloseableHttpClient client = HttpClients.createDefault();
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -183,7 +183,7 @@ public class testLiveClient {
 	
 	
 	public static void testCreateBarrage() throws IOException {
-        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v1/live/barrage/create");
+        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v2/live/barrage/create");
         try {
         	CloseableHttpClient client = HttpClients.createDefault();
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -203,7 +203,7 @@ public class testLiveClient {
     }
 	
 	public static void testGetBarrageList() throws IOException {
-        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v1/live/barrage/list");
+        HttpPost httpPost = new HttpPost(IP_ADDRESS+"/v2/live/barrage/list");
         try {
         	CloseableHttpClient client = HttpClients.createDefault();
             List<NameValuePair> params = new ArrayList<NameValuePair>();
