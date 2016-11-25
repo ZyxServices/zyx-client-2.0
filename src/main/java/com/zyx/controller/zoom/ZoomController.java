@@ -19,7 +19,7 @@ import java.util.Objects;
  * Create by XiaoWei on 2016/11/9
  */
 @RestController
-@RequestMapping(name = "/v2")
+@RequestMapping("/v2/")
 public class ZoomController {
     @Resource
     private ZoomFacade zoomFacade;
