@@ -1,17 +1,11 @@
 package com.zyx.controller.activity;
 
 
-import com.zyx.constants.Constants;
-import com.zyx.entity.activity.ActivityMember;
 import com.zyx.param.activity.ActivityMemberParam;
-import com.zyx.param.activity.ActivityParam;
 import com.zyx.param.activity.QueryActivityMemberParam;
-import com.zyx.param.activity.QueryActivityParam;
 import com.zyx.rpc.account.AccountCommonFacade;
-import com.zyx.rpc.activity.ActivityFacade;
 import com.zyx.rpc.activity.ActivityMemberFacade;
 import com.zyx.utils.ActivityUtils;
-import com.zyx.utils.MapUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -34,7 +28,7 @@ import java.util.Map;
  *          Copyright (c)2016 tyj-版权所有
  */
 @RestController
-@RequestMapping("/v1/member")
+@RequestMapping("/v2/member")
 @Api(description = "活动报名接口。【1】活动报名。【2】通过活动id查询报名用户列表。【3】通过用户ID查询用户所报名的活动列表")
 public class ActivityMemberController {
 

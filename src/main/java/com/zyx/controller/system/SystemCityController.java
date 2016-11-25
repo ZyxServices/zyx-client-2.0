@@ -22,7 +22,7 @@ import java.util.Map;
  * @since 2016/11/10
  */
 @RestController
-@RequestMapping("/v1/city")
+@RequestMapping("/v2/city")
 @Api(description = "城市查询")
 public class SystemCityController {
 

@@ -31,7 +31,7 @@ public class SwaggerConfig {
                 .genericModelSubstitutes(ResponseEntity.class)
                 .useDefaultResponseMessages(false)
                 .forCodeGeneration(true)
-                .pathMapping("/v1/account")//api测试请求地址
+                .pathMapping("/v2/account")//api测试请求地址
                 .select()
                // .paths(PathSelectors.regex("/common/.*"))//过滤的接口
                 .paths(PathSelectors.regex("/*"))//过滤的接口

@@ -28,7 +28,7 @@ import java.util.Map;
  *          Copyright (c)2016 tyj-版权所有
  */
 @RestController
-@RequestMapping("/v1/activity")
+@RequestMapping("/v2/activity")
 @Api(description = "活动接口。【1】活动发布。【2】活动列表查询。【3】活动详细信息查询")
 public class ActivityController {
 

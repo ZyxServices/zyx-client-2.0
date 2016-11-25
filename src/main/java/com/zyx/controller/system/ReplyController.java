@@ -23,7 +23,7 @@ import java.util.Map;
  * Create by XiaoWei on 2016/8/31
  */
 @RestController
-@RequestMapping("/v1/reply")
+@RequestMapping("/v2/reply")
 @Api(description = "回复相关接口")
 public class ReplyController {
     @Autowired
