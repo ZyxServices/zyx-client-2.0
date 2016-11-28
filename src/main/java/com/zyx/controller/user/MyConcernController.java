@@ -1,13 +1,12 @@
 package com.zyx.controller.user;
 
+import com.zyx.annotation.TokenVerify;
 import com.zyx.constants.user.UserConstants;
 import com.zyx.param.user.UserConcernParam;
-import com.zyx.rpc.common.TokenFacade;
 import com.zyx.rpc.user.MyConcernFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.annotation.Resource;
-import java.util.Map;
 
 /**
  * Created by wms on 2016/11/8.
@@ -35,11 +33,9 @@ public class MyConcernController {
     @Resource
     private MyConcernFacade myConcernFacade;
 
-    @Autowired
-    private TokenFacade tokenFacade;
-
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ApiOperation(value = "我的动态列表", notes = "我的动态列表")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.OTHER)
     public ModelAndView myCircleList(@RequestParam String token,
                                      @RequestParam Integer accountId,
                                      @ApiParam(name = "page", value = "页数")
@@ -52,13 +48,7 @@ public class MyConcernController {
             jsonView.setAttributesMap(UserConstants.MAP_PARAM_MISS);
         } else {
             try {
-                // 判断token是否失效
-                Map<String, Object> map = tokenFacade.validateTokenIncludeOther(token, accountId);
-                if (map != null) {
-                    jsonView.setAttributesMap(map);
-                } else {
-                    jsonView.setAttributesMap(myConcernFacade.myList(buildUserConcernParam(token, accountId, page, pageSize)));
-                }
+                jsonView.setAttributesMap(myConcernFacade.myList(buildUserConcernParam(token, accountId, page, pageSize)));
             } catch (Exception e) {
                 e.printStackTrace();
                 jsonView.setAttributesMap(UserConstants.MAP_500);

@@ -1,11 +1,11 @@
 package com.zyx.controller.user;
 
+import com.zyx.annotation.TokenVerify;
 import com.zyx.constants.user.UserConstants;
 import com.zyx.param.activity.MyActivityListParam;
 import com.zyx.param.activity.QueryActivityMemberParam;
 import com.zyx.rpc.activity.ActivityFacade;
 import com.zyx.rpc.activity.ActivityMemberFacade;
-import com.zyx.rpc.common.TokenFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,6 @@ import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.annotation.Resource;
-import java.util.Map;
 
 /**
  * Created by wms on 2016/11/8.
@@ -40,11 +39,9 @@ public class MyActivityController {
     @Resource
     private ActivityMemberFacade activityMemberFacade;
 
-    @Autowired
-    private TokenFacade tokenFacade;
-
     @RequestMapping(value = "/create/list", method = RequestMethod.GET)
     @ApiOperation(value = "我发起的活动列表", notes = "我发起的活动列表")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.MINE)
     public ModelAndView myCreateActivityList(@RequestParam String token, @RequestParam Integer accountId, @RequestParam Integer page, @RequestParam Integer pageSize) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
@@ -52,13 +49,7 @@ public class MyActivityController {
             jsonView.setAttributesMap(UserConstants.MAP_PARAM_MISS);
         } else {
             try {
-                // 判断token是否失效
-                Map<String, Object> map = tokenFacade.validateToken(token, accountId);
-                if (map != null) {
-                    jsonView.setAttributesMap(map);
-                } else {
-                    jsonView.setAttributesMap(activityFacade.myActivityList(buildParam(accountId, page, pageSize)));
-                }
+                jsonView.setAttributesMap(activityFacade.myActivityList(buildParam(accountId, page, pageSize)));
             } catch (Exception e) {
                 e.printStackTrace();
                 jsonView.setAttributesMap(UserConstants.MAP_500);
@@ -77,13 +68,7 @@ public class MyActivityController {
             jsonView.setAttributesMap(UserConstants.MAP_PARAM_MISS);
         } else {
             try {
-                // 判断token是否失效
-                Map<String, Object> map = tokenFacade.validateToken(token, accountId);
-                if (map != null) {
-                    jsonView.setAttributesMap(map);
-                } else {
-                    jsonView.setAttributesMap(activityMemberFacade.findMemberByUserId(buildMemberParam(accountId, page, pageSize)));
-                }
+                jsonView.setAttributesMap(activityMemberFacade.findMemberByUserId(buildMemberParam(accountId, page, pageSize)));
             } catch (Exception e) {
                 e.printStackTrace();
                 jsonView.setAttributesMap(UserConstants.MAP_500);

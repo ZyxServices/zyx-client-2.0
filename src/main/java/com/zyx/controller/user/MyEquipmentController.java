@@ -1,8 +1,8 @@
 package com.zyx.controller.user;
 
+import com.zyx.annotation.TokenVerify;
 import com.zyx.constants.user.UserConstants;
 import com.zyx.param.user.UserEquipmentParam;
-import com.zyx.rpc.common.TokenFacade;
 import com.zyx.rpc.user.MyEquipmentFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
-
-import java.util.Map;
 
 /**
  * Created by wms on 2016/11/24.
@@ -33,11 +31,9 @@ public class MyEquipmentController {
     @Autowired
     private MyEquipmentFacade myEquipmentFacade;
 
-    @Autowired
-    private TokenFacade tokenFacade;
-
     @RequestMapping(value = "/create/list", method = RequestMethod.GET)
     @ApiOperation(value = "我的装备秀列表", notes = "我的装备秀列表")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.MINE)
     public ModelAndView myCreateActivityList(@RequestParam String token, @RequestParam Integer userId, @RequestParam Integer page, @RequestParam Integer pageSize) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
@@ -45,13 +41,7 @@ public class MyEquipmentController {
             jsonView.setAttributesMap(UserConstants.MAP_PARAM_MISS);
         } else {
             try {
-                // 判断token是否失效
-                Map<String, Object> map = tokenFacade.validateToken(token, userId);
-                if (map != null) {
-                    jsonView.setAttributesMap(map);
-                } else {
-                    jsonView.setAttributesMap(myEquipmentFacade.myEquipmentList(buildParam(userId, page, pageSize)));
-                }
+                jsonView.setAttributesMap(myEquipmentFacade.myEquipmentList(buildParam(userId, page, pageSize)));
             } catch (Exception e) {
                 e.printStackTrace();
                 jsonView.setAttributesMap(UserConstants.MAP_500);
@@ -68,6 +58,4 @@ public class MyEquipmentController {
         param.setPageSize(pageSize);
         return param;
     }
-
-
 }

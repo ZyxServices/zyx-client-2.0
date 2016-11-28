@@ -1,8 +1,9 @@
 package com.zyx.controller.user;
 
+import com.zyx.annotation.TokenVerify;
 import com.zyx.constants.Constants;
+import com.zyx.constants.user.UserConstants;
 import com.zyx.param.user.UserAddressParam;
-import com.zyx.rpc.common.TokenFacade;
 import com.zyx.rpc.user.UserAddressFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -36,11 +36,9 @@ public class UserAddressController {
     @Autowired
     private UserAddressFacade accountAddressFacade;
 
-    @Autowired
-    private TokenFacade tokenFacade;
-
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ApiOperation(value = "新增收货地址", notes = "新增收货地址。需要token验证。")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.MINE)
     public ModelAndView insert(@RequestParam(name = "token") String token,
                                @RequestParam(name = "account_id") Integer userId,
                                @ApiParam(required = true, name = "name", value = "收货人姓名")
@@ -51,14 +49,10 @@ public class UserAddressController {
                                @RequestParam(name = "content") String content) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
-        if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userId) || StringUtils.isEmpty(receiver) || StringUtils.isEmpty(phone) || StringUtils.isEmpty(zipCode) || StringUtils.isEmpty(content)) {// 缺少参数
+        if (StringUtils.isEmpty(token) || StringUtils.isEmpty(receiver) || StringUtils.isEmpty(phone) || StringUtils.isEmpty(zipCode) || StringUtils.isEmpty(content)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            // 判断token是否失效
-            Map<String, Object> map = tokenFacade.validateToken(token, userId);
-            if (map != null) {
-                jsonView.setAttributesMap(map);
-            } else {
+            try {
                 UserAddressParam param = new UserAddressParam();
                 param.setToken(token);
                 param.setUserId(userId);
@@ -68,6 +62,9 @@ public class UserAddressController {
                 param.setZipCode(zipCode);
                 param.setAddressId(UUID.randomUUID().toString().replaceAll("-", ""));
                 jsonView.setAttributesMap(accountAddressFacade.insertUserAddressInfo(param));
+            } catch (Exception e) {
+                e.printStackTrace();
+                jsonView.setAttributesMap(UserConstants.MAP_500);
             }
         }
         return new ModelAndView(jsonView);
@@ -75,7 +72,9 @@ public class UserAddressController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ApiOperation(value = "编辑收货地址", notes = "编辑收货地址。需要token验证。")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.MINE)
     public ModelAndView edit(@RequestParam(name = "token") String token,
+                             @RequestParam(name = "account_id") Integer userId,
                              @RequestParam(name = "address_id") String address_id,
                              @ApiParam(required = true, name = "name", value = "收货人姓名")
                              @RequestParam(name = "name", required = false) String receiver,
@@ -88,19 +87,19 @@ public class UserAddressController {
         if (StringUtils.isEmpty(token) || StringUtils.isEmpty(address_id)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            // 判断token是否失效
-            Map<String, Object> map = tokenFacade.validateToken(token);
-            if (map != null) {
-                jsonView.setAttributesMap(map);
-            } else {
+            try {
                 UserAddressParam param = new UserAddressParam();
                 param.setToken(token);
+                param.setUserId(userId);
                 param.setAddressId(address_id);
                 param.setContent(content);
                 param.setPhone(phone);
                 param.setReceiver(receiver);
                 param.setZipCode(zipCode);
                 jsonView.setAttributesMap(accountAddressFacade.editReceiptAddress(param));
+            } catch (Exception e) {
+                e.printStackTrace();
+                jsonView.setAttributesMap(UserConstants.MAP_500);
             }
         }
         return new ModelAndView(jsonView);
@@ -108,22 +107,24 @@ public class UserAddressController {
 
     @RequestMapping(value = "/info", method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "获取收货地址", notes = "获取收货地址。通过address_id查询收货地址信息，需要token验证。")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.MINE)
     public ModelAndView info(@RequestParam(name = "token") String token,
+                             @RequestParam(name = "account_id") Integer userId,
                              @ApiParam(required = true, name = "address_id", value = "address_id：32位的字符串")
                              @RequestParam(name = "address_id") String addressId) {
         AbstractView jsonView = new MappingJackson2JsonView();
         if (StringUtils.isEmpty(token) || StringUtils.isEmpty(addressId)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            // 判断token是否失效
-            Map<String, Object> map = tokenFacade.validateToken(token);
-            if (map != null) {
-                jsonView.setAttributesMap(map);
-            } else {
+            try {
                 UserAddressParam param = new UserAddressParam();
                 param.setToken(token);
+                param.setUserId(userId);
                 param.setAddressId(addressId);
                 jsonView.setAttributesMap(accountAddressFacade.queryUserAddressInfo(param));
+            } catch (Exception e) {
+                e.printStackTrace();
+                jsonView.setAttributesMap(UserConstants.MAP_500);
             }
         }
         return new ModelAndView(jsonView);
@@ -131,7 +132,9 @@ public class UserAddressController {
 
     @RequestMapping(value = "/delete", method = {RequestMethod.DELETE, RequestMethod.POST})
     @ApiOperation(value = "删除收货地址", notes = "删除收货地址。通过address_id删除收货地址，需要token验证。")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.MINE)
     public ModelAndView delete(@RequestParam(name = "token") String token,
+                               @RequestParam(name = "account_id") Integer userId,
                                @ApiParam(required = true, name = "address_id", value = "address_id：32位的字符串")
                                @RequestParam(name = "address_id") String addressId) {
         AbstractView jsonView = new MappingJackson2JsonView();
@@ -139,15 +142,15 @@ public class UserAddressController {
         if (StringUtils.isEmpty(token) || StringUtils.isEmpty(addressId)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            // 判断token是否失效
-            Map<String, Object> map = tokenFacade.validateToken(token);
-            if (map != null) {
-                jsonView.setAttributesMap(map);
-            } else {
+            try {
                 UserAddressParam param = new UserAddressParam();
                 param.setToken(token);
+                param.setUserId(userId);
                 param.setAddressId(addressId);
                 jsonView.setAttributesMap(accountAddressFacade.deleteUserAddressInfo(param));
+            } catch (Exception e) {
+                e.printStackTrace();
+                jsonView.setAttributesMap(UserConstants.MAP_500);
             }
         }
         return new ModelAndView(jsonView);
@@ -155,25 +158,25 @@ public class UserAddressController {
 
     @RequestMapping(value = "/default", method = RequestMethod.POST)
     @ApiOperation(value = "设置默认收货地址", notes = "设置默认收货地址。需要token验证。")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.MINE)
     public ModelAndView defaultAddress(@RequestParam(name = "token") String token,
                                        @RequestParam(name = "account_id") Integer userId,
                                        @ApiParam(required = true, name = "address_id", value = "address_id：32位的字符串")
                                        @RequestParam(name = "address_id") String addressId) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
-        if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userId) || StringUtils.isEmpty(addressId)) {// 缺少参数
+        if (StringUtils.isEmpty(token) || StringUtils.isEmpty(addressId)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            // 判断token是否失效
-            Map<String, Object> map = tokenFacade.validateToken(token, userId);
-            if (map != null) {
-                jsonView.setAttributesMap(map);
-            } else {
+            try {
                 UserAddressParam param = new UserAddressParam();
                 param.setToken(token);
                 param.setUserId(userId);
                 param.setAddressId(addressId);
                 jsonView.setAttributesMap(accountAddressFacade.setDefaultReceiptAddress(param));
+            } catch (Exception e) {
+                e.printStackTrace();
+                jsonView.setAttributesMap(UserConstants.MAP_500);
             }
         }
         return new ModelAndView(jsonView);
@@ -181,22 +184,22 @@ public class UserAddressController {
 
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "获取用户收货地址列表", notes = "获取用户收货地址列表。根据account_id获取收货地址列表，需要token验证。")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.MINE)
     public ModelAndView list(@RequestParam(name = "token") String token,
                              @RequestParam(name = "account_id") Integer userId) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
-        if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userId)) {// 缺少参数
+        if (StringUtils.isEmpty(token)) {// 缺少参数
             jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
         } else {
-            // 判断token是否失效
-            Map<String, Object> map = tokenFacade.validateToken(token, userId);
-            if (map != null) {
-                jsonView.setAttributesMap(map);
-            } else {
+            try {
                 UserAddressParam param = new UserAddressParam();
                 param.setToken(token);
                 param.setUserId(userId);
                 jsonView.setAttributesMap(accountAddressFacade.queryUserAddressList(param));
+            } catch (Exception e) {
+                e.printStackTrace();
+                jsonView.setAttributesMap(UserConstants.MAP_500);
             }
         }
         return new ModelAndView(jsonView);

@@ -1,5 +1,6 @@
 package com.zyx.controller.user;
 
+import com.zyx.annotation.TokenVerify;
 import com.zyx.constants.user.UserConstants;
 import com.zyx.param.attention.AttentionParam;
 import com.zyx.rpc.user.MyAttentionFacade;
@@ -35,6 +36,7 @@ public class MyAttentionController {
 
     @RequestMapping(value = "/from", method = RequestMethod.GET)
     @ApiOperation(value = "我的关注列表", notes = "我的关注列表")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.OTHER)
     public ModelAndView myGZList(@RequestParam String token, @RequestParam Integer accountId) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
@@ -48,6 +50,7 @@ public class MyAttentionController {
 
     @RequestMapping(value = "/dk/from", method = RequestMethod.GET)
     @ApiOperation(value = "我的关注大咖列表", notes = "我的关注大咖列表")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.OTHER)
     public ModelAndView myDKGZList(@RequestParam String token, @RequestParam Integer accountId) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
@@ -61,6 +64,7 @@ public class MyAttentionController {
 
     @RequestMapping(value = "/to", method = RequestMethod.GET)
     @ApiOperation(value = "我的粉丝列表", notes = "我的粉丝列表")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.OTHER)
     public ModelAndView myFSList(@RequestParam String token, @RequestParam Integer accountId) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
