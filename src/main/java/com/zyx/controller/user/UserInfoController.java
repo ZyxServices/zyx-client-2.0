@@ -1,9 +1,9 @@
 package com.zyx.controller.user;
 
+import com.zyx.annotation.TokenVerify;
 import com.zyx.constants.user.UserConstants;
 import com.zyx.param.account.AccountInfoParam;
 import com.zyx.param.account.UserAuthParam;
-import com.zyx.rpc.common.TokenFacade;
 import com.zyx.rpc.user.UserInfoFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,11 +35,9 @@ public class UserInfoController {
     @Autowired
     private UserInfoFacade accountInfoFacade;
 
-    @Autowired
-    private TokenFacade tokenFacade;
-
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     @ApiOperation(value = "通过用户ID查询用户信息", notes = "通过用户ID查询用户信息")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.MINE)
     public ModelAndView info(@RequestParam(name = "token") String token, @RequestParam(name = "account_id") Integer userId) {
         AbstractView jsonView = new MappingJackson2JsonView();
 
@@ -47,13 +45,7 @@ public class UserInfoController {
             jsonView.setAttributesMap(UserConstants.MAP_PARAM_MISS);
         } else {
             try {
-                // 判断token是否失效
-                Map<String, Object> map = tokenFacade.validateToken(token, userId);
-                if (map != null) {
-                    jsonView.setAttributesMap(map);
-                } else {
-                    jsonView.setAttributesMap(accountInfoFacade.queryAccountInfo(token, userId));
-                }
+                jsonView.setAttributesMap(accountInfoFacade.queryAccountInfo(token, userId));
             } catch (Exception e) {
                 e.printStackTrace();
                 jsonView.setAttributesMap(UserConstants.MAP_500);
@@ -65,6 +57,7 @@ public class UserInfoController {
 
     @RequestMapping(value = "/info", method = RequestMethod.POST)
     @ApiOperation(value = "通过用户ID编辑用户信息", notes = "通过用户ID编辑用户信息")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.MINE)
     public ModelAndView edit(@RequestParam(name = "token") String token,
                              @RequestParam(name = "account_id") Integer userId,
                              @ApiParam(name = "avatar", value = "头像地址，需要先使用文件上传接口上传获取地址")
@@ -89,14 +82,8 @@ public class UserInfoController {
                 // 必须包含一个参数值
                 jsonView.setAttributesMap(UserConstants.MAP_PARAM_MISS);
             } else {
-                // 判断token是否失效
-                Map<String, Object> map = tokenFacade.validateToken(token, userId);
-                if (map != null) {
-                    jsonView.setAttributesMap(map);
-                } else {
-                    AccountInfoParam param = buildAccountInfoParam(avatar, nickname, sex, birthday, address, signature);
-                    jsonView.setAttributesMap(doEdit(accountInfoFacade, token, userId, param));
-                }
+                AccountInfoParam param = buildAccountInfoParam(avatar, nickname, sex, birthday, address, signature);
+                jsonView.setAttributesMap(doEdit(accountInfoFacade, token, userId, param));
             }
         }
         return new ModelAndView(jsonView);
@@ -124,6 +111,7 @@ public class UserInfoController {
 
     @RequestMapping(value = "/center_info", method = {RequestMethod.GET})
     @ApiOperation(value = "通过用户ID查询个人中心用户信息", notes = "通过用户ID查询个人中心用户信息")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.OTHER)
     public ModelAndView centerInfo(
             @ApiParam(required = true, name = "token", value = "使用通用token:tiyujia2016可以查询别人的个人中心信息")
             @RequestParam(name = "token") String token,
@@ -134,13 +122,7 @@ public class UserInfoController {
             jsonView.setAttributesMap(UserConstants.MAP_PARAM_MISS);
         } else {
             try {
-                // 判断token是否失效
-                Map<String, Object> map = tokenFacade.validateTokenIncludeOther(token, userId);
-                if (map != null) {
-                    jsonView.setAttributesMap(map);
-                } else {
-                    jsonView.setAttributesMap(accountInfoFacade.queryMyCenterInfo(token, userId));
-                }
+                jsonView.setAttributesMap(accountInfoFacade.queryMyCenterInfo(token, userId));
             } catch (Exception e) {
                 e.printStackTrace();
                 jsonView.setAttributesMap(UserConstants.MAP_500);
@@ -152,6 +134,7 @@ public class UserInfoController {
 
     @RequestMapping(value = "/auth_info", method = RequestMethod.GET)
     @ApiOperation(value = "通过用户ID查询用户审核信息", notes = "通过用户ID查询用户审核信息")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.MINE)
     public ModelAndView authInfo(
             @RequestParam(name = "token") String token,
             @RequestParam(name = "account_id") Integer userId) {
@@ -161,13 +144,7 @@ public class UserInfoController {
             jsonView.setAttributesMap(UserConstants.MAP_PARAM_MISS);
         } else {
             try {
-                // 判断token是否失效
-                Map<String, Object> map = tokenFacade.validateToken(token, userId);
-                if (map != null) {
-                    jsonView.setAttributesMap(map);
-                } else {
-                    jsonView.setAttributesMap(accountInfoFacade.queryMyAuthInfo(token, userId));
-                }
+                jsonView.setAttributesMap(accountInfoFacade.queryMyAuthInfo(token, userId));
             } catch (Exception e) {
                 e.printStackTrace();
                 jsonView.setAttributesMap(UserConstants.MAP_500);
@@ -179,6 +156,7 @@ public class UserInfoController {
 
     @RequestMapping(value = "/auth_info", method = RequestMethod.POST)
     @ApiOperation(value = "通过用户ID提交认证信息", notes = "通过用户ID提交认证信息")
+    @TokenVerify(verifyType = TokenVerify.VerifyEnum.MINE)
     public ModelAndView editAuthInfo(@RequestParam(name = "token") String token,
                                      @RequestParam(name = "account_id") Integer userId,
                                      @ApiParam(required = true, name = "authName", value = "真实姓名")
@@ -199,14 +177,8 @@ public class UserInfoController {
             jsonView.setAttributesMap(UserConstants.MAP_PARAM_MISS);
         } else {
             try {
-                // 判断token是否失效
-                Map<String, Object> map = tokenFacade.validateToken(token, userId);
-                if (map != null) {
-                    jsonView.setAttributesMap(map);
-                } else {
-                    UserAuthParam param = buildUserAuthParam(token, userId, authName, authIDCard, authMob, authFile, authInfo, authFileWork);
-                    jsonView.setAttributesMap(accountInfoFacade.editAccountAuth(token, userId, param));
-                }
+                UserAuthParam param = buildUserAuthParam(token, userId, authName, authIDCard, authMob, authFile, authInfo, authFileWork);
+                jsonView.setAttributesMap(accountInfoFacade.editAccountAuth(token, userId, param));
             } catch (Exception e) {
                 e.printStackTrace();
                 jsonView.setAttributesMap(UserConstants.MAP_500);

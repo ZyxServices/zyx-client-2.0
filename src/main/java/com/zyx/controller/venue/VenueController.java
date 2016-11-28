@@ -31,9 +31,9 @@ import java.util.Map;
 @Api(description = "场馆相关接口【1】场馆-获取定位点半径范围内场馆信息 【2】记录-上传运动场馆 【3】查询场馆列表信息 【4】查询某个场馆详细信息")
 public class VenueController {
     @Autowired
-    VenueFacade venueFacade;
+    private VenueFacade venueFacade;
 
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/list", method = RequestMethod.POST)
     @ApiOperation(value = "场馆-获取定位点半径范围内场馆信息", notes = "获取定位点半径范围内场馆信息")
     public ModelAndView getSelfRecordOverview(
             @ApiParam(required = true, name = "latitude", value = "纬度") @RequestParam(name = "latitude", required = true) Double latitude,
@@ -52,7 +52,7 @@ public class VenueController {
         attrMap.put(Constants.DATA, list);
         jsonView.setAttributesMap(attrMap);
         return new ModelAndView(jsonView);
-    }
+    }*/
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ApiOperation(value = "记录-上传运动场馆", notes = "上传运动场馆")

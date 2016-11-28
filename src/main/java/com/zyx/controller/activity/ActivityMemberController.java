@@ -92,4 +92,20 @@ public class ActivityMemberController {
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
+
+
+    @RequestMapping(value = "/delMember", method = RequestMethod.POST)
+    @ApiOperation(value = "取消对应活动的报名", notes = "取消对应活动的报名")
+    public ModelAndView delMember(@ApiParam(required = true, name = "userId", value = "用户ID") @RequestParam(name = "userId", required = true) Integer userId,
+                                  @ApiParam(required = true, name = "activityId", value = "活动ID") @RequestParam(name = "activityId", required = true) Integer activityId) {
+
+        AbstractView jsonView = new MappingJackson2JsonView();
+        QueryActivityMemberParam param = new QueryActivityMemberParam();
+        param.setUserId(userId);
+        param.setActivityId(activityId);
+
+        Map<String, Object> map = activityMemberFacade.delMember(param);
+        jsonView.setAttributesMap(map);
+        return new ModelAndView(jsonView);
+    }
 }
