@@ -35,4 +35,11 @@ public interface ActivityMemberFacade {
      * @return
      */
     Map<String, Object> findMemberByUserId(QueryActivityMemberParam memberParam);
+
+    /**
+     * 取消报名
+     * @param memberParam
+     * @return
+     */
+    Map<String, Object> delMember(QueryActivityMemberParam memberParam);
 }

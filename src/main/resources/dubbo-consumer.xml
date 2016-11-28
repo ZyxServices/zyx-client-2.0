@@ -68,7 +68,7 @@
 
     <dubbo:reference interface="com.zyx.rpc.coin.SportCoinFacade" id="sportCoinFacade" check="false"/>
 
-    <dubbo:reference interface="com.zyx.rpc.venue.VenueFacade" id="venueFacade" check="false"/>
+    <dubbo:reference interface="com.zyx.rpc.venue.VenueFacade" id="venueFacade" check="false" timeout="10000"/>
 
     <dubbo:reference interface="com.zyx.rpc.system.VersionFacade" id="versionFacade" check="false" timeout="10000"/>
 </beans>
