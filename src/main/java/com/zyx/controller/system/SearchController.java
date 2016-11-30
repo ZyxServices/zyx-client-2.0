@@ -31,8 +31,8 @@ public class SearchController {
     private SearchFacade searchFacade;
 
     @RequestMapping(value = "/model", method = {RequestMethod.POST})
-    @ApiOperation(value = "官方推荐查询", notes = "官方推荐查询")
-    public ModelAndView deva(@ApiParam(name = "character", value = "查询关键词") @RequestParam(name = "character", required = false) String character,
+    @ApiOperation(value = "搜索查询", notes = "搜索查询")
+    public ModelAndView model(@ApiParam(name = "character", value = "查询关键词") @RequestParam(name = "character", required = false) String character,
                              @ApiParam(required = true, name = "model", value = "查询分类model（1、活动，2、装备，3、动态，4、场馆，5、教程，6、用户）") @RequestParam(name = "model") Integer model,
                              @ApiParam(required = true, name = "number", value = "每页显示多少条") @RequestParam(name = "number") Integer number,
                              @ApiParam(required = true, name = "pageNumber", value = "当前第几页") @RequestParam(name = "pageNumber") Integer pageNumber) {
@@ -49,16 +49,12 @@ public class SearchController {
     }
 
     @RequestMapping(value = "/deva", method = {RequestMethod.POST})
-    @ApiOperation(value = "搜索查询", notes = "搜索查询")
-    public ModelAndView searchModel(@ApiParam(required = true, name = "model", value = "查询分类model（1、首页，2、活动") @RequestParam(name = "model") Integer model,
-                                    @ApiParam(required = true, name = "number", value = "每页显示多少条") @RequestParam(name = "number") Integer number,
-                                    @ApiParam(required = true, name = "pageNumber", value = "当前第几页") @RequestParam(name = "pageNumber") Integer pageNumber) {
+    @ApiOperation(value = "官方推荐查询", notes = "官方推荐查询")
+    public ModelAndView deva(@ApiParam(required = true, name = "model", value = "查询分类model（1、首页，2、活动") @RequestParam(name = "model") Integer model) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
         SearchDevaParam searchDevaParam = new SearchDevaParam();
         searchDevaParam.setModel(model);
-        searchDevaParam.setNumber(number);
-        searchDevaParam.setPageNumber(pageNumber);
         Map<String, Object> map = searchFacade.devaSearch(searchDevaParam);
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
