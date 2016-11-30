@@ -34,6 +34,16 @@ public class ZoomController {
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
+    @RequestMapping(value = "follow/unfollow", method = RequestMethod.POST)
+    @ApiOperation(value = "取消关注", notes = "取消关注")
+    public ModelAndView unFollow(@RequestParam("token") String token,
+                                  @ApiParam(required = true, name = "fromUserId", value = "添加关注的人") @RequestParam("fromUserId") Integer fromUserId,
+                                  @ApiParam(required = true, name = "toUserId", value = "被添加关注的人") @RequestParam("toUserId") Integer toUserId) {
+        AbstractView jsonView = new MappingJackson2JsonView();
+        Map<String, Object> map = zoomFacade.unFollow(fromUserId, toUserId);
+        jsonView.setAttributesMap(map);
+        return new ModelAndView(jsonView);
+    }
 
     @RequestMapping(value = "follow/list", method = RequestMethod.POST)
     @ApiOperation(value = "获取未关注用户", notes = "获取未关注用户")
