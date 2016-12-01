@@ -1,5 +1,7 @@
 package com.zyx.rpc.zoom;
 
+import com.zyx.param.user.UserConcernParam;
+
 import java.util.Map;
 
 /**
@@ -91,4 +93,11 @@ public interface ZoomFacade {
      * @return
      */
     Map<String,Object> unFollow(Integer fromUserId, Integer toUserId);
+
+    /**
+     *  动态用户对象，推荐动态
+     * @param userConcernParam
+     * @return
+     */
+    Map<String,Object> getRecommend(UserConcernParam userConcernParam);
 }

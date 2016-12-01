@@ -1,5 +1,6 @@
 package com.zyx.controller.zoom;
 
+import com.zyx.param.user.UserConcernParam;
 import com.zyx.rpc.zoom.ZoomFacade;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -79,6 +80,21 @@ public class ZoomController {
         jsonView.setAttributesMap(returnMap);
         return new ModelAndView(jsonView);
     }
+    @RequestMapping(value = "concern/getRecommend", method = RequestMethod.GET)
+    @ApiOperation(value = "推荐动态", notes = "loginUserId：登录用户id")
+    public ModelAndView getRecommend(
+            @RequestParam(value = "token") String token,
+            @RequestParam(value = "loginUserId") Integer loginUserId,
+            @RequestParam(value = "page") Integer page,
+            @RequestParam(value = "pageSize") Integer pageSize) {
+        UserConcernParam concernParam=new UserConcernParam(loginUserId,page,pageSize);
+        Map<String, Object> returnMap =zoomFacade.getRecommend(concernParam);
+        AbstractView jsonView = new MappingJackson2JsonView();
+        jsonView.setAttributesMap(returnMap);
+        return new ModelAndView(jsonView);
+    }
+
+
 
     @RequestMapping(value = "cern/insert", method = RequestMethod.POST)
     @ApiOperation(value = "发布动态", notes = "发布动态")
