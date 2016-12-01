@@ -100,4 +100,11 @@ public interface ZoomFacade {
      * @return
      */
     Map<String,Object> getRecommend(UserConcernParam userConcernParam);
+
+    /**
+     * 根据标签id获取装备秀列表
+     * @param labelId
+     * @return
+     */
+    Map<String, Object> queryEquipByLabelId(Integer labelId);
 }

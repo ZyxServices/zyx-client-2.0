@@ -10,6 +10,7 @@ import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -35,11 +36,12 @@ public class ZoomController {
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
+
     @RequestMapping(value = "follow/unfollow", method = RequestMethod.POST)
     @ApiOperation(value = "取消关注", notes = "取消关注")
     public ModelAndView unFollow(@RequestParam("token") String token,
-                                  @ApiParam(required = true, name = "fromUserId", value = "添加关注的人") @RequestParam("fromUserId") Integer fromUserId,
-                                  @ApiParam(required = true, name = "toUserId", value = "被添加关注的人") @RequestParam("toUserId") Integer toUserId) {
+                                 @ApiParam(required = true, name = "fromUserId", value = "添加关注的人") @RequestParam("fromUserId") Integer fromUserId,
+                                 @ApiParam(required = true, name = "toUserId", value = "被添加关注的人") @RequestParam("toUserId") Integer toUserId) {
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> map = zoomFacade.unFollow(fromUserId, toUserId);
         jsonView.setAttributesMap(map);
@@ -80,6 +82,7 @@ public class ZoomController {
         jsonView.setAttributesMap(returnMap);
         return new ModelAndView(jsonView);
     }
+
     @RequestMapping(value = "concern/getRecommend", method = RequestMethod.GET)
     @ApiOperation(value = "推荐动态", notes = "loginUserId：登录用户id")
     public ModelAndView getRecommend(
@@ -87,13 +90,12 @@ public class ZoomController {
             @RequestParam(value = "loginUserId") Integer loginUserId,
             @RequestParam(value = "page") Integer page,
             @RequestParam(value = "pageSize") Integer pageSize) {
-        UserConcernParam concernParam=new UserConcernParam(loginUserId,page,pageSize);
-        Map<String, Object> returnMap =zoomFacade.getRecommend(concernParam);
+        UserConcernParam concernParam = new UserConcernParam(loginUserId, page, pageSize);
+        Map<String, Object> returnMap = zoomFacade.getRecommend(concernParam);
         AbstractView jsonView = new MappingJackson2JsonView();
         jsonView.setAttributesMap(returnMap);
         return new ModelAndView(jsonView);
     }
-
 
 
     @RequestMapping(value = "cern/insert", method = RequestMethod.POST)
@@ -107,7 +109,7 @@ public class ZoomController {
                                 @ApiParam(required = true, name = "visible", value = "可见范围，可见范围0所有可见，1好友可见") @RequestParam(name = "visible") Integer visible,
                                 @ApiParam(name = "local", value = "位置") @RequestParam(name = "local", required = false) String local) {
         AbstractView jsonView = new MappingJackson2JsonView();
-        Map<String, Object> map = zoomFacade.addCern(userId, 0, content, imgUrl, videoUrl, visible,local);
+        Map<String, Object> map = zoomFacade.addCern(userId, 0, content, imgUrl, videoUrl, visible, local);
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
@@ -131,6 +133,16 @@ public class ZoomController {
                                    @ApiParam(required = false, name = "id", value = "装备秀id") @RequestParam(name = "eId", required = false) Integer eid) {
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> map = zoomFacade.queryEquip(eid);
+        jsonView.setAttributesMap(map);
+        return new ModelAndView(jsonView);
+    }
+
+    @RequestMapping(value = "equip/queryEquipByLabelId", method = RequestMethod.GET)
+    @ApiOperation(value = "装备秀列表查询", notes = "装备秀列表查询")
+    public ModelAndView queryEquipByLabelId(@RequestParam(name = "token") String token,
+                                            @ApiParam(name = "label_id", value = "标签id",required = true) @RequestParam(name = "label_id") Integer labelId) {
+        AbstractView jsonView = new MappingJackson2JsonView();
+        Map<String, Object> map = zoomFacade.queryEquipByLabelId(labelId);
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
