@@ -1,6 +1,8 @@
 package com.zyx.rpc.coin;
 
+import java.util.List;
 import com.zyx.entity.coin.CoinLog;
+import com.zyx.vo.coin.CoinDayLogVo;
 import com.zyx.vo.coin.SportCoinVo;
 
 /**
@@ -36,5 +38,13 @@ public interface SportCoinFacade {
      * @param userId
      * @return
      */
-    public java.util.List<CoinLog> getCoinLog(Integer userId, Integer operId);
+    public List<CoinLog> getCoinLog(Integer userId, Integer operId);
+
+    /**
+     *
+     * @param userId
+     * @param day 0 为当天 负数N为当天之前第N天
+     * @return
+     */
+    public List<CoinDayLogVo> getDayCoinLog(Integer userId, Integer day);
 }
