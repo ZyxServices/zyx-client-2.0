@@ -120,9 +120,10 @@ public class ZoomController {
                                  @ApiParam(required = true, name = "title", value = "装备秀标题") @RequestParam(name = "title") String title,
                                  @RequestParam(name = "content") String content,
                                  @ApiParam(required = true, name = "accountId", value = "创建者id") @RequestParam(name = "accountId", required = false) Integer accountId,
-                                 @ApiParam(required = true, name = "labelId", value = "装备秀标签id") @RequestParam(name = "labelId") Integer labelId) {
+                                 @ApiParam(required = true, name = "labelId", value = "装备秀标签id") @RequestParam(name = "labelId") Integer labelId,
+                                 @ApiParam(required = true, name = "imgUrls", value = "图片路径") @RequestParam(name = "imgUrls") String imgUrls){
         AbstractView jsonView = new MappingJackson2JsonView();
-        Map<String, Object> map = zoomFacade.addEquip(title, content, accountId, labelId);
+        Map<String, Object> map = zoomFacade.addEquip(title, content, accountId, labelId,imgUrls);
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
