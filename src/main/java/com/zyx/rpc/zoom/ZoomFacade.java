@@ -70,7 +70,7 @@ public interface ZoomFacade {
      * @param labelId
      * @return
      */
-    Map<String, Object> addEquip(String title, String content, Integer accountId,Integer labelId);
+    Map<String, Object> addEquip(String title, String content, Integer accountId,Integer labelId,String imgUrls);
 
 
     /**
