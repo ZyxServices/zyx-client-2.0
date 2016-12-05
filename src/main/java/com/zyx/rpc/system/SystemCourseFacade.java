@@ -33,5 +33,5 @@ public interface SystemCourseFacade {
      *
      * @return
      */
-    Map<String, Object> findCourseById(Integer courseId);
+    Map<String, Object> findCourseById(Integer userId, Integer courseId);
 }
