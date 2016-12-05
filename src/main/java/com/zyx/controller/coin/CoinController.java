@@ -3,6 +3,7 @@ package com.zyx.controller.coin;
 import com.zyx.constants.Constants;
 import com.zyx.entity.coin.CoinLog;
 import com.zyx.rpc.coin.SportCoinFacade;
+import com.zyx.vo.coin.CoinDayLogVo;
 import com.zyx.vo.coin.SportCoinVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -61,6 +62,21 @@ public class CoinController {
         attrMap.put(Constants.STATE, Constants.SUCCESS);
         attrMap.put(Constants.SUCCESS_MSG, Constants.MSG_SUCCESS);
         attrMap.put(Constants.DATA, vo);
+        jsonView.setAttributesMap(attrMap);
+        return new ModelAndView(jsonView);
+    }
+
+    @RequestMapping(value = "/day", method = RequestMethod.POST)
+    @ApiOperation(value = "运动币-获取用户某天 运动币获取情况", notes = "获取用户某天 运动币获取情况")
+    public ModelAndView getDayUserCoin(
+            @ApiParam(required = true, name = "userId", value = "用户ID") @RequestParam(name = "userId", required = true) Integer userId,
+            @ApiParam(required = true, name = "offset", value = "日期偏移量单位为：天") @RequestParam(name = "offset", required = true) Integer dayOffset) {
+        AbstractView jsonView = new MappingJackson2JsonView();
+        Map<String, Object> attrMap = new HashMap<>();
+        List<CoinDayLogVo> vos = sportCoinFacade.getDayCoinLog(userId, dayOffset);
+        attrMap.put(Constants.STATE, Constants.SUCCESS);
+        attrMap.put(Constants.SUCCESS_MSG, Constants.MSG_SUCCESS);
+        attrMap.put(Constants.DATA, vos);
         jsonView.setAttributesMap(attrMap);
         return new ModelAndView(jsonView);
     }
