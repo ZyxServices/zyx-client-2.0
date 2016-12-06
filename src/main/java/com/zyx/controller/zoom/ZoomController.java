@@ -91,7 +91,7 @@ public class ZoomController {
             @RequestParam(value = "page") Integer page,
             @RequestParam(value = "pageSize") Integer pageSize) {
         UserConcernParam concernParam = new UserConcernParam(loginUserId, page, pageSize);
-        Map<String, Object> returnMap = zoomFacade.getRecommend(loginUserId,concernParam);
+        Map<String, Object> returnMap = zoomFacade.getRecommend(concernParam);
         AbstractView jsonView = new MappingJackson2JsonView();
         jsonView.setAttributesMap(returnMap);
         return new ModelAndView(jsonView);
