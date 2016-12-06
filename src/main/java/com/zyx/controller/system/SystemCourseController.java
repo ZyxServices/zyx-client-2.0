@@ -63,9 +63,10 @@ public class SystemCourseController {
     @RequestMapping(value = "/findCourseById", method = RequestMethod.POST)
     @ApiOperation(value = "通过教程ID查询教程详细信息", notes = "通过教程ID查询教程详细信息")
     public ModelAndView findCourseById(
+            @ApiParam(required = false, name = "userId", value = "当前登录用户ID") @RequestParam(name = "userId", required = false) Integer userId,
             @ApiParam(required = true, name = "courseId", value = "标签ID") @RequestParam(name = "courseId", required = true) Integer courseId) {
         AbstractView jsonView = new MappingJackson2JsonView();
-        Map<String, Object> courseList = systemCourseFacade.findCourseById(courseId);
+        Map<String, Object> courseList = systemCourseFacade.findCourseById(userId,courseId);
         jsonView.setAttributesMap(courseList);
         return new ModelAndView(jsonView);
     }
