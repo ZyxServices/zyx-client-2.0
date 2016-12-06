@@ -224,4 +224,44 @@ public class RecordController {
         jsonView.setAttributesMap(attrMap);
         return new ModelAndView(jsonView);
     }
+
+    @RequestMapping(value = "/sportinfo/level", method = RequestMethod.POST)
+    @ApiOperation(value = "记录-获取场馆下的可用运动难度线等级", notes = "获取场馆下的可用运动难度线等级")
+    public ModelAndView getSportInfoVenue(
+            @ApiParam(required = true, name = "venueId", value = "场馆ID") @RequestParam(name = "venueId", required = true) Integer venueId) {
+        AbstractView jsonView = new MappingJackson2JsonView();
+        Map<String, Object> attrMap = new HashMap<>();
+        SportRecordParam param = new SportRecordParam();
+        List<SportInfoLevelVo> list = sportRecordFacade.getSportInfoLevel(venueId);
+        attrMap.put(RecordConstants.STATE, RecordConstants.SUCCESS);
+        attrMap.put(RecordConstants.SUCCESS_MSG, RecordConstants.MSG_SUCCESS);
+        attrMap.put(RecordConstants.DATA, list);
+        jsonView.setAttributesMap(attrMap);
+        return new ModelAndView(jsonView);
+    }
+
+//    @RequestMapping(value = "/sportinfo/list", method = RequestMethod.POST)
+//    @ApiOperation(value = "记录-获取场馆下的可用运动信息", notes = "获取场馆下的可用运动信息")
+//    public ModelAndView getSportInfo(
+//            @RequestParam(name = "token", required = true) String token,
+//            @ApiParam(required = true, name = "city", value = "所需详细查询的城市名称") @RequestParam(name = "city", required = true) String city) {
+//        AbstractView jsonView = new MappingJackson2JsonView();
+//        Map<String, Object> attrMap = new HashMap<>();
+//        if (!accountCommonFacade.validateToken(token)) {
+//            attrMap = RecordConstants.MAP_TOKEN_FAILURE;
+//        } else {
+//            AccountInfoVo account = accountCommonFacade.getAccountVoByToken(token);
+//            if (account == null || account.getId() == null) {
+//                attrMap = RecordConstants.MAP_TOKEN_FAILURE;
+//            } else {
+//                SportRecordParam param = new SportRecordParam();
+//                List<FootprintVo> list = sportRecordFacade.getVenueFootprints(account.getId(), city);
+//                attrMap.put(RecordConstants.STATE, RecordConstants.SUCCESS);
+//                attrMap.put(RecordConstants.SUCCESS_MSG, RecordConstants.MSG_SUCCESS);
+//                attrMap.put(RecordConstants.DATA, list);
+//            }
+//        }
+//        jsonView.setAttributesMap(attrMap);
+//        return new ModelAndView(jsonView);
+//    }
 }
