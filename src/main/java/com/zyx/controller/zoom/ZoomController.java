@@ -91,7 +91,7 @@ public class ZoomController {
             @RequestParam(value = "page") Integer page,
             @RequestParam(value = "pageSize") Integer pageSize) {
         UserConcernParam concernParam = new UserConcernParam(loginUserId, page, pageSize);
-        Map<String, Object> returnMap = zoomFacade.getRecommend(concernParam);
+        Map<String, Object> returnMap = zoomFacade.getRecommend(loginUserId,concernParam);
         AbstractView jsonView = new MappingJackson2JsonView();
         jsonView.setAttributesMap(returnMap);
         return new ModelAndView(jsonView);
@@ -151,7 +151,7 @@ public class ZoomController {
     @RequestMapping(value = "equip/queryOne", method = RequestMethod.GET)
     @ApiOperation(value = "装备秀详情查询", notes = "装备秀详情查询")
     public ModelAndView queryOne(@RequestParam(name = "token", value = "", required = false) String token,
-                                 @ApiParam(required = false, name = "id", value = "装备秀id") @RequestParam("id") Integer eid) {
+                                 @ApiParam(name = "id", value = "装备秀id") @RequestParam("id") Integer eid) {
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> map = zoomFacade.queryOne(eid);
         jsonView.setAttributesMap(map);

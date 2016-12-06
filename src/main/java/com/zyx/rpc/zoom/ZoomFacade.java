@@ -99,7 +99,7 @@ public interface ZoomFacade {
      * @param userConcernParam
      * @return
      */
-    Map<String,Object> getRecommend(UserConcernParam userConcernParam);
+    Map<String, Object> getRecommend(Integer loginUserId,UserConcernParam userConcernParam);
 
     /**
      * 根据标签id获取装备秀列表
