@@ -11,7 +11,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
@@ -90,6 +93,7 @@ public class MsgController {
                 return new ModelAndView(jsonView);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             jsonView.setAttributesMap(Constants.MAP_500);
         }
         return new ModelAndView(jsonView);
@@ -117,17 +121,18 @@ public class MsgController {
                 return new ModelAndView(jsonView);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             jsonView.setAttributesMap(Constants.MAP_500);
         }
         return new ModelAndView(jsonView);
     }
 
-    @RequestMapping(value = "/count/{user_id}", method = {RequestMethod.GET})
+    @RequestMapping(value = "/count", method = {RequestMethod.GET})
     @ApiOperation(value = "消息数量", notes = "消息数量", response = BaseResponse.class)
     @TokenVerify(verifyType = TokenVerify.VerifyEnum.NORMAL)
     public ModelAndView queryMsgCount(
             @ApiParam(required = true, name = "token", value = "token") @RequestParam(value = "token") String token,
-            @ApiParam(required = true, name = "user_id", value = "当前用户ID") @PathVariable(value = "user_id") Integer toUserId,
+            @ApiParam(required = true, name = "user_id", value = "当前用户ID") @RequestParam(value = "user_id") Integer toUserId,
             @ApiParam(name = "msg_type", value = "消息类型") @RequestParam(value = "msg_type", required = false) Integer msgType) {
         AbstractView jsonView = new MappingJackson2JsonView();
         try {
@@ -148,12 +153,12 @@ public class MsgController {
         return new ModelAndView(jsonView);
     }
 
-    @RequestMapping(value = "/list/{user_id}", method = {RequestMethod.GET})
+    @RequestMapping(value = "/list", method = {RequestMethod.GET})
     @ApiOperation(value = "消息列表", notes = "消息列表", response = BaseResponse.class)
     @TokenVerify(verifyType = TokenVerify.VerifyEnum.NORMAL)
     public ModelAndView queryMsgList(
             @ApiParam(required = true, name = "token", value = "token") @RequestParam(value = "token") String token,
-            @ApiParam(required = true, name = "user_id", value = "当前用户ID") @PathVariable(value = "user_id") Integer toUserId,
+            @ApiParam(required = true, name = "user_id", value = "当前用户ID") @RequestParam(value = "user_id") Integer toUserId,
             @ApiParam(required = true, name = "msg_type", value = "消息类型") @RequestParam(value = "msg_type") Integer msgType,
             @ApiParam(name = "page", value = "页数") @RequestParam(required = false) Integer page,
             @ApiParam(name = "pageSize", value = "每页显示的记录数") @RequestParam(required = false) Integer pageSize) {
