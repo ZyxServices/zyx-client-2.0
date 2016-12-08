@@ -31,7 +31,7 @@ public class ZanController {
     @ApiOperation(value = "点赞", notes = "点赞")
     public ModelAndView zan(@RequestParam(name = "token") String token,
                             @ApiParam(required = true, name = "bodyId", value = "模块id") @RequestParam(name = "bodyId") Integer bodyId,
-                            @ApiParam(required = true, name = "bodyType", value = "点赞模块类型1：文章,2：动态，3：装备控") @RequestParam(name = "bodyType") Integer bodyType,
+                            @ApiParam(required = true, name = "bodyType", value = "点赞模块类型0：文章,1：动态，2：装备控，3记录，4活动") @RequestParam(name = "bodyType") Integer bodyType,
                             @ApiParam(required = true, name = "accountId", value = "点赞人id") @RequestParam(name = "accountId") Integer accountId) {
         Map<String, Object> map = zoomFacade.addZan(bodyId, bodyType, accountId);
         AbstractView jsonView = new MappingJackson2JsonView();
