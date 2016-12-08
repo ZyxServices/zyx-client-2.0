@@ -111,5 +111,6 @@ public interface SportRecordFacade {
     public SportOverviewVo getSelfRecordOverview(Integer userId);
 
 
+    public List<SportInfoLevelVo> getSportInfoLevel(Integer venueId);
 
 }
