@@ -141,9 +141,12 @@ public class ZoomController {
     @RequestMapping(value = "equip/queryEquipByLabelId", method = RequestMethod.GET)
     @ApiOperation(value = "装备秀按标签查询", notes = "装备秀按标签查询")
     public ModelAndView queryEquipByLabelId(@RequestParam(name = "token") String token,
-                                            @ApiParam(name = "label_id", value = "标签id", required = true) @RequestParam(name = "label_id") Integer labelId) {
+                                            @RequestParam(value = "loginUserId", defaultValue = "-1", required = false) Integer loginUserId,
+                                            @ApiParam(name = "label_id", value = "标签id", required = true) @RequestParam(name = "label_id") Integer labelId,
+                                            @RequestParam("page") Integer page,
+                                            @RequestParam("pageSize") Integer pageSize) {
         AbstractView jsonView = new MappingJackson2JsonView();
-        Map<String, Object> map = zoomFacade.queryEquipByLabelId(labelId);
+        Map<String, Object> map = zoomFacade.queryEquipByLabelId(labelId, loginUserId, page, pageSize);
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
