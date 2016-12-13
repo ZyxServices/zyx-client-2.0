@@ -6,6 +6,7 @@ import com.zyx.param.record.SportRecordParam;
 import com.zyx.rpc.account.AccountCommonFacade;
 import com.zyx.rpc.record.SportRecordFacade;
 import com.zyx.vo.account.AccountInfoVo;
+import com.zyx.vo.account.UserIconVo;
 import com.zyx.vo.record.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -264,4 +265,26 @@ public class RecordController {
 //        jsonView.setAttributesMap(attrMap);
 //        return new ModelAndView(jsonView);
 //    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    @ApiOperation(value = "记录-查询到过某个场馆的用户", notes = "查询到过某个场馆的用户")
+    public ModelAndView getRecordUsers(
+            @ApiParam(required = true, name = "venueId", value = "场馆ID") @RequestParam(name = "venueId", required = true) Integer venueId,
+            @ApiParam(required = true, name = "pageSize", value = "分页大小") @RequestParam(name = "pageSize", required = false) Integer pageSize,
+            @ApiParam(required = true, name = "pageNum", value = "页码 1开始") @RequestParam(name = "pageNum", required = false) Integer pageNum) {
+        AbstractView jsonView = new MappingJackson2JsonView();
+        Map<String, Object> attrMap = new HashMap<>();
+        if (pageSize < 1 || pageSize < 1) {
+            attrMap.put(RecordConstants.STATE, RecordConstants.PARAM_ERROR);
+            attrMap.put(RecordConstants.ERROR_MSG, RecordConstants.MSG_PARAM_ERROR);
+        } else {
+
+            List<UserIconVo> list = sportRecordFacade.getRecordUserIcon(venueId, pageSize, pageNum);
+            attrMap.put(RecordConstants.STATE, RecordConstants.SUCCESS);
+            attrMap.put(RecordConstants.SUCCESS_MSG, RecordConstants.MSG_SUCCESS);
+            attrMap.put(RecordConstants.DATA, list);
+        }
+        jsonView.setAttributesMap(attrMap);
+        return new ModelAndView(jsonView);
+    }
 }

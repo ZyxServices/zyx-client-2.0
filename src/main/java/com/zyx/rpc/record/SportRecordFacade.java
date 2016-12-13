@@ -5,6 +5,7 @@ import com.zyx.entity.venue.Venue;
 import com.zyx.param.record.RankParam;
 import com.zyx.param.record.SportRecordParam;
 import com.zyx.param.venue.VenueParam;
+import com.zyx.vo.account.UserIconVo;
 import com.zyx.vo.record.*;
 
 import java.util.List;
@@ -113,4 +114,5 @@ public interface SportRecordFacade {
 
     public List<SportInfoLevelVo> getSportInfoLevel(Integer venueId);
 
+        public List<UserIconVo> getRecordUserIcon(Integer venueId,Integer pageSize,Integer pageNum);
 }

@@ -7,8 +7,7 @@ public class MyBean implements	CommandLineRunner{
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		System.out.println("==================================");
-		
+
 	}
 
 }

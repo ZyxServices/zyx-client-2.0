@@ -62,6 +62,5 @@ public class UserLoginTest {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(650697901065l);
-        System.out.println(calendar.getTime());
     }
 }
