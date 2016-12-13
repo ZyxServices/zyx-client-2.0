@@ -35,7 +35,7 @@ public class CommentController {
     @RequestMapping(value = "/insert", method = {RequestMethod.POST})
     @ApiOperation(value = "发表评论", notes = "发表评论", response = BaseResponse.class)
     public ModelAndView addComment(
-            @ApiParam(required = true, name = "comment_type", value = "评论类型，0：文章/教程，1:动态，2：装备控") @RequestParam(value = "comment_type") Integer commentType,
+            @ApiParam(required = true, name = "comment_type", value = "评论类型，0：文章/教程，1:动态，2：装备控，3求约，4场馆") @RequestParam(value = "comment_type") Integer commentType,
             @ApiParam(required = true, name = "comment_id", value = "评论主体ID") @RequestParam(value = "comment_id") Integer comment_id,
             @ApiParam(required = true, name = "model_create_id", value = "评论主体创建者ID") @RequestParam(value = "model_create_id") Integer model_create_id,
             @ApiParam(required = true, name = "comment_account", value = "发表评论用户id") @RequestParam(value = "comment_account") Integer comment_account,
@@ -76,7 +76,7 @@ public class CommentController {
     @RequestMapping(value = "/query/{comment_type}/{comment_id}", method = {RequestMethod.GET})
     @ApiOperation(value = "评论列表", notes = "首推-评论列表", response = BaseResponse.class)
     public ModelAndView queryComment(
-            @ApiParam(required = true, name = "comment_type", value = "评论类型，0：文章/教程，1:动态，2：装备控") @PathVariable(value = "comment_type") Integer commentType,
+            @ApiParam(required = true, name = "comment_type", value = "评论类型，0：文章/教程，1:动态，2：装备控，3求约，4场馆") @PathVariable(value = "comment_type") Integer commentType,
             @ApiParam(required = true, name = "comment_id", value = "评论modelId类型") @PathVariable(value = "comment_id") Integer comment_id) {
         Map<String, Object> map = commentFacade.queryComment(commentType, comment_id);
         AbstractView jsonView = new MappingJackson2JsonView();
