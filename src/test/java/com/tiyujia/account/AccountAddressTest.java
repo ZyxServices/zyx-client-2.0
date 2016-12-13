@@ -54,7 +54,6 @@ public class AccountAddressTest {
             UrlEncodedFormEntity httpEntity = new UrlEncodedFormEntity(params, "UTF-8");
             httpPost.setEntity(httpEntity);
             CloseableHttpResponse response = client.execute(httpPost);
-            System.out.println(EntityUtils.toString(response.getEntity()));
         } finally {
             httpPost.releaseConnection();
         }
