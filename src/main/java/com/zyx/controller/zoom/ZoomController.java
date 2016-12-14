@@ -140,7 +140,7 @@ public class ZoomController {
 
     @RequestMapping(value = "equip/queryEquipByLabelId", method = RequestMethod.GET)
     @ApiOperation(value = "装备秀按标签查询", notes = "装备秀按标签查询")
-    public ModelAndView queryEquipByLabelId(@RequestParam(name = "token") String token,
+    public ModelAndView queryEquipByLabelId(@RequestParam(name = "token",required = false) String token,
                                             @RequestParam(value = "loginUserId", defaultValue = "-1", required = false) Integer loginUserId,
                                             @ApiParam(name = "label_id", value = "标签id", required = true) @RequestParam(name = "label_id") Integer labelId,
                                             @RequestParam("page") Integer page,
