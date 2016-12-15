@@ -3,6 +3,7 @@ package com.zyx.controller.account;
 import com.zyx.constants.account.AccountConstants;
 import com.zyx.rpc.account.AccountCommonFacade;
 import com.zyx.utils.MapUtils;
+import com.zyx.utils.PhoneFormatCheckUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by wms on 2016/11/7.
@@ -94,12 +93,7 @@ public class CommonController {
 
     private Map<String, Object> doSendPhone(String phone, String type, String msg) {
         // 判断手机号码
-        return isMobileNum(phone) ? accountCommonFacade.sendPhoneCode(phone, type, msg) : MapUtils.buildErrorMap(AccountConstants.ACCOUNT_ERROR_CODE_40100, AccountConstants.ACCOUNT_ERROR_CODE_40100_MSG);
+        return PhoneFormatCheckUtils.isPhoneLegal(phone) ? accountCommonFacade.sendPhoneCode(phone, type, msg) : MapUtils.buildErrorMap(AccountConstants.ACCOUNT_ERROR_CODE_40100, AccountConstants.ACCOUNT_ERROR_CODE_40100_MSG);
     }
 
-    private boolean isMobileNum(String mobiles) {
-        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$");
-        Matcher m = p.matcher(mobiles);
-        return m.matches();
-    }
 }
