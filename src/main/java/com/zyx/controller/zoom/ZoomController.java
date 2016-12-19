@@ -114,6 +114,17 @@ public class ZoomController {
         return new ModelAndView(jsonView);
     }
 
+    @RequestMapping(value = "cern/del", method = RequestMethod.DELETE)
+    @ApiOperation(value = "删除动态", notes = "发布动态")
+    public ModelAndView delCern(@RequestParam(name = "token", value = "", required = false) String token,
+                                @ApiParam(required = true, name = "id", value = "动态id") @RequestParam(name = "id") Integer id,
+                                @ApiParam(required = true, name = "loginUserId", value = "用户登陆id") @RequestParam(name = "loginUserId") Integer loginUserId) {
+        AbstractView jsonView = new MappingJackson2JsonView();
+        Map<String, Object> map = zoomFacade.delCern(id, loginUserId);
+        jsonView.setAttributesMap(map);
+        return new ModelAndView(jsonView);
+    }
+
     @RequestMapping(value = "equip/insert", method = RequestMethod.POST)
     @ApiOperation(value = "发布装备秀", notes = "发布装备秀")
     public ModelAndView addEquip(@RequestParam(name = "token", value = "", required = false) String token,
@@ -140,7 +151,7 @@ public class ZoomController {
 
     @RequestMapping(value = "equip/queryEquipByLabelId", method = RequestMethod.GET)
     @ApiOperation(value = "装备秀按标签查询", notes = "装备秀按标签查询")
-    public ModelAndView queryEquipByLabelId(@RequestParam(name = "token",required = false) String token,
+    public ModelAndView queryEquipByLabelId(@RequestParam(name = "token", required = false) String token,
                                             @RequestParam(value = "loginUserId", defaultValue = "-1", required = false) Integer loginUserId,
                                             @ApiParam(name = "label_id", value = "标签id", required = true) @RequestParam(name = "label_id") Integer labelId,
                                             @RequestParam("page") Integer page,
