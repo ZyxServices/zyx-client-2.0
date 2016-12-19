@@ -106,5 +106,21 @@ public interface ZoomFacade {
      * @param labelId
      * @return
      */
-    Map<String, Object> queryEquipByLabelId(Integer labelId);
+    Map<String, Object> queryEquipByLabelId(Integer labelId,Integer loginUserId,Integer page,Integer pageSize);
+
+    /**
+     *  根据动态id获取点赞用户列表
+     * @param concernId
+     * @param max
+     * @return
+     */
+    Map<String,Object> getConcernZanUser(Integer concernId,Integer max);
+
+    /**
+     * 删除动态（软）
+     * @param id
+     * @param loginUserId
+     * @return
+     */
+    Map<String, Object> delCern(Integer id, Integer loginUserId);
 }

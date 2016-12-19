@@ -34,45 +34,6 @@ public class MsgController {
     @Autowired
     private MsgFacade msgFacade;
 
-//    @RequestMapping(value = "/info", method = {RequestMethod.POST})
-//    @ApiOperation(value = "插入消息", notes = "插入消息", response = BaseResponse.class)
-//    public ModelAndView insertMsg(
-//            @ApiParam(required = true, name = "token", value = "token") @RequestParam(value = "token") String token,
-//            @ApiParam(required = true, name = "from_user_id", value = "当前用户ID") @RequestParam(value = "from_user_id") Integer fromUserId,
-//            @ApiParam(required = true, name = "to_user_id", value = "主体对象拥有者ID") @RequestParam(value = "to_user_id") Integer toUserId,
-//            @ApiParam(required = true, name = "bodyId", value = "主体对象ID") @RequestParam(value = "bodyId") Integer bodyId,
-//            @ApiParam(required = true, name = "bodyType", value = "主体对象类型") @RequestParam(value = "bodyType") Integer bodyType,
-//            @ApiParam(required = true, name = "fromContent", value = "当前用户内容") @RequestParam(value = "fromContent") String fromContent,
-//            @ApiParam(name = "toContent") @RequestParam(required = false, value = "toContent") String toContent) {
-//        AbstractView jsonView = new MappingJackson2JsonView();
-//        try {
-//            if (StringUtils.isEmpty(token) || StringUtils.isEmpty(toUserId)) {// 缺少参数
-//                jsonView.setAttributesMap(Constants.MAP_PARAM_MISS);
-//            } else {
-//                if (fromUserId.equals(toUserId)) {// 过滤自己评论自己的
-//                    jsonView.setAttributesMap(MapUtils.buildErrorMap(Constants.ERROR, "评论自己的不需要发送消息"));
-//                } else {
-//                    jsonView.setAttributesMap(doInsertMsg(token, fromUserId, toUserId, bodyId, bodyType, fromContent, toContent));
-//                }
-//            }
-//        } catch (Exception e) {
-//            jsonView.setAttributesMap(Constants.MAP_500);
-//        }
-//        return new ModelAndView(jsonView);
-//    }
-
-//    private Map<String, Object> doInsertMsg(String token, Integer fromUserId, Integer toUserId, Integer bodyId, Integer bodyType, String fromContent, String toContent) {
-//        UserMsgParam userMsgParam = new UserMsgParam();
-//        userMsgParam.setToken(token);
-//        userMsgParam.setFromUserId(fromUserId);
-//        userMsgParam.setToUserId(toUserId);
-//        userMsgParam.setBodyId(bodyId);
-//        userMsgParam.setBodyType(bodyType);
-//        userMsgParam.setFromContent(fromContent);
-//        userMsgParam.setToContent(toContent);
-//        return msgFacade.insertMsg(userMsgParam);
-//    }
-
     @RequestMapping(value = "/info", method = {RequestMethod.DELETE})
     @ApiOperation(value = "删除消息", notes = "删除消息", response = BaseResponse.class)
     @TokenVerify(verifyType = TokenVerify.VerifyEnum.NORMAL)
