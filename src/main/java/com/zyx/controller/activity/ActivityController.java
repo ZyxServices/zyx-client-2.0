@@ -2,17 +2,19 @@ package com.zyx.controller.activity;
 
 
 import com.zyx.constants.Constants;
-import com.zyx.entity.activity.Activity;
 import com.zyx.param.activity.ActivityParam;
 import com.zyx.param.activity.QueryActivityParam;
 import com.zyx.rpc.account.AccountCommonFacade;
-import com.zyx.utils.ActivityUtils;
 import com.zyx.rpc.activity.ActivityFacade;
+import com.zyx.utils.ActivityUtils;
 import com.zyx.utils.MapUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.AbstractView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
@@ -126,5 +128,20 @@ public class ActivityController {
         return new ModelAndView(jsonView);
     }
 
+
+    @RequestMapping(value = "/delActivityById", method = RequestMethod.POST)
+    @ApiOperation(value = "通过活动ID查询活动详情信息", notes = "通过活动ID查询活动详情信息")
+    public ModelAndView delActivityById(@RequestParam(name = "token", required = true) String token,
+                                        @RequestParam(name = "activityId", required = true) Integer activityId,
+                                        @RequestParam(name = "userId", required = true) Integer userId) {
+
+        boolean token1 = accountCommonFacade.validateToken(token);
+        if (!token1) return new ModelAndView(ActivityUtils.tokenFailure());
+
+        AbstractView jsonView = new MappingJackson2JsonView();
+        Map<String, Object> map = activityFacade.delActivityById(activityId, userId);
+        jsonView.setAttributesMap(map);
+        return new ModelAndView(jsonView);
+    }
 
 }

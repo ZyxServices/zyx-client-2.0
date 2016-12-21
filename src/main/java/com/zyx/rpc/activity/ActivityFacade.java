@@ -43,4 +43,13 @@ public interface ActivityFacade {
      * @return
      */
     Map<String, Object> activityById(Integer activityId);
+
+    /**
+     * 通过ID删除活动
+     *
+     * @param activityId
+     * @return
+     */
+    Map<String, Object> delActivityById(Integer activityId, Integer userId);
+
 }

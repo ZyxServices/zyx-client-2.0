@@ -34,6 +34,7 @@ public class SearchController {
     @RequestMapping(value = "/model", method = {RequestMethod.POST})
     @ApiOperation(value = "搜索查询", notes = "搜索查询")
     public ModelAndView model(@ApiParam(name = "character", value = "查询关键词") @RequestParam(name = "character", required = false) String character,
+                              @ApiParam(name = "userId", value = "当前登录用户ID") @RequestParam(name = "userId", required = false) Integer userId,
                               @ApiParam(required = true, name = "model", value = "查询分类model（1、活动，2、装备，3、动态，4、场馆，5、教程，6、用户）") @RequestParam(name = "model") Integer model,
                               @ApiParam(required = true, name = "number", value = "每页显示多少条") @RequestParam(name = "number") Integer number,
                               @ApiParam(required = true, name = "pageNumber", value = "当前第几页") @RequestParam(name = "pageNumber") Integer pageNumber) {
@@ -44,6 +45,7 @@ public class SearchController {
         searchParam.setModel(model);
         searchParam.setPageNumber(pageNumber);
         searchParam.setNumber(number);
+        searchParam.setUserId(userId);
         Map<String, Object> map = searchFacade.modularSearch(searchParam);
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);

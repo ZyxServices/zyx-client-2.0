@@ -97,6 +97,7 @@ public class VenueController {
             @ApiParam(required = true, name = "type", value = "查询方式(1、全部，2、距离当前经纬度最近，3、最热门， 4、最大难度)") @RequestParam(name = "type", required = true) Integer type,
             @ApiParam(required = true, name = "lng", value = "经度") @RequestParam(name = "lng", required = true) Double lng,
             @ApiParam(required = true, name = "lat", value = "纬度") @RequestParam(name = "lat", required = true) Double lat,
+            @ApiParam(required = false, name = "city", value = "城市") @RequestParam(name = "city", required = false) String city,
             @ApiParam(required = true, name = "number", value = "每页显示多少条") @RequestParam(name = "number", required = true) Integer number,
             @ApiParam(required = true, name = "pageNumber", value = "当前第几页") @RequestParam(name = "pageNumber", required = true) Integer pageNumber
     ) {
@@ -107,6 +108,7 @@ public class VenueController {
         findVenueParam.setLat(lat);
         findVenueParam.setNumber(number);
         findVenueParam.setPageNumber(pageNumber);
+        findVenueParam.setCity(city);
         Map<String, Object> venue = venueFacade.findVenue(findVenueParam);
         jsonView.setAttributesMap(venue);
         return new ModelAndView(jsonView);
