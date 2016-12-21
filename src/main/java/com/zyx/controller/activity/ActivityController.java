@@ -100,6 +100,7 @@ public class ActivityController {
     @ApiOperation(value = "活动查询筛选", notes = "活动查询筛选")
     public ModelAndView query(@ApiParam(required = true, name = "state", value = "状态（0、全部  1、正在报名 2、已结束）") @RequestParam(name = "state", required = true) Integer state,
                               @ApiParam(required = true, name = "type", value = "类型（0、全部 1、求约 2、求带）") @RequestParam(name = "type", required = true) Integer type,
+                              @ApiParam(required = false, name = "userId", value = "当前登录用户）") @RequestParam(name = "userId", required = false) Integer userId,
                               @ApiParam(required = false, name = "city", value = "城市") @RequestParam(name = "city", required = false) String city,
                               @ApiParam(required = true, name = "number", value = "每页显示条数") @RequestParam(name = "number", required = true) Integer number,
                               @ApiParam(required = true, name = "pageNumber", value = "当前第几页") @RequestParam(name = "pageNumber", required = true) Integer pageNumber) {
@@ -112,6 +113,7 @@ public class ActivityController {
         queryActivityParam.setNumber(number);
         queryActivityParam.setPageNumber(pageNumber);
         queryActivityParam.setCity(city);
+        queryActivityParam.setUserId(userId);
 
         Map<String, Object> map = activityFacade.queryActivity(queryActivityParam);
         jsonView.setAttributesMap(map);
