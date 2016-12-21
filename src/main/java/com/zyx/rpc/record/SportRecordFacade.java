@@ -1,5 +1,6 @@
 package com.zyx.rpc.record;
 
+import com.zyx.entity.record.SportRecord;
 import com.zyx.entity.venue.SportInfo;
 import com.zyx.entity.venue.Venue;
 import com.zyx.param.record.RankParam;
@@ -44,9 +45,11 @@ public interface SportRecordFacade {
      *
      * @param userId
      * @param type 默认1
+     * @param venueId
+     * @param
      * @param spendTime
      */
-    public void uploadSportRecord(Integer userId, Integer type,Integer venueId, String level,Integer score, Long spendTime);
+    public SportRecord uploadSportRecord(Integer userId, Integer type, Integer venueId, String level, Integer score, Long spendTime);
 
 
     /**
@@ -99,7 +102,7 @@ public interface SportRecordFacade {
      * @param param
      * @return
      */
-    public List<Venue> getVenues(VenueParam param);
+//    public List<Venue> getVenues(VenueParam param);
 
     /**
      * 获取用户各人运动概况
@@ -110,8 +113,8 @@ public interface SportRecordFacade {
     // TODO: 2016/11/8 后期考虑另建表存储
     public SportOverviewVo getSelfRecordOverview(Integer userId);
 
-
     public List<SportInfoLevelVo> getSportInfoLevel(Integer venueId);
 
-        public List<UserIconVo> getRecordUserIcon(Integer venueId,Integer pageSize,Integer pageNum);
+    public List<UserIconVo> getRecordUserIcon(Integer venueId, Integer pageSize, Integer pageNum);
+
 }
