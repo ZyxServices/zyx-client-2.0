@@ -70,6 +70,7 @@ public class CommentController {
         param.setBodyType(commentType);
         param.setFromContent(comment_content);
         param.setCreateTime(System.currentTimeMillis());
+        param.setMsgType(1);
         return param;
     }
 
