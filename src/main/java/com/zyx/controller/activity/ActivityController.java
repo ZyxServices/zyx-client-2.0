@@ -120,10 +120,11 @@ public class ActivityController {
 
     @RequestMapping(value = "/activityById", method = RequestMethod.POST)
     @ApiOperation(value = "通过活动ID查询活动详情信息", notes = "通过活动ID查询活动详情信息")
-    public ModelAndView activityById(@RequestParam(name = "activityId", required = true) Integer activityId) {
+    public ModelAndView activityById(@RequestParam(name = "activityId", required = true) Integer activityId,
+                                     @RequestParam(name = "userId", required = false) Integer userId) {
 
         AbstractView jsonView = new MappingJackson2JsonView();
-        Map<String, Object> map = activityFacade.activityById(activityId);
+        Map<String, Object> map = activityFacade.activityById(activityId, userId);
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
