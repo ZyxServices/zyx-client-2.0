@@ -1,6 +1,7 @@
 package com.zyx.controller.record;
 
 import com.zyx.constants.record.RecordConstants;
+import com.zyx.entity.record.SportRecord;
 import com.zyx.param.record.RankParam;
 import com.zyx.param.record.SportRecordParam;
 import com.zyx.rpc.account.AccountCommonFacade;
@@ -55,9 +56,10 @@ public class RecordController {
                     attrMap.put(RecordConstants.STATE, RecordConstants.NOT_EXIST_LEVEL);
                     attrMap.put(RecordConstants.SUCCESS_MSG, RecordConstants.MSG_NOT_EXIST_LEVEL);
                 }else{
-                    sportRecordFacade.uploadSportRecord(account.getId(), 1, venueId, level, RecordConstants.LEVEL_SCORE.get(level),spendTime);
+                    SportRecord entity = sportRecordFacade.uploadSportRecord(account.getId(), 1, venueId, level, RecordConstants.LEVEL_SCORE.get(level), spendTime);
                     attrMap.put(RecordConstants.STATE, RecordConstants.SUCCESS);
                     attrMap.put(RecordConstants.SUCCESS_MSG, RecordConstants.MSG_SUCCESS);
+                    attrMap.put(RecordConstants.DATA, entity);
                 }
             }
         }

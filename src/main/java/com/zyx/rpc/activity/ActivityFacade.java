@@ -25,6 +25,7 @@ public interface ActivityFacade {
 
     /**
      * 查询活动
+     *
      * @param queryParam
      * @return
      */
@@ -32,6 +33,7 @@ public interface ActivityFacade {
 
     /**
      * 通过用户ID 查询活动
+     *
      * @param myActivityListParam
      * @return
      */
@@ -39,10 +41,12 @@ public interface ActivityFacade {
 
     /**
      * 通过ID查询活动详细信息
+     *
      * @param activityId
+     * @param userId
      * @return
      */
-    Map<String, Object> activityById(Integer activityId);
+    Map<String, Object> activityById(Integer activityId, Integer userId);
 
     /**
      * 通过ID删除活动

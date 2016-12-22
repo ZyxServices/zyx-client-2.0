@@ -120,15 +120,33 @@ public class ZoomController {
                                 @RequestParam(name = "imgUrl", required = false) String imgUrl,
                                 @ApiParam(name = "videoUrl", value = "视频url") @RequestParam(name = "videoUrl", required = false) String videoUrl,
                                 @ApiParam(required = true, name = "visible", value = "可见范围，可见范围0所有可见，1好友可见") @RequestParam(name = "visible") Integer visible,
-                                @ApiParam(name = "local", value = "位置") @RequestParam(name = "local", required = false) String local) {
+
+                                @ApiParam(name = "local", value = "位置") @RequestParam(name = "local", required = false) String local,
+                                @ApiParam(required = false, name = "recordId", value = "秀的记录ID") @RequestParam(name = "recordId") Integer recordId) {
         boolean token1 = commonFacade.validateToken(token);
         if (!token1) return new ModelAndView(ActivityUtils.tokenFailure());
         AbstractView jsonView = new MappingJackson2JsonView();
-        Map<String, Object> map = zoomFacade.addCern(userId, 0, content, imgUrl, videoUrl, visible, local);
+        Map<String, Object> map = zoomFacade.addCern(userId, 0, content, imgUrl, videoUrl, visible, local,recordId);
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
 
+//    @RequestMapping(value = "cern/show", method = RequestMethod.POST)
+//    @ApiOperation(value = "发布动态", notes = "发布动态")
+//    public ModelAndView showSportRecord(@RequestParam(name = "token", value = "", required = false) String token,
+//                                        @ApiParam(required = true, name = "userId", value = "发布动态id") @RequestParam(name = "userId") Integer userId,
+////                                @ApiParam(required = true, name = "type", value = "动态类型1为个人动态，2为活动动态，3为明星动态，4为圈子动态") @RequestParam(name = "type") Integer type,
+//                                        @RequestParam(name = "content") String content,
+//                                        @RequestParam(name = "imgUrl", required = false) String imgUrl,
+//                                        @ApiParam(name = "videoUrl", value = "视频url") @RequestParam(name = "videoUrl", required = false) String videoUrl,
+//                                        @ApiParam(required = true, name = "visible", value = "可见范围，可见范围0所有可见，1好友可见") @RequestParam(name = "visible") Integer visible,
+//                                        @ApiParam(name = "local", value = "位置") @RequestParam(name = "local", required = false) String local,
+//                                        @ApiParam(required = true, name = "recordId", value = "秀的记录ID") @RequestParam(name = "recordId") Integer recordId) {
+//        AbstractView jsonView = new MappingJackson2JsonView();
+//        Map<String, Object> map = zoomFacade.showSportRecord(userId, 1, content, imgUrl, videoUrl, visible, local,recordId);
+//        jsonView.setAttributesMap(map);
+//        return new ModelAndView(jsonView);
+//    }
 
     @RequestMapping(value = "equip/insert", method = RequestMethod.POST)
     @ApiOperation(value = "发布装备秀", notes = "发布装备秀")
@@ -150,7 +168,7 @@ public class ZoomController {
     @ApiOperation(value = "装备秀列表查询", notes = "装备秀列表查询")
     public ModelAndView queryEquip(
 //                                   @RequestParam(name = "token", value = "", required = false) String token,
-                                   @ApiParam(required = false, name = "id", value = "装备秀id") @RequestParam(name = "eId", required = false) Integer eid) {
+                                   @ApiParam(name = "id", value = "装备秀id") @RequestParam(name = "eId", required = false) Integer eid) {
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> map = zoomFacade.queryEquip(eid);
         jsonView.setAttributesMap(map);
