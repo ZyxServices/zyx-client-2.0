@@ -123,4 +123,12 @@ public interface ZoomFacade {
      * @return
      */
     Map<String, Object> delCern(Integer id, Integer loginUserId);
+
+    /**
+     * 删除装备秀（软）
+     * @param id
+     * @param loginUserId
+     * @return
+     */
+    Map<String, Object> delEquip(Integer id, Integer loginUserId);
 }

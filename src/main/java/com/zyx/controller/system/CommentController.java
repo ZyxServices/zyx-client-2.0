@@ -3,8 +3,10 @@ package com.zyx.controller.system;
 import com.zyx.config.BaseResponse;
 import com.zyx.constants.Constants;
 import com.zyx.param.account.UserMsgParam;
+import com.zyx.rpc.account.AccountCommonFacade;
 import com.zyx.rpc.system.CommentFacade;
 import com.zyx.rpc.system.MsgFacade;
+import com.zyx.utils.ActivityUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -30,11 +32,15 @@ public class CommentController {
     private CommentFacade commentFacade;
 
     @Autowired
+    private AccountCommonFacade commonFacade;
+
+    @Autowired
     private MsgFacade msgFacade;
 
     @RequestMapping(value = "/insert", method = {RequestMethod.POST})
     @ApiOperation(value = "发表评论", notes = "发表评论", response = BaseResponse.class)
     public ModelAndView addComment(
+            @ApiParam(required = true, name = "token") @RequestParam(value = "token") String token,
             @ApiParam(required = true, name = "comment_type", value = "评论类型，0：文章/教程，1:动态，2：装备控，3求约，4场馆") @RequestParam(value = "comment_type") Integer commentType,
             @ApiParam(required = true, name = "comment_id", value = "评论主体ID") @RequestParam(value = "comment_id") Integer comment_id,
             @ApiParam(required = true, name = "model_create_id", value = "评论主体创建者ID") @RequestParam(value = "model_create_id") Integer model_create_id,
@@ -42,6 +48,10 @@ public class CommentController {
             @ApiParam(required = true, name = "comment_content", value = "评论内容") @RequestParam(value = "comment_content") String comment_content,
             @RequestParam(value = "comment_state", required = false, defaultValue = "0") Integer comment_state,
             @ApiParam(name = "comment_img_path", value = "评论图片") @RequestParam(value = "comment_img_path", required = false) String comment_img_path) {
+
+        boolean token1 = commonFacade.validateToken(token);
+        if (!token1) return new ModelAndView(ActivityUtils.tokenFailure());
+
         Map<String, Object> map = commentFacade.addComment(commentType, comment_id, comment_content, comment_account, comment_state, comment_img_path);
         AbstractView jsonView = new MappingJackson2JsonView();
         jsonView.setAttributesMap(map);
@@ -85,11 +95,16 @@ public class CommentController {
 
     }
 
-    @RequestMapping(value = "/del/{id}/{comment_account_id}", method = {RequestMethod.GET})
+    @RequestMapping(value = "/del/{token}/{id}/{comment_account_id}", method = {RequestMethod.GET})
     @ApiOperation(value = "删除评论", notes = "删除评论", response = BaseResponse.class)
     public ModelAndView delComment(
+            @ApiParam(required = true, name = "token") @PathVariable(value = "token") String token,
             @ApiParam(required = true, name = "id", value = "评论id") @PathVariable(value = "id") Integer id,
             @ApiParam(required = true, name = "comment_account_id", value = "评论用户id") @PathVariable(value = "comment_account_id") Integer comment_account_id) {
+
+        boolean token1 = commonFacade.validateToken(token);
+        if (!token1) return new ModelAndView(ActivityUtils.tokenFailure());
+
         Map<String, Object> map = commentFacade.delComment(id,comment_account_id);
         AbstractView jsonView = new MappingJackson2JsonView();
         jsonView.setAttributesMap(map);
