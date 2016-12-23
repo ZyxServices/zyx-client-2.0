@@ -87,7 +87,7 @@ public class ActivityMemberController {
         param.setToUserId(activityUserId);
         param.setFromContent(msg);
         param.setBodyId(activityId);
-        param.setBodyType(4);
+        param.setBodyType(3);
         param.setMsgType(2);
         param.setCreateTime(System.currentTimeMillis());
         return param;
