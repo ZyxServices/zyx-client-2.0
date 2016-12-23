@@ -62,7 +62,7 @@ public class ZoomController {
     @ApiOperation(value = "获取未关注用户", notes = "获取未关注用户")
     public ModelAndView followList(
 //                                   @RequestParam("token") String token,
-                                   @ApiParam(name = "loginUserId", value = "登录用户id") @RequestParam(value = "loginUserId", required = false, defaultValue = "-1") Integer loginUserId) {
+            @ApiParam(name = "loginUserId", value = "登录用户id") @RequestParam(value = "loginUserId", required = false, defaultValue = "-1") Integer loginUserId) {
         loginUserId = Objects.equals(loginUserId, null) || Objects.equals(loginUserId, "") ? -1 : loginUserId;
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> map = zoomFacade.getNoAttentionUser(loginUserId);
@@ -121,11 +121,11 @@ public class ZoomController {
                                 @ApiParam(name = "videoUrl", value = "视频url") @RequestParam(name = "videoUrl", required = false) String videoUrl,
                                 @ApiParam(required = true, name = "visible", value = "可见范围，可见范围0所有可见，1好友可见") @RequestParam(name = "visible") Integer visible,
                                 @ApiParam(name = "local", value = "位置") @RequestParam(name = "local", required = false) String local,
-                                @ApiParam(name = "recordId", value = "秀的记录ID") @RequestParam(name = "recordId",required = false) Integer recordId) {
+                                @ApiParam(name = "recordId", value = "秀的记录ID") @RequestParam(name = "recordId", required = false) Integer recordId) {
         boolean token1 = commonFacade.validateToken(token);
         if (!token1) return new ModelAndView(ActivityUtils.tokenFailure());
         AbstractView jsonView = new MappingJackson2JsonView();
-        Map<String, Object> map = zoomFacade.addCern(userId, 0, content, imgUrl, videoUrl, visible, local,recordId);
+        Map<String, Object> map = zoomFacade.addCern(userId, 0, content, imgUrl, videoUrl, visible, local, recordId);
         jsonView.setAttributesMap(map);
         return new ModelAndView(jsonView);
     }
@@ -167,7 +167,7 @@ public class ZoomController {
     @ApiOperation(value = "装备秀列表查询", notes = "装备秀列表查询")
     public ModelAndView queryEquip(
 //                                   @RequestParam(name = "token", value = "", required = false) String token,
-                                   @ApiParam(name = "id", value = "装备秀id") @RequestParam(name = "eId", required = false) Integer eid) {
+            @ApiParam(name = "id", value = "装备秀id") @RequestParam(name = "eId", required = false) Integer eid) {
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> map = zoomFacade.queryEquip(eid);
         jsonView.setAttributesMap(map);
@@ -178,10 +178,10 @@ public class ZoomController {
     @ApiOperation(value = "装备秀按标签查询", notes = "装备秀按标签查询")
     public ModelAndView queryEquipByLabelId(
 //                                            @RequestParam(name = "token", required = false) String token,
-                                            @RequestParam(value = "loginUserId", defaultValue = "-1", required = false) Integer loginUserId,
-                                            @ApiParam(name = "label_id", value = "标签id") @RequestParam(name = "label_id", required = false) Integer labelId,
-                                            @RequestParam("page") Integer page,
-                                            @RequestParam("pageSize") Integer pageSize) {
+            @RequestParam(value = "loginUserId", defaultValue = "-1", required = false) Integer loginUserId,
+            @ApiParam(name = "label_id", value = "标签id") @RequestParam(name = "label_id", required = false) Integer labelId,
+            @RequestParam("page") Integer page,
+            @RequestParam("pageSize") Integer pageSize) {
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> map = zoomFacade.queryEquipByLabelId(labelId, loginUserId, page, pageSize);
         jsonView.setAttributesMap(map);
@@ -191,7 +191,7 @@ public class ZoomController {
     @RequestMapping(value = "equip/queryOne", method = RequestMethod.GET)
     @ApiOperation(value = "装备秀详情查询", notes = "装备秀详情查询")
     public ModelAndView queryOne(
-                                 @ApiParam(name = "id", value = "装备秀id") @RequestParam("id") Integer eid) {
+            @ApiParam(name = "id", value = "装备秀id") @RequestParam("id") Integer eid) {
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> map = zoomFacade.queryOne(eid);
         jsonView.setAttributesMap(map);
@@ -201,8 +201,8 @@ public class ZoomController {
     @RequestMapping(value = "concern/getConcernZanUser", method = RequestMethod.GET)
     @ApiOperation(value = "根据动态id获取点赞用户列表", notes = "根据动态id获取点赞用户列表")
     public ModelAndView getConcernZanUser(
-                                          @ApiParam(name = "concernId", value = "动态id", required = true) @RequestParam("concernId") Integer concernId,
-                                          @ApiParam(name = "max", value = "最大条数,不填写默认为5") @RequestParam(value = "max", required = false, defaultValue = "5") Integer max) {
+            @ApiParam(name = "concernId", value = "动态id", required = true) @RequestParam("concernId") Integer concernId,
+            @ApiParam(name = "max", value = "最大条数,不填写默认为5") @RequestParam(value = "max", required = false, defaultValue = "5") Integer max) {
         AbstractView jsonView = new MappingJackson2JsonView();
         Map<String, Object> map = zoomFacade.getConcernZanUser(concernId, max);
         jsonView.setAttributesMap(map);
@@ -210,12 +210,12 @@ public class ZoomController {
     }
 
 
-    @RequestMapping(value = "concern/del/{concernId}/{loginUserId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "concern/del/{token}/{concernId}/{loginUserId}", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除动态", notes = "删除动态")
     public ModelAndView delConcern(
-                                   @RequestParam(name = "token") String token,
-                                   @ApiParam(name = "concernId", value = "动态id", required = true) @PathVariable("concernId") Integer concernId,
-                                   @ApiParam(name = "loginUserId", value = "登录用户id", required = true) @PathVariable("loginUserId") Integer loginUserId) {
+            @PathVariable("token") String token,
+            @ApiParam(name = "concernId", value = "动态id", required = true) @PathVariable("concernId") Integer concernId,
+            @ApiParam(name = "loginUserId", value = "登录用户id", required = true) @PathVariable("loginUserId") Integer loginUserId) {
         boolean token1 = commonFacade.validateToken(token);
         if (!token1) return new ModelAndView(ActivityUtils.tokenFailure());
 
@@ -225,12 +225,12 @@ public class ZoomController {
         return new ModelAndView(jsonView);
     }
 
-    @RequestMapping(value = "equip/del/{equipId}/{loginUserId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "equip/{token}/del/{equipId}/{loginUserId}", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除装别秀", notes = "删除装别秀")
     public ModelAndView delEquip(
-                                 @RequestParam(name = "token") String token,
-                                 @ApiParam(name = "equipId", value = "装备控id", required = true) @PathVariable("equipId") Integer equipId,
-                                 @ApiParam(name = "loginUserId", value = "登录用户id", required = true) @PathVariable("loginUserId") Integer loginUserId) {
+            @PathVariable("token") String token,
+            @ApiParam(name = "equipId", value = "装备控id", required = true) @PathVariable("equipId") Integer equipId,
+            @ApiParam(name = "loginUserId", value = "登录用户id", required = true) @PathVariable("loginUserId") Integer loginUserId) {
 
         boolean token1 = commonFacade.validateToken(token);
         if (!token1) return new ModelAndView(ActivityUtils.tokenFailure());
